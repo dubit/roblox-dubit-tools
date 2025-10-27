@@ -23,7 +23,6 @@ For more information about Roblox Internal Tools, view the [RIT Confluence](http
 - [**Engagements** *- Roblox Engagements Library*](/docs/Dubit%20Tools/Engagements/intro)
 - [**Environment Tool** *- Roblox Environment System*](/docs/Dubit%20Tools/Environment%20Tool/intro/)
 - [**Event Tracker** *- Globally Synced Events*](/docs/Dubit%20Tools/Event%20Tracker/intro/)
-- [**Quilt** *- Roblox Interface Library*](/docs/Dubit%20Tools/Quilt/getting_started/)
 - [**System** *- System Management*](/docs/Dubit%20Tools/System/intro)
 
 ## Tool API
@@ -38,9 +37,6 @@ For more information about Roblox Internal Tools, view the [RIT Confluence](http
 - [**EventTracker** *- Global Roblox Events Library*](/api/EventTracker)
 - [**FPSCounter** *- Roblox FPS Display*](/api/FPSCounter)
 - [**Notifications** *- Roblox Notification System*](/api/Notifications)
-- [**Quilt** *- Roblox Interface Library*](/api/Interface)
-	- **QuiltDebugger** *- Visual debugger for Quilt*
-	- [**QuiltRoact** *- Roact hooks for Quilt*](/api/QuiltRoact)
 - [**System** *- System Management*](/api/System)
 - [**Totalizers** *- Global Totalizer Library*](/api/Totalizers)
 - [**UgcToolkit** *- UGC Utility Library*](/api/UgcToolkit)

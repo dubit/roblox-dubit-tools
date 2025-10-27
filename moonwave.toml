@@ -40,18 +40,6 @@ title = "Dubit Store"
 description = "DubitStore is a Roblox DataStore library"
 
 [[home.features]]
-title = "Quilt"
-description = "Quilt is a Roblox interface library"
-
-[[home.features]]
-title = "Quilt Debugger"
-description = "A visual debugger for the Quilt interface module"
-
-[[home.features]]
-title = "Quilt Roact"
-description = "A roact hook to help integrate Quilt into Roact"
-
-[[home.features]]
 title = "Allocation Pool"
 description = "A simple library designed to consume global budgets"
 

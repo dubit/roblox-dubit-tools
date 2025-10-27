@@ -29,9 +29,6 @@ registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
 [dependencies]
 Roact = "roblox/roact@1.4.4"
 Console = "4x8matrix/console@1.2.1"
-Quilt = "dubit/quilt@0.7.5"
-QuiltRoact = "dubit/quilt-roact@1.0.2"
-QuiltDebugger = "dubit/quilt-debugger@0.1.0"
 DubitStore = "dubit/dubit-store@0.1.27"
 
 # Truncated dependencies since there are quite a bit..

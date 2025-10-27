@@ -21,13 +21,9 @@
 				"DubitStore",
 				"DubitUtils",
 				"EventTracker",
-				"Quilt",
-				"QuiltDebugger",
-				"QuiltRoact",
 				"SequenceAnimator",
 				"SimpleStore",
 				"System",
-				"WeaverCore"
 			]
 		}
 	],
