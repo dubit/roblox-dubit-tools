@@ -1,0 +1,25 @@
+{
+	"name": "tool-name",
+	"tree": {
+		"$className": "DataModel",
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"ToolName": {
+					"$path": "Source"
+				}
+			},
+
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		}
+	}
+}

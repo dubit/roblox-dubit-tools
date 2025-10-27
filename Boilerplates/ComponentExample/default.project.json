@@ -1,0 +1,6 @@
+{
+	"name": "tool-name",
+	"tree": {
+		"$path": "Source"
+	}
+}
