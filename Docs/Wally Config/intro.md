@@ -20,23 +20,4 @@ This command should generate a base `wally.toml` file that we can use to add dep
 
 ## Adding dependencies
 
-### Private Wally dependencies
-
-:::note
-Please note that in order to search for internal tools, you'll need to follow the steps seen in ["*Wally Authentication*"](/docs/Wally%20Config/authentication)
-:::
-
-You can find private Wally packages by executing the following command inside of a Terminal;
-
-```bash
-C:\..\project-name> wally search "dubit/"
-```
-
-A list of internal wally packages should now present themselves, they should resemble the following snippet of code;
-
-```lua
-packageName = "author/packageName@version"
-	packageDescription
-```
-
-To add these into your project, please head on over to the [Installing Guide](/docs/Dubit%20Tools/intro)
+TODO: Add how to find Dubit created Wally packages (inc. name & version used for installation)
