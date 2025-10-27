@@ -2,7 +2,7 @@
 name = "dubit/allocation-pool"
 version = "0.2.2"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 

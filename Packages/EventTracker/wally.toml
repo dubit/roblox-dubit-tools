@@ -2,7 +2,7 @@
 name = "dubit/event-tracker"
 version = "0.1.58"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 

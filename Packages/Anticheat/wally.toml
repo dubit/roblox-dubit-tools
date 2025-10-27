@@ -2,7 +2,7 @@
 name = "dubit/anticheat"
 version = "0.0.1-dev.1"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 

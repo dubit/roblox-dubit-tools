@@ -2,7 +2,7 @@
 name = "dubit/fpscounter"
 version = "0.0.2"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 
 description = "A super lightweight roblox FPS counter"
 

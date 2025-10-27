@@ -2,7 +2,7 @@
 name = "dubit/simple-store"
 version = "1.0.5"
 realm = "server"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 

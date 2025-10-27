@@ -2,7 +2,7 @@
 name = "dubit/dubit-pickups"
 version = "0.1.0-dev.5"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 
