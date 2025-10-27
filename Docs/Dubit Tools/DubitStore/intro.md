@@ -96,4 +96,4 @@ end)
 
 ---
 
-> *you can find the latest working examples under the RIT repository: https://bitbucket.org/dubitplatform/rit/src/main/modules/DubitStore/Examples/*
+> *you can find the latest working examples under the RDT repository: https://bitbucket.org/dubitplatform/rit/src/main/modules/DubitStore/Examples/*

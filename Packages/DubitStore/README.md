@@ -7,7 +7,7 @@ The following document describes the objective for this module, as well as serve
 https://dubitlimited.atlassian.net/wiki/spaces/~6239bb6ab75ca8007055b382/pages/3879239740/Roblox+Data+Handler
 
 ## Technical Information
-An overview regarding the technical ability of for the DubitStore module residing under RIT *(Roblox-Internal-Tools)*
+An overview regarding the technical ability of for the DubitStore module residing under RDT *(Roblox-Dubit-Tools)*
 
 ### Project Tooling
 There are several tools you'll need to build & get the DubitStore working, they are as follows;
