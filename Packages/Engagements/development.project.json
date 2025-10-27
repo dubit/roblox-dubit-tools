@@ -1,0 +1,32 @@
+{
+	"name": "engagements",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"Engagements": {
+					"$path": "Source"
+				}
+			},
+
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		},
+
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$ignoreUnknownInstances": true,
+			"$path": "Tests/Source"
+		}
+	}
+}

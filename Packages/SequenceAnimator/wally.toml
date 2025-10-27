@@ -1,0 +1,10 @@
+[package]
+name = "dubit/sequence-animator"
+version = "0.0.1"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+
+description = "A library for playing Keyframe Sequences"
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]

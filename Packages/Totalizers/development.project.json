@@ -1,0 +1,27 @@
+{
+	"name": "totalizers",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+				"Totalizers": {
+					"$path": "Source"
+				}
+			},
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$ignoreUnknownInstances": true,
+			"$path": "Tests/Source"
+		}
+	}
+}

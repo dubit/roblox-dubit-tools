@@ -1,0 +1,7 @@
+{
+	"name": "dubit-pickups",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$path": "Source"
+	}
+}

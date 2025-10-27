@@ -1,0 +1,21 @@
+[package]
+name = "dubit/allocation-pool"
+version = "0.2.2"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+licence = ""
+authors = []
+
+description = "A library to allow developers to assign & consume global budgets"
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
+
+[dev-dependencies]
+TestEz = "roblox/testez@0.4.1"
+EmoticonReporter = "4x8matrix/emoticon-reporter@1.0.0"
+
+[dependencies]
+DubitStore = "dubit/dubit-store@0.x.x"
+Promise = "evaera/promise@4.x.x"
+Signal = "sleitnick/signal@2.x.x"

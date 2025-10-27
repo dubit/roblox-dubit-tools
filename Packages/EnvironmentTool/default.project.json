@@ -1,0 +1,7 @@
+{
+	"name": "environmenttool",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$path": "Source"
+	}
+}

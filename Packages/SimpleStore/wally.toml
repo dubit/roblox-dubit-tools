@@ -1,0 +1,17 @@
+[package]
+name = "dubit/simple-store"
+version = "1.0.5"
+realm = "server"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+licence = ""
+authors = []
+
+description = "A simple DubitStore wrapper."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
+
+[dependencies]
+DubitStore = "dubit/dubit-store@1.x.x"
+Sift = "csqrl/sift@0.x.x"
+Signal = "sleitnick/signal@1.x.x"

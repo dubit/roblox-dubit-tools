@@ -1,0 +1,24 @@
+[package]
+name = "dubit/dubit-chassis"
+version = "0.1.0"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+licence = ""
+authors = []
+
+description = "The ‘Dubit Chassis’ is a Raycast Suspension Chassis Module."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
+
+[dev-dependencies]
+TestEz = "roblox/testez@0.4.1"
+EmoticonReporter = "4x8matrix/emoticon-reporter@1.0.0"
+
+[dependencies]
+Component = "sleitnick/component@2.x.x"
+Trove = "sleitnick/trove@0.x.x"
+Signal = "sleitnick/signal@2.x.x"
+Console = "4x8matrix/console@2.x.x"
+TableUtil = "sleitnick/table-util@1.x.x"
+Streamable = "sleitnick/streamable@1.x.x"

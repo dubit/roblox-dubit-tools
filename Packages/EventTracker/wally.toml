@@ -1,0 +1,18 @@
+[package]
+name = "dubit/event-tracker"
+version = "0.1.58"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+licence = ""
+authors = []
+
+description = "A proprietary Roblox global event library"
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
+
+# [dev-dependencies]
+# TestEz = "roblox/testez@0.4.1"
+
+[dependencies]
+Signal = "sleitnick/signal@2.x.x"

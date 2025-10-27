@@ -1,0 +1,40 @@
+{
+	"name": "pickup-system",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Assets": {
+				"$path": "Tests/Build/ReplicatedStorage"
+			},
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"PickupSystem": {
+					"$path": "Source"
+				}
+			},
+
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		},
+
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$path": "Tests/Source/Server"
+		},
+
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$path": "Tests/Source/Client"
+		}
+	}
+}

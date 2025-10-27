@@ -1,0 +1,22 @@
+[package]
+name = "dubit/dubit-store"
+version = "1.0.3"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+licence = ""
+authors = []
+
+description = "The 'DubitStore' is a Roblox DataStore wrapper."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]
+
+[dev-dependencies]
+TestEz = "roblox/testez@0.4.1"
+EmoticonReporter = "4x8matrix/emoticon-reporter@1.0.0"
+
+[dependencies]
+Promise = "evaera/promise@^4"
+Sift = "csqrl/sift@^0"
+Signal = "sleitnick/signal@^1"
+Console = "4x8matrix/console@^2"
