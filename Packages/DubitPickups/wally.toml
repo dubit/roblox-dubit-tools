@@ -1,6 +1,6 @@
 [package]
 name = "dubit/dubit-pickups"
-version = "0.1.0-dev.5"
+version = "0.2.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 licence = ""

@@ -1,6 +1,6 @@
 [package]
 name = "dubit/ugc-toolkit"
-version = "0.0.1-dev.0"
+version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 licence = ""

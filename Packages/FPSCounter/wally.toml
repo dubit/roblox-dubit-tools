@@ -1,6 +1,6 @@
 [package]
 name = "dubit/fpscounter"
-version = "0.0.2"
+version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 

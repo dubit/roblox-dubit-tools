@@ -1,6 +1,6 @@
 [package]
 name = "dubit/dubit-utils"
-version = "0.0.19"
+version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 

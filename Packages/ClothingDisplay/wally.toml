@@ -1,6 +1,6 @@
 [package]
 name = "dubit/clothing-display"
-version = "0.2.0"
+version = "0.3.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 
