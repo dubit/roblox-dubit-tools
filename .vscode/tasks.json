@@ -1,0 +1,171 @@
+{
+	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "projectFile",
+			"description": "The name of the project.json file",
+			"default": "development",
+			"type": "promptString"
+		},
+
+		{
+			"id": "projectFolder",
+			"description": "The name of the project folder",
+			"default": "",
+			"type": "pickString",
+			"options": [
+				"AllocationPool",
+				"ClothingDisplay",
+				"DebugTools",
+				"DubitChassis",
+				"DubitStore",
+				"DubitUtils",
+				"EventTracker",
+				"SequenceAnimator",
+				"SimpleStore",
+				"System",
+			]
+		}
+	],
+
+	"tasks": [
+		{
+			"hide": true,
+			"label": "[❌ - Rojo]: Kill all Rojo processes",
+			"type": "shell",
+			"command": "killall rojo",
+			"windows": {
+				// check if the process exists first to avoid a 128 exit code from taskkill
+				"command": "tasklist | findstr rojo && taskkill /F /IM rojo.exe || exit 0"
+			},
+		},
+
+		{
+			"hide": true,
+			"label": "[🛠️ Aftman]: Install Tools",
+			"dependsOn": [
+				"[❌ - Rojo]: Kill all Rojo processes"
+			],
+			"type": "shell",
+			"command": "aftman install",
+		},
+
+		{
+			"label": "[📦 Wally]: Build Project Packages",
+			"detail": "Build the required wally packages for a module.",
+			"dependsOn": [
+				"[🛠️ Aftman]: Install Tools"
+			],
+			"type": "shell",
+			"command": "wally install",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/Packages/${input:projectFolder}",
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": true
+			}
+		},
+
+		{
+			"label": "[👀 Selene]: Execute Linter",
+			"detail": "Run the selene linter on all projecs under the RIT repository.",
+			"dependsOn": [
+				"[🛠️ Aftman]: Install Tools"
+			],
+			"type": "shell",
+			"command": "selene ,",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/Packages",
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": true
+			}
+		},
+
+		{
+			"label": "[🧼 StyLua]: Format Project",
+			"detail": "Format a project with StyLua.",
+			"dependsOn": [
+				"[🛠️ Aftman]: Install Tools"
+			],
+			"type": "shell",
+			"command": "stylua .",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/Packages/${input:projectFolder}",
+			},
+			"presentation": {
+				"reveal": "silent"
+			}
+		},
+
+		{
+			"label": "[🔢 Rojo]: Build Binary",
+			"detail": "Build a roblox binary.",
+			"dependsOn": [
+				"[🛠️️ Aftman]: Install Tools"
+			],
+			"type": "shell",
+			"command": "rojo build Packages/${input:projectFolder}/${input:projectFile}.project.json -o latest.rbxl",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": true
+			}
+		},
+
+		{
+			"label": "[🕹️ Rojo]: Host Roblox Project",
+			"detail": "Host a Rojo server for a roblox project.",
+			"dependsOn": [
+				"[🛠️️ Aftman]: Install Tools"
+			],
+			"type": "shell",
+			"command": "rojo serve Packages/${input:projectFolder}/${input:projectFile}.project.json",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"focus": true
+			}
+		},
+
+		{
+			"label": "[🌊 MoonWave]: Build Local Documentation Site",
+			"detail": "Build the latest documentation site with MoonWave.",
+			"type": "shell",
+			"command": "npx moonwave dev --code Packages",
+			"group": {
+				"kind": "build"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"focus": true
+			}
+		}
+	]
+}

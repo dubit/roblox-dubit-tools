@@ -1,0 +1,9 @@
+[package]
+name = "dubit/debug-tools"
+version = "0.2.10"                                             # remember to update version in Constants.lua
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+description = "Debug Tools."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]

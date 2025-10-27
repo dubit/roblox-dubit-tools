@@ -1,0 +1,30 @@
+{
+	"name": "debug-tools",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$className": "Folder",
+				"DebugTools": {
+					"$path": "Source"
+				}
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$path": "Development/Server"
+		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$path": "Development/Client"
+		}
+	}
+}

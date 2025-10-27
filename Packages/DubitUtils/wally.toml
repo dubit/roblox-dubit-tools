@@ -1,0 +1,10 @@
+[package]
+name = "dubit/dubit-utils"
+version = "0.0.19"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+
+description = "A library with common utility data / functions."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]

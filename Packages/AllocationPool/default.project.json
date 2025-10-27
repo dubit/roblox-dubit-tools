@@ -1,0 +1,7 @@
+{
+	"name": "allocation-pool",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$path": "Source"
+	}
+}

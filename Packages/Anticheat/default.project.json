@@ -1,0 +1,7 @@
+{
+	"name": "anticheat",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$path": "Source"
+	}
+}

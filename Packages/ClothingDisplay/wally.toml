@@ -1,0 +1,14 @@
+[package]
+name = "dubit/clothing-display"
+version = "0.2.0"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+
+description = "A library for showing clothing standalone or on a mannequin."
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]
+
+[dependencies]
+DubitUtils = "dubit/dubit-utils@^0.0.17" # internal lib
+Signal = "sleitnick/signal@2.x.x"        # https://sleitnick.github.io/RbxUtil/api/Signal

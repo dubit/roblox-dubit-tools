@@ -1,0 +1,39 @@
+image: dubit/rbxlua-ci-cd:aftman-0.2-lune-0.7
+
+definitions:
+  caches:
+    aftman-cache:
+      key:
+        files:
+          - aftman.toml
+      path: .aftman-ci
+
+  steps:
+    - step: &install-deps
+        name: Install Dependencies
+        caches:
+          - aftman-cache
+        script:
+          - lune install-dependencies $ROBLOX_AFTMAN_PAT
+
+    - step: &lint-format
+        name: Selene Lint & StyLua Format Check
+        caches:
+          - aftman-cache
+        script:
+          - lune lint-format
+
+    - step: &moonwave-generate
+        name: Moonwave Generate
+        caches:
+          - aftman-cache
+        script:
+          - lune moonwave-generate
+
+pipelines:
+  pull-requests:
+    "**":
+      - step: *install-deps
+      - parallel:
+          - step: *lint-format
+          - step: *moonwave-generate

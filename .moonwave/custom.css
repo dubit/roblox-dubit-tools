@@ -1,0 +1,5 @@
+img[alt='small-center'] {
+	display: block;
+    margin: auto;
+	width: 400px;
+}

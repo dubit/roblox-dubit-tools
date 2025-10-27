@@ -1,0 +1,10 @@
+[package]
+name = "dubit/fpscounter"
+version = "0.0.2"
+realm = "shared"
+registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+
+description = "A super lightweight roblox FPS counter"
+
+exclude = ["**"]
+include = ["Source", "Source/*", "default.project.json", "wally.toml"]

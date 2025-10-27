@@ -1,0 +1,47 @@
+{
+	"name": "event-tracker",
+	"tree": {
+		"$className": "DataModel",
+
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		},
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"EventTracker": {
+					"$path": "Source"
+				}
+			},
+
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		},
+
+		"StarterGui": {
+			"$className": "StarterGui",
+			"$ignoreUnknownInstances": true,
+
+			"Graphics-UI": {
+				"$path": "Tests/Build"
+			}
+		},
+
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$ignoreUnknownInstances": true,
+			"$path": "Tests/Source"
+		}
+	}
+}

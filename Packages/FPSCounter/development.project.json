@@ -1,0 +1,28 @@
+{
+	"name": "fps-counter",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		},
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"FPSCounter": {
+					"$path": "Source"
+				}
+			}
+		}
+	}
+}

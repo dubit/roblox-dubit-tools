@@ -1,0 +1,26 @@
+{
+	"name": "anticheat",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+
+			"Packages": {
+				"$className": "Folder",
+				"$path": "Packages",
+
+				"AntiCheat": {
+					"$path": "Source"
+				}
+			},
+
+			"DevPackages": {
+				"$className": "Folder",
+				"$path": "DevPackages"
+			}
+		}
+	}
+}
