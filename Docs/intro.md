@@ -4,14 +4,13 @@ sidebar_position: 1
 
 # Getting Started
 
-Welcome, this is the **Roblox Internal Tools (RIT)** documentation site for private **Packages** developed by the RIT team.
+Welcome, this is the **Roblox Internal Tools (RIT)** documentation site for **Packages** developed by the RIT team.
 
 For more information about Roblox Internal Tools, view the [RIT Confluence](https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/3879141428/Roblox+Internal+Tools)
 
 ## Wally Configuration
 
 - [Setting up 'Wally' in your Roblox Project](/docs/Wally%20Config/intro)
-- [Authenticating 'Wally' with our private registry](/docs/Wally%20Config/authentication)
 
 ## Tool Documentation
 - [**Allocation Pool** *- Globally Synced Budgets*](/docs/Dubit%20Tools/Allocation%20Pool/intro/)

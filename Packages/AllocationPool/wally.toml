@@ -1,8 +1,8 @@
 [package]
 name = "dubit/allocation-pool"
-version = "0.2.2"
+version = "0.3.0"
 realm = "shared"
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
+registry = "https://github.com/upliftgames/wally-index"
 licence = ""
 authors = []
 

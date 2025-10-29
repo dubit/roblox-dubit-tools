@@ -14,9 +14,6 @@ name = "dubit/nascar-hub"
 version = "0.0.1"
 realm = "shared"
 
-# Update the 'registry' to use our internal registry.
-registry = "https://github.com/Roblox-Devs-Dubit/wally-index"
-
 #[place]
 #shared-packages = "game.ReplicatedStorage.Packages"
 
