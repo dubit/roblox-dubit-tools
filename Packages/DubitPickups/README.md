@@ -9,7 +9,7 @@ Technical Documentation for this tool has been written on Confluence;
 https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/3878715445/Roblox+Pickup+System
 
 ## Technical Information
-An overview regarding the technical ability of for the DubitPickups module residing under RIT *(Roblox-Internal-Tools)*
+An overview regarding the technical ability of for the DubitPickups module residing under RDT *(Roblox-Dubit-Tools)*
 
 ### Project Tooling
 

@@ -1,8 +1,6 @@
 # roblox-dubit-tools
 This roblox-dubit-tools is a mono-repository that houses a multitude of tools that can be used across all projects on the Roblox platform.
 
-TODO: change all instances of RIT to RDT
-
 ## Context
 
 ### Important links
@@ -14,13 +12,13 @@ TODO: change all instances of RIT to RDT
 
 ---
 
-For developers designing tooling under RIT, you will need the following tooling set up on your machine;
+For developers designing tooling under RDT, you will need the following tooling set up on your machine;
 
 - [Roblox Studio](https://www.roblox.com/create) - Studio Environment
 - [Aftman](https://github.com/LPGhatguy/aftman) - Toolchain Manager
 	- [StyLua](https://github.com/JohnnyMorganz/StyLua) - Code Formatter
 	- [Selene](https://github.com/Kampfkarren/selene) - Linter
-	- [Rojo](https://rojo.space/) - IDE integration tool for Studio
+	- [Rojo](https://rojo.space/) - IDE integration tool for Roblox Studio
 	- [Wally](https://wally.run/) - Package Manager
 - [Node](https://nodejs.org/en)
 - [Moonwave](https://eryn.io/moonwave/docs/intro/)
@@ -29,27 +27,27 @@ For developers designing tooling under RIT, you will need the following tooling 
 ### Project Build Structure
 
 ---
-TODO: edit this section to list out project strucutre appropriately.
+TODO: edit this section to list out project structure appropriately.
 
 - `/Packages/**`
-	- The `Packages` folder contains all packages developed under the RIT repository.
+	- The `Packages` folder contains all packages developed under the RDT repository.
 - `/Boilerplates/**`
-	- The `Boilerplates` folder contains boilerplate RIT projects that you can clone into `/Packages` folder when creating a new tool.
+	- The `Boilerplates` folder contains boilerplate RDT projects that you can clone into `/Packages` folder when creating a new tool.
 - `/Docs/**.md`
-	- The `Docs` folder contains a range of `*.md` files to help document tools under RIT.
-	- It is **optional** to write documentation under the `Docs` folder, however, helps developers onboard themselves with your tool.
+	- The `Docs` folder contains a range of `*.md` files to help document tools under RDT.
 
-### RIT Branch Structure
+### RDT Branch Structure
 
 ---
+TODO: Add Docs branch
 
 - `main`
-	- Contains the latest version of all packages under RIT, the code under the `main` may have experimental or not yet released features.
+	- Contains the latest version of all packages under RDT, the code under the `main` may have experimental or not yet released features.
 
 - `feature/BFL-<jira-id>`
-	- Feature branches should be merged into `main` branches when ready
+	- Feature branches should be merged into `main` branch when ready
 - `bugfix/BFL-<jira-id>`
-	- Bugfix branches should be merged into `main` branches when ready
+	- Bugfix branches should be merged into `main` branch when ready
 
 ### RDT CI/CD
 
@@ -81,9 +79,9 @@ TODO: create a .md file explaining these steps.. and or convert internal conflue
 
 ---
 
-RIT was designed with the Visual Studio Code IDE in mind, this said, it is suggested that you use the multi-root workspace feature VSCode offers when working on a project in RIT.
+RDT was designed with the Visual Studio Code IDE in mind, this said, it is suggested that you use the multi-root workspace feature VSCode offers when working on a project in RDT.
 
-> âš ï¸ if this feature is not used, you may come across several errors as the tooling we use won't be able to map the project you're working on.
+> If this feature is not used, you may come across several errors as the tooling we use won't be able to map the project you're working on.
 
 As a quick example, please watch the below video to get yourself onboard with how multi-root workspaces work;
 https://www.youtube.com/watch?v=2yOQUtP_GcY

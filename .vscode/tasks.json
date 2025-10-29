@@ -72,7 +72,7 @@
 
 		{
 			"label": "[👀 Selene]: Execute Linter",
-			"detail": "Run the selene linter on all projecs under the RIT repository.",
+			"detail": "Run the selene linter on all projecs under the RDT repository.",
 			"dependsOn": [
 				"[🛠️ Aftman]: Install Tools"
 			],

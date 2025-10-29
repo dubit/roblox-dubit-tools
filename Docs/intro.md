@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Getting Started
 
-Welcome, this is the **Roblox Internal Tools (RIT)** documentation site for **Packages** developed by the RIT team.
+Welcome, this is the **Roblox Dubit Tools (RDT)** documentation site for **Packages** developed by the RDT team.
 
-For more information about Roblox Internal Tools, view the [RIT Confluence](https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/3879141428/Roblox+Internal+Tools)
+For more information about Roblox Dubit Tools, view the [RDT Confluence](https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/3879141428/Roblox+Internal+Tools)
 
 ## Wally Configuration
 
