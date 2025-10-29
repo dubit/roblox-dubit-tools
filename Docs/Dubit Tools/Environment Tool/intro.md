@@ -45,7 +45,7 @@ print("Current environment: " .. environment)
 
 ## Setting the Branch Attribute
 
-In order for this tool to work correctly in non-local environments, the Branch attribute of the Workspace must be set during your Bitbucket pipeline deployment. This can be achieved using a Lune deploy script containing the following:
+In order for this tool to work correctly in non-local environments, the Branch attribute of the Workspace must be set during your pipeline deployment. This can be achieved using a Lune deploy script containing the following:
 
 ```lua
 print(`[Deploy-To]: Set workspace attribute 'Branch' to: '{process.env.BITBUCKET_BRANCH}'`)
