@@ -20,8 +20,8 @@ return function(DebugTools)
 end
 ```
 
-### Defining logic on the clientside
-It's not guaranteed that DebugTools ModuleScript will be available when player joins the game, so a check needs to be written for it. The only players that have access to DebugTools and get the DebugTools injected into their `PlayerGui` are **Dubit employees / people** that have rank higher or equal under Dubit Roblox group.
+### Defining logic on the client side
+It's not guaranteed that DebugTools ModuleScript will be available when player joins the game, so a check needs to be written for it. The only players that have access to DebugTools and get the DebugTools injected into their `PlayerGui` are people that have rank higher or equal the set authorised rank under the set Roblox group (both defined in `Constants.lua`).
 
 Example:
 ```lua

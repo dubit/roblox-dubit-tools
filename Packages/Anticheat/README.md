@@ -1,5 +1,5 @@
 # AntiCheat
-The Roblox AntiCheat tool is designed to allow developers to implement a quick, standard anticheat into the experiences we create at Dubit.
+The Roblox AntiCheat tool is designed to allow developers to implement a quick, standard anticheat into experiences.
 
 ## Research & Development
 - https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/4692934695/Roblox+AntiCheat+Tool
