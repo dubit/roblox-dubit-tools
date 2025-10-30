@@ -31,7 +31,7 @@ local threads = {}
 --[=[
 	@class AntiCheat
 
-	The Roblox AntiCheat tool allows developers to implement a quick and standardized anti-cheat system in Dubit's experiences.
+	The Roblox AntiCheat tool allows developers to implement a quick and standardized anti-cheat system in their experiences.
 
 	---
 

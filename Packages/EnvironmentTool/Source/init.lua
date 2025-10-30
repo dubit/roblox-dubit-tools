@@ -25,7 +25,7 @@
 	to a certain environment creates less consistency between those environments, giving us a harder time when doing QA
 	on projects.
 
-	In order for this tool to work, the branch attribute of workspace must be set during bitbucket pipeline deployment.
+	In order for this tool to work, the branch attribute of workspace must be set during pipeline deployment.
 	This can be achieved using a lune deploy script containing the following:
 
 	project/.lune/deploy.lua
@@ -70,7 +70,7 @@ EnvironmentTool.Environment = {
 	@private
 	@return string
 
-	Internal function - gets the branch attribute of workspace, represents the bitbucket branch that was used to create
+	Internal function - gets the branch attribute of workspace, represents the branch that was used to create
 	this build. Please refer to the EnvironmentTool documentation to learn how to set the branch attribute correctly
 	during place deployment.
 
@@ -161,7 +161,7 @@ end
 	@within EnvironmentTool
 	@return Environment -- environment string which can be "Edge", "Stable", "Production" or "Local"
 
-	If the player is in an online roblox studio, where the place has been built using bitbucket pipelines, it will
+	If the player is in an online roblox studio, where the place has been built using pipelines, it will
 	correctly identify the build. If no such environment is found, it will return "Local"
 
 	Example usage:

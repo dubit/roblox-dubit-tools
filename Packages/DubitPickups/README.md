@@ -1,6 +1,6 @@
 # Tool Name
 
-A simple to use Pickup System that we can deploy in our games at Dubit.
+A simple to use Pickup System that we can deploy in our games.
 
 ## Research & Development
 

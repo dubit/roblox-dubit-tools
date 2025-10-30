@@ -1,6 +1,6 @@
 # Dubit Chassis
 
-The ‘Roblox Chassis’ is a third-party LuaU module designed to be pulled into any Project that has been written/or is managed by Dubit.
+The ‘Roblox Chassis’ is a third-party LuaU module designed to be pulled into any Project.
 
 ## Research & Development
 

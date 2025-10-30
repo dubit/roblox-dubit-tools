@@ -20,9 +20,6 @@ Dubit Chassis is built upon the following principles:
 *   **Component Inheritance:** Enables the creation of new component classes that inherit lifecycle methods and prototype functions.
 *   **Network Ownership:** Distributes physics computations between clients and server for reduced latency and optimized performance.
 
-For more information on the physics and principles behind this chassis, please refer to the confluence page:
-https://dubitlimited.atlassian.net/wiki/spaces/PROD/pages/3878584362/Roblox+Vehicle+Physics+System
-
 ## Usage
 
 To use Dubit Chassis, you'll typically interact with its components and interface functions. Here's a basic example of how to create a chassis component on both the client-side and server-side:

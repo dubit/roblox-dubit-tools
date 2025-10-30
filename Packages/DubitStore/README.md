@@ -1,5 +1,5 @@
 # Dubit Store
-The ‘Roblox Data Handler’ is a third-party LuaU module designed to be pulled into any Project that has been written/or is managed by Dubit.
+The ‘Roblox Data Handler’ is a third-party LuaU module designed to be pulled into any Project.
 
 ## Research & Development
 The following document describes the objective for this module, as well as serveral technical aspects about what this module is supposed to offer developers.
