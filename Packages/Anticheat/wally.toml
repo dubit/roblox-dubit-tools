@@ -3,8 +3,7 @@ name = "dubit/anticheat"
 version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "designed to allow developers to implement a quick, standard anticheat into their experiences."
 

@@ -3,6 +3,7 @@ name = "dubit/environmenttool"
 version = "0.2.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
+license = "MIT"
 
 description = "An environment utility file for dubit projects"
 

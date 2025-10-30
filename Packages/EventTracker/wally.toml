@@ -3,8 +3,7 @@ name = "dubit/event-tracker"
 version = "0.2.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "A proprietary Roblox global event library"
 

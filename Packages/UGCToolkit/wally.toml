@@ -3,8 +3,7 @@ name = "dubit/ugc-toolkit"
 version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "the UGC Toolkit should be a suite/library of functions that enable developers to implement common functions that we normally assign the 3d podiums/UGCs in our experiences."
 

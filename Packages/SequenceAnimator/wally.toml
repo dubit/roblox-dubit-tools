@@ -3,6 +3,7 @@ name = "dubit/sequence-animator"
 version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
+license = "MIT"
 
 description = "A library for playing Keyframe Sequences"
 

@@ -3,8 +3,7 @@ name = "dubit/dubit-chassis"
 version = "0.2.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "The ‘Dubit Chassis’ is a Raycast Suspension Chassis Module."
 
