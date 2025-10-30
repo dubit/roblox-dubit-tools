@@ -3,8 +3,7 @@ name = "dubit/allocation-pool"
 version = "0.3.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "A library to allow developers to assign & consume global budgets"
 

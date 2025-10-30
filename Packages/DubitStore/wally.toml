@@ -3,8 +3,7 @@ name = "dubit/dubit-store"
 version = "1.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "The 'DubitStore' is a Roblox DataStore wrapper."
 

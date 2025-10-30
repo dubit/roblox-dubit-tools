@@ -3,8 +3,7 @@ name = "dubit/engagements"
 version = "0.1.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
-licence = ""
-authors = []
+license = "MIT"
 
 description = "package that enables developers to easily query and handle events, objects, interfaces engagements from within a Roblox experience."
 
