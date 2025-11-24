@@ -1,8 +1,9 @@
 site_name: Roblox Dubit Tools
 site_url: https://dubit.github.io/roblox-dubit-tools/
-site_author: YOUR_NAME
+site_author: dubit
 repo_name: dubit/roblox-dubit-tools
 repo_url: https://github.com/dubit/roblox-dubit-tools
+docs_dir: Docs
 
 theme:
   name: material
