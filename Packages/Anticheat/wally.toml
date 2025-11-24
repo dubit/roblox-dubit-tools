@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "designed to allow developers to implement a quick, standard anticheat into their experiences."
+description = "Designed to allow developers to implement a quick, standard anticheat into their experiences."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]

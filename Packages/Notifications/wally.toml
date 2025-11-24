@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "Notification system that provides a managed queue for displaying notifications and popups with a limited lifespan."
+description = "A system that provides a managed queue for displaying notifications and popups with a limited lifespan."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]

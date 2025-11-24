@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "An environment utility file for dubit projects"
+description = "An environment utility file for projects"
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.toml"]

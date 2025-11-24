@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "package that enables developers to easily query and handle events, objects, interfaces engagements from within a Roblox experience."
+description = "Package that enables developers to easily query and handle events, objects, and interfaces engagements from within a Roblox experience."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]

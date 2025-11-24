@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "A library for playing Keyframe Sequences"
+description = "A library for creating Keyframe Sequences"
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.toml"]
