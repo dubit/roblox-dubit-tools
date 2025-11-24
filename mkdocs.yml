@@ -42,6 +42,3 @@ nav:
   - Debug Tools:
     - 'packages/debug_tools.md'
     - 'api/debug_tools.md'
-
-watch:
-  - packages
