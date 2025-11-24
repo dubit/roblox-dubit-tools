@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "A library to allow developers to assign & consume global budgets"
+description = "A library to allow developers to assign & consume global budgets, such as daily allocations of free UGC."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
@@ -15,6 +15,6 @@ TestEz = "roblox/testez@0.4.1"
 EmoticonReporter = "4x8matrix/emoticon-reporter@1.0.0"
 
 [dependencies]
-DubitStore = "dubit/dubit-store@0.x.x"
+DubitStore = "dubit/dubit-store@1.x.x"
 Promise = "evaera/promise@4.x.x"
 Signal = "sleitnick/signal@2.x.x"
