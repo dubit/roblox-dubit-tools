@@ -1,5 +1,5 @@
 {
-	"name": "SimpleStore",
+	"name": "simple-store",
 	"tree": {
 		"$className": "DataModel",
 
