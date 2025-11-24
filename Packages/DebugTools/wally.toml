@@ -4,7 +4,7 @@ version = "0.3.0"                                             # remember to upda
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
-description = "Debug Tools."
+description = "An expandable Debug Tools interface with several features."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.toml"]
