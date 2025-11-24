@@ -1,0 +1,17 @@
+site_name: Roblox Dubit Tools
+site_url: https://dubit.github.io/roblox-dubit-tools/
+site_author: YOUR_NAME
+repo_name: dubit/roblox-dubit-tools
+repo_url: https://github.com/dubit/roblox-dubit-tools
+
+theme:
+  name: material
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  features:
+    - content.code.copy
+    - content.code.annotate
+
+nav:
+  - Home: intro.md
