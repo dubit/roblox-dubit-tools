@@ -5,13 +5,13 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "A proprietary Roblox global event library"
+description = "A Roblox global event library"
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.lock", "wally.toml"]
 
-# [dev-dependencies]
-# TestEz = "roblox/testez@0.4.1"
+[dev-dependencies]
+TestEz = "roblox/testez@0.4.1"
 
 [dependencies]
 Signal = "sleitnick/signal@2.x.x"
