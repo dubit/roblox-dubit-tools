@@ -1,5 +1,5 @@
 {
-	"name": "fps-counter",
+	"name": "fpscounter",
 	"emitLegacyScripts": false,
 	"tree": {
 		"$className": "DataModel",
