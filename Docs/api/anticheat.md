@@ -34,7 +34,7 @@ AntiCheat.ViolationTriggered:Connect(function(player, node, message)
 end)
 ```
 
-## Functions
+## Methods
 
 ### :AddToWhitelist
 ```luau { .fn_type }

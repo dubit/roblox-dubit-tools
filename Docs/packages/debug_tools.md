@@ -7,7 +7,7 @@ To add `Debug Tools` package to your project add the following into your `wally.
 !!! notice
 	The package doesn't need to be required within another script to be initialized, the package does it by itself.
 
-```lua
+```toml
 [dependencies]
 DebugTools = "dubit/debug-tools@~0.2"
 ```

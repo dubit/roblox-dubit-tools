@@ -51,3 +51,15 @@ nav:
   - Anticheat:
     - 'packages/anticheat.md'
     - 'api/anticheat.md'
+  - Dubit Utils:
+    - 'packages/dubit_utils.md'
+    - 'api/dubit_utils.md'
+  - Dubit Store:
+    - 'packages/dubit_store.md'
+    - 'api/dubit_store.md'
+  - Engagements:
+    - 'packages/engagements.md'
+    - 'api/engagements.md'
+  - Event Tracker:
+    - 'packages/event_tracker.md'
+    - 'api/event_tracker.md'

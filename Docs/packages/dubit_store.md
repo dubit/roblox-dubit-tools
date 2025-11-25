@@ -1,7 +1,8 @@
-# Getting Started
+# Overview
+
 You can add the DubitStore package to your project by adding the following into your `wally.toml` file.
 
-```lua
+```toml
 [place]
 shared-packages = "game.ReplicatedStorage.Packages"
 
