@@ -20,9 +20,6 @@ For developers designing tooling under RDT, you will need the following tooling 
 	- [Selene](https://github.com/Kampfkarren/selene) - Linter
 	- [Rojo](https://rojo.space/) - IDE integration tool for Roblox Studio
 	- [Wally](https://wally.run/) - Package Manager
-- [Node](https://nodejs.org/en)
-- [Moonwave](https://eryn.io/moonwave/docs/intro/)
-	- `npm i -g moonwave`
 
 ### Project Build Structure
 
@@ -85,16 +82,6 @@ RDT was designed with the Visual Studio Code IDE in mind, this said, it is sugge
 
 As a quick example, please watch the below video to get yourself onboard with how multi-root workspaces work;
 https://www.youtube.com/watch?v=2yOQUtP_GcY
-
-### Viewing documentation changes
-
----
-
-In the case the build commands cannot be used, you'll need to excute the following snippet in order to view any changes made to the docs site.
-
-```
-moonwave dev --code Packages
-```
 
 ### Tool Versioning
 
