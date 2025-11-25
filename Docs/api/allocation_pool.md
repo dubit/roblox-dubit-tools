@@ -16,7 +16,7 @@ AllocationPool.BudgetFailed: Signal<string, string>
 
 ### .ConsumePoolAsync
 ```luau { .fn_type }
-AllocationPool.ConsumePoolAsync(player: Player?, poolName: string, size: number?): Types.Promise
+AllocationPool.ConsumePoolAsync(player: Player?, poolName: string, size: number?): Promise
 ```
 
 Consumes a pool allocation for a player. This function updates both the player's consumed pools list and the pool's consumption count. The operation is performed asynchronously and returns a promise that resolves when complete.
@@ -61,7 +61,7 @@ AllocationPool.CreatePoolAsync("MyPool", 10):expect()
 
 ### .GetPoolCountAsync
 ```luau { .fn_type }
-AllocationPool.GetPoolCountAsync(poolName: string): Types.Promise
+AllocationPool.GetPoolCountAsync(poolName: string): Promise
 ```
 
 Returns the current consumption count for a specific pool.
@@ -74,7 +74,7 @@ local poolCount = AllocationPool.GetPoolCountAsync("MyPool"):expect()
 
 ### .GetPoolLimitAsync
 ```luau { .fn_type }
-AllocationPool.GetPoolLimitAsync(poolName: string): Types.Promise
+AllocationPool.GetPoolLimitAsync(poolName: string): Promise
 ```
 
 Returns the pool's limit value from the datastore.
@@ -87,7 +87,7 @@ local poolLimit = AllocationPool.GetPoolLimitAsync("MyPool"):expect()
 
 ### .GetPoolReserveAsync
 ```luau { .fn_type }
-AllocationPool.GetPoolReserveAsync(poolName: string): Types.Promise
+AllocationPool.GetPoolReserveAsync(poolName: string): Promise
 ```
 
 Returns the remaining allocations available in a pool.
@@ -101,7 +101,7 @@ local newPoolValue = AllocationPool.CreatePool("NewPool", DEFAULT_POOL_LIMIT + l
 
 ### .HasConsumedAsync
 ```luau { .fn_type }
-AllocationPool.HasConsumedAsync(player: Player, poolName: string) -> Types.Promise
+AllocationPool.HasConsumedAsync(player: Player, poolName: string): Promise
 ```
 
 Checks if a player has consumed a specific pool in the datastore.
@@ -116,7 +116,7 @@ local hasConsumed = AllocationPool.HasConsumedAsync(player, poolName):expect()
 
 ### .MarkConsumedAsync
 ```luau { .fn_type }
-AllocationPool.MarkConsumedAsync(player: Player, poolName: string): Types.Promise
+AllocationPool.MarkConsumedAsync(player: Player, poolName: string): Promise
 ```
 
 Marks a pool as consumed for a player in the datastore.
@@ -129,7 +129,7 @@ AllocationPool.MarkConsumedAsync(player, poolName):expect()
 
 ### .ResetPoolAsync
 ```luau { .fn_type }
-AllocationPool.ResetPoolAsync(poolName: string): Types.Promise
+AllocationPool.ResetPoolAsync(poolName: string): Promise
 ```
 
 Resets a pool's consumption count back to zero.
