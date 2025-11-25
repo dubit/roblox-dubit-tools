@@ -1,4 +1,4 @@
-# Getting Started
+# Overview
 
 You can add the AllocationPool library to your project by adding the following into your `wally.toml` file.
 

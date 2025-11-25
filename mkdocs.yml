@@ -31,14 +31,23 @@ theme:
   features:
     - content.code.copy
     - content.code.annotate
+    - content.code.select
 
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
 
+extra_css:
+  - stylesheets/api.css
+
 nav:
   - 'index.md'
   - Debug Tools:
     - 'packages/debug_tools.md'
-    - 'api/debug_tools.md'
+  - Allocation Pool:
+    - 'packages/allocation_pool.md'
+    - 'api/allocation_pool.md'
+  - Anticheat:
+    - 'packages/anticheat.md'
+    - 'api/anticheat.md'

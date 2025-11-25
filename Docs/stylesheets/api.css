@@ -1,0 +1,18 @@
+div.highlight.fn_type code,
+pre.fn_type,
+code.fn_type {
+	background: transparent !important;
+
+	font-weight: 600;
+	opacity: 0.75;
+
+	white-space: pre-wrap !important;
+	word-break: break-word;
+
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+div.highlight.fn_type .md-code__nav {
+	display: none !important;
+}
