@@ -24,7 +24,7 @@ AntiCheat.ViolationTriggered: Signal<Player, string, string>
 ```
 
 !!! warning
-	This signal should not be used to detect cheaters. Use the **CheaterFound** signal instead!
+	This signal should not be used to detect cheaters. Use the **[CheaterFound](#cheaterfound)** signal instead!
 
 Invoked when a player triggers a rule violation, increasing their anti-cheat score.
 
@@ -113,7 +113,7 @@ AntiCheat:FlagAsCheater(player: Player): ()
 Flags a player as a cheater. This information is stored in a datastore, managed entirely by the anti-cheat system.
 
 !!! warning
-	This function is automatically called when a player is detected as a cheater. See **CheaterFound** for more details.
+	This function is automatically called when a player is detected as a cheater. See **[CheaterFound](#cheaterfound)** for more details.
 
 !!! success ""
 	This is a server only method.
@@ -152,7 +152,7 @@ This list is broken up to allow developers to see what specific nodes a player h
 AntiCheat:RemoveFromWhitelist(player: Player): ()
 ```
 
-Removes a player from the whitelist. See **AddToWhitelist** for details.
+Removes a player from the whitelist. See **[AddToWhitelist](#addtowhitelist)** for details.
 
 !!! success ""
 	This is a server only method.
