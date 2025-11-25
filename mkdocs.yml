@@ -63,3 +63,9 @@ nav:
   - Event Tracker:
     - 'packages/event_tracker.md'
     - 'api/event_tracker.md'
+  - Simple Store:
+    - 'packages/simple_store.md'
+    - 'api/simple_store.md'
+  - Sequence Animator:
+    - 'packages/sequence_animator.md'
+    - 'api/sequence_animator.md'
