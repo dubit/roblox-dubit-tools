@@ -18,13 +18,12 @@ The goal for this package is to provide developers with an easy way to create sy
 	* *For example, if we want to offset time for an US Central event, we’d set the UTC offset to -05:00*
 - Allowing developers to get status updates on events.
 
-:::caution
-The event tracker will **NOT** work in the background, developers must call the `:Start` method in order to get the library to process times for events.
-:::
+!!! warning
+	The event tracker will **NOT** work in the background, developers must call the **Start** method in order to get the library to process times for events.
 
 ### Examples
 
-The example seen below creates an "EventName" event, developers can implement functionality for these events by using the `OnActivated` and `OnDeactivated` lifecycle methods.
+The example seen below creates an "EventName" event, developers can implement functionality for these events by using the **OnActivated** and **OnDeactivated** lifecycle methods.
 
 ```lua
 -- Server/.../Events/EventName.lua
