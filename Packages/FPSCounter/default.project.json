@@ -1,7 +1,0 @@
-{
-	"name": "fpscounter",
-	"emitLegacyScripts": false,
-	"tree": {
-		"$path": "Source"
-	}
-}
