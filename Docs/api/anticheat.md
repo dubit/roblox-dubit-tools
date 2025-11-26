@@ -18,6 +18,8 @@ AntiCheat.CheaterFound:Connect(function(player)
 end)
 ```
 
+---
+
 ### ViolationTriggered
 ```luau { .fn_type }
 AntiCheat.ViolationTriggered: Signal<Player, string, string>
@@ -46,6 +48,8 @@ Adds a player to the whitelist. Whitelisted players are exempt from anti-cheat m
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :Disable
 ```luau { .fn_type }
 AntiCheat:Disable(): ()
@@ -56,6 +60,7 @@ Disables the anti-cheat. When this method is called, all detection nodes are sto
 !!! success ""
 	This is a server only method.
 
+---
 
 ### :DisableNode
 ```luau { .fn_type }
@@ -76,6 +81,8 @@ AntiCheat:DisableNode("AntiFly")
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :Enable
 ```luau { .fn_type }
 AntiCheat:Enable(): ()
@@ -85,6 +92,8 @@ Enables the anti-cheat. This should only be called if the anti-cheat has been pr
 
 !!! success ""
 	This is a server only method.
+
+---
 
 ### :EnableNode
 ```luau { .fn_type }
@@ -105,6 +114,8 @@ AntiCheat:EnableNode("AntiFly")
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :FlagAsCheater
 ```luau { .fn_type }
 AntiCheat:FlagAsCheater(player: Player): ()
@@ -118,12 +129,16 @@ Flags a player as a cheater. This information is stored in a datastore, managed 
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :IsFlaggedAsCheater
 ```luau { .fn_type }
 AntiCheat:IsFlaggedAsCheater(player: Player): ()
 ```
 
 Allows developers on both the client, and the server - to query if the current player is a cheater or not.
+
+---
 
 ### :QueryScores
 ```luau { .fn_type }
@@ -134,6 +149,8 @@ Allows developers to query the current players score for all nodes. Score indica
 
 !!! success ""
 	This is a server only method.
+
+---
 
 ### :QueryViolations
 ```luau { .fn_type }
@@ -147,6 +164,8 @@ This list is broken up to allow developers to see what specific nodes a player h
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :RemoveFromWhitelist
 ```luau { .fn_type }
 AntiCheat:RemoveFromWhitelist(player: Player): ()
@@ -156,6 +175,8 @@ Removes a player from the whitelist. See **[AddToWhitelist](#addtowhitelist)** f
 
 !!! success ""
 	This is a server only method.
+
+---
 
 ### :ResetFlag
 ```luau { .fn_type }
@@ -170,6 +191,8 @@ AntiCheat:ResetFlag(AntiCheat.AntiFly.RaycastDistance)
 
 !!! success ""
 	This is a server only method.
+
+---
 
 ### :SetFlag
 ```luau { .fn_type }
@@ -191,6 +214,8 @@ AntiCheat:EnableNode("AntiFlyRaycastDistance")
 !!! success ""
 	This is a server only method.
 
+---
+
 ### :SetVerbose
 ```luau { .fn_type }
 AntiCheat:SetVerbose(isVerbose: boolean): ()
@@ -202,6 +227,8 @@ Warnings indicate when a player has violated a node's rules, allowing developers
 
 !!! success ""
 	This is a server only method.
+
+---
 
 ### :WaitUntilReady
 ```luau { .fn_type }

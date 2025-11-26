@@ -7,6 +7,8 @@
 AllocationPool.BudgetConsumed: Signal<string, number>
 ```
 
+---
+
 ### BudgetFailed
 ```luau { .fn_type }
 AllocationPool.BudgetFailed: Signal<string, string>
@@ -46,6 +48,8 @@ end):catch(function(err)
 end)
 ```
 
+---
+
 ### .CreatePoolAsync
 ```luau { .fn_type }
 AllocationPool.CreatePoolAsync(poolName: string, poolLimit: number): ()
@@ -58,6 +62,8 @@ This function creates a new allocation pool in the datastore with the given name
 ```luau
 AllocationPool.CreatePoolAsync("MyPool", 10):expect()
 ```
+
+---
 
 ### .GetPoolCountAsync
 ```luau { .fn_type }
@@ -72,6 +78,8 @@ This function retrieves the pool's data from the datastore and returns a promise
 local poolCount = AllocationPool.GetPoolCountAsync("MyPool"):expect()
 ```
 
+---
+
 ### .GetPoolLimitAsync
 ```luau { .fn_type }
 AllocationPool.GetPoolLimitAsync(poolName: string): Promise
@@ -84,6 +92,8 @@ This function retrieves the pool's data and returns a promise that resolves with
 ```luau
 local poolLimit = AllocationPool.GetPoolLimitAsync("MyPool"):expect()
 ```
+
+---
 
 ### .GetPoolReserveAsync
 ```luau { .fn_type }
@@ -98,6 +108,8 @@ This function retrieves the pool's data from the datastore and calculates the di
 local lastPoolValue = AllocationPool.GetPoolReserveAsync("PreviousPool"):expect()
 local newPoolValue = AllocationPool.CreatePool("NewPool", DEFAULT_POOL_LIMIT + lastPoolValue):expect()
 ```
+
+---
 
 ### .HasConsumedAsync
 ```luau { .fn_type }
@@ -114,6 +126,8 @@ The operation is performed asynchronously and returns a promise that resolves wi
 local hasConsumed = AllocationPool.HasConsumedAsync(player, poolName):expect()
 ```
 
+---
+
 ### .MarkConsumedAsync
 ```luau { .fn_type }
 AllocationPool.MarkConsumedAsync(player: Player, poolName: string): Promise
@@ -126,6 +140,8 @@ This function updates the player's consumed pools list by adding the specified p
 ```luau
 AllocationPool.MarkConsumedAsync(player, poolName):expect()
 ```
+
+---
 
 ### .ResetPoolAsync
 ```luau { .fn_type }
@@ -141,6 +157,8 @@ This is useful for resetting pool allocations after a specific event or time per
 ```luau
 AllocationPool.ResetPoolAsync(player, poolName)
 ```
+
+---
 
 ### .UpdatePoolLimitAsync
 ```luau { .fn_type }

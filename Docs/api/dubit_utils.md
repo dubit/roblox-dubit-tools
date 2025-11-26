@@ -17,6 +17,8 @@ Checks if the given asset type is an accessory.
 	print(DubitUtils.Accessory.isAssetTypeAccessory(Enum.AssetType.Animation)) --> false
 	```
 
+---
+
 #### .matchAssetTypeToAccessoryType
 ```luau { .fn_type }
 DubitUtils.Accessory.matchAssetTypeToAccessoryType(assetType: Enum.AssetType): Enum.AccessoryType
@@ -51,6 +53,8 @@ DubitUtils.Character.cloneCharacter(character: Model, isAnchored: boolean?): Mod
 
 Creates a clone of the provided character, without overhead display of display name & health.
 
+---
+
 #### .resetCharacterTransparency
 ```luau { .fn_type }
 DubitUtils.Character.resetCharacterTransparency(character: Model, tweenInfo: TweenInfo?): ()
@@ -61,12 +65,16 @@ Resets the transparency of all parts within the provided character to the origin
 !!! notice
 	This function must be used in conjunction with **[setCharacterTransparency](#setcharactertransparency)**, which stores the original transparency values of each part. If the character did not have its transparency modified via that function, this function will fail.
 
+---
+
 #### .setCharacterFrozen
 ```luau { .fn_type }
 DubitUtils.Character.setCharacterFrozen(character: Model, frozen: boolean?): ()
 ```
 
 Set a provided character to be frozen or unfrozen.
+
+---
 
 #### .setCharacterTransparency
 ```luau { .fn_type }
@@ -92,6 +100,8 @@ Finds & returns the first ancestor of the given instance with the provided tag, 
 !!! notice
 	This function will ignore the provided instance, and only check its ancestors.
 
+---
+
 #### .findDescendantsWithTag
 ```luau { .fn_type }
 DubitUtils.InstanceUtility.findDescendantsWithTag(instance: Instance, tag: string): Instance?
@@ -105,6 +115,8 @@ Finds & returns a table of descendants of the given instance which have the prov
 !!! notice
 	This function will ignore the provided instance, and only check its ancestors.
 
+---
+
 #### .setDescendantTransparency
 ```luau { .fn_type }
 DubitUtils.InstanceUtility.setDescendantTransparency(instance: Instance, transparency: number): Instance?
@@ -114,6 +126,8 @@ Sets the transparency of a given instance and all of its descendants to a provid
 
 !!! notice
 	This function will dynamically set either the LocalTransparencyModifier (client, will not replicate) or the Transparency of the instance (server, will replicate), depending on whether the function is called from the client or the server.
+
+---
 
 #### .verifyInstance
 ```luau { .fn_type }
@@ -127,6 +141,8 @@ Ensure that an Instance exists within the given parent Instance, and create it i
 
 !!! danger
 	Developers should ensure that the provided 'instanceType' equates to a valid Instance subclass. This is something that as of current can not be natively checked in Lua/Luau, so will cause an error if it is not valid.
+
+---
 
 #### .waitForChildren
 ```luau { .fn_type }
@@ -162,6 +178,8 @@ Abbreviates the given number with a large number notation, depending on the near
 	print(DubitUtils.Number.abbreviate(4967827362967902, true, 2)) --> 4.96Qd+
 	```
 
+---
+
 #### .formatDigitLength
 ```luau { .fn_type }
 DubitUtils.Number.formatDigitLength(numberToFormat: number, minimumDigitLength: number): string
@@ -177,6 +195,8 @@ Adds trailing zeros preceding the given number until it is at least the given le
 	print(DubitUtils.Number.formatDigitLength(48, 4)) --> 0048
 	```
 
+---
+
 #### .roundToNearest
 ```luau { .fn_type }
 DubitUtils.Number.roundToNearest(numberToRound: number, roundTo: number): number
@@ -188,6 +208,8 @@ Rounds a given number to the nearest multiple of the given 'roundTo' number.
 	```lua
 	print(DubitUtils.Number.roundToNearest(37, 5)) --> 35
 	```
+
+---
 
 #### .lerp
 ```luau { .fn_type }
@@ -211,6 +233,7 @@ The time value isn't clamped!
 	print(DubitUtils.Number.lerp(0.00, 1.00, 2.00)) --> 2.00
 	```
 
+
 ## RobloxGroup
 
 ### Functions
@@ -224,6 +247,8 @@ Get the rank of the given player in the group with the ID provided.
 
 !!! warning
 	If **groupId** is not provided and the creator ID of the current experience is not that of a group, this function will fail and return nil.
+
+---
 
 #### .isPlayerAboveGroupRank
 ```luau { .fn_type }
@@ -265,6 +290,8 @@ Cyclical References not supported.
 	print(DubitUtils.Table.compare(tbl)) --> false, the table entries are roughly compared, both values of nested fields point to different tables
 	```
 
+---
+
 #### .compareDeep
 ```luau { .fn_type }
 DubitUtils.Table.compareDeep(source: {[any]: any}, other: {[any]: any}): boolean
@@ -290,6 +317,8 @@ Cyclical References not supported.
 	print(DubitUtils.Table.compareDeep(tbl)) --> true
 	```
 
+---
+
 #### .deepClone
 ```luau { .fn_type }
 DubitUtils.Table.deepClone(tbl: T): T
@@ -307,6 +336,8 @@ Cyclical References not supported.
 	print(tbl.test, tblClone.test) --> true, false
 	```
 
+---
+
 #### .deepFreeze
 ```luau { .fn_type }
 DubitUtils.Table.deepFreeze(tbl: {[any]: any})
@@ -322,6 +353,8 @@ Cyclical References not supported.
 	DubitUtils.Table.deepFreeze(tbl)
 	tbl.test = false --> attempt to modify a readonly table
 	```
+
+---
 
 #### .merge
 ```luau { .fn_type }
@@ -339,12 +372,16 @@ Cyclical References not supported.
 	print(DubitUtils.Table.merge(tbl, tblOther)) --> { test = false, foo = 8, bar = 16 }
 	```
 
+---
+
 #### .getRandomDictionaryEntry
 ```luau { .fn_type }
 DubitUtils.Table.merge(source: {[string]: any}, other: {[string]: any})
 ```
 
 Gets a random entry (key-value pair) from a given dictionary.
+
+---
 
 #### .TableToString
 ```luau { .fn_type }
@@ -387,6 +424,8 @@ Formats seconds to countdown timer format (hr:mm:ss).
 	print(DubitUtils.Time.formatToCountdownTimer(86399)) --> 23:59:59
 	```
 
+---
+
 #### .formatToRaceTimer
 ```luau { .fn_type }
 DubitUtils.Time.formatToRaceTimer(seconds: number): string
@@ -402,6 +441,8 @@ Formats seconds to race like timer format (mm:ss:msms). This differs from Time.f
 	print(DubitUtils.Time.formatToRaceTimer(6)) --> 00:06.000
 	```
 
+---
+
 #### .formatSecondsToMinutesAndSeconds
 ```luau { .fn_type }
 DubitUtils.Time.formatSecondsToMinutesAndSeconds(seconds: number, useNotations: boolean?): string
@@ -416,6 +457,8 @@ Formats the given time in seconds to minutes and seconds, in the format of minut
 	print(DubitUtils.Time.formatSecondsToMinutesAndSeconds(1235, true)) --> 20m35s
 	print(DubitUtils.Time.formatSecondsToMinutesAndSeconds(12, true)) --> 12s
 	```
+
+---
 	
 #### .getFormattedTimeOfDay
 ```luau { .fn_type }
@@ -441,12 +484,16 @@ DubitUtils.Vector.findNearestGroundAroundPoint(origin: Vector3, radius: number, 
 
 Returns the nearest ground point within a sphere radius around origin, if it doesn't find any ground point it returns the origin.
 
+---
+
 #### .findRandomGroundAroundPoint
 ```luau { .fn_type }
 DubitUtils.Vector.findRandomGroundAroundPoint(origin: Vector3, radius: number, params: RaycastParams?): Vector3
 ```
 
 Returns a random point on the ground within a sphere radius around origin, if it doesn't find any ground point it returns the origin.
+
+---
 
 #### .getRandomPointInPart
 ```luau { .fn_type }
@@ -464,6 +511,8 @@ Gets and returns a random position within a given part, with the option to only 
 DubitUtils.fzy.filter(needle: string, haystack: string, caseSensitive: boolean?): {{number,{number},number}}
 ```
 
+---
+
 #### .hasMatch
 ```luau { .fn_type }
 DubitUtils.fzy.hasMatch(needle: string, haystack: string, caseSensitive: boolean?): boolean
@@ -473,6 +522,8 @@ Check if needle is a subsequence of the haystack.
 
 Usually called before score or positions.
 
+---
+
 #### .positions
 ```luau { .fn_type }
 DubitUtils.fzy.positions(needle: string, haystack: string, caseSensitive: boolean?): {[number]: number}
@@ -481,6 +532,8 @@ DubitUtils.fzy.positions(needle: string, haystack: string, caseSensitive: boolea
 Compute the locations where fzy matches a string.
 
 Determine where each character of the needle is matched to the haystack in the optimal match.
+
+---
 
 #### .score
 ```luau { .fn_type }
