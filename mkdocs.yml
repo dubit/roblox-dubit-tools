@@ -43,29 +43,29 @@ extra_css:
 
 nav:
   - 'index.md'
-  - Debug Tools:
-    - 'packages/debug_tools.md'
   - Allocation Pool:
     - 'packages/allocation_pool.md'
     - 'api/allocation_pool.md'
   - Anticheat:
     - 'packages/anticheat.md'
     - 'api/anticheat.md'
-  - Dubit Utils:
-    - 'packages/dubit_utils.md'
-    - 'api/dubit_utils.md'
+  - Debug Tools:
+    - 'packages/debug_tools.md'
   - Dubit Store:
     - 'packages/dubit_store.md'
     - 'api/dubit_store.md'
+  - Dubit Utils:
+    - 'packages/dubit_utils.md'
+    - 'api/dubit_utils.md'
   - Engagements:
     - 'packages/engagements.md'
     - 'api/engagements.md'
   - Event Tracker:
     - 'packages/event_tracker.md'
     - 'api/event_tracker.md'
-  - Simple Store:
-    - 'packages/simple_store.md'
-    - 'api/simple_store.md'
   - Sequence Animator:
     - 'packages/sequence_animator.md'
     - 'api/sequence_animator.md'
+  - Simple Store:
+    - 'packages/simple_store.md'
+    - 'api/simple_store.md'

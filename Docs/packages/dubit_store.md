@@ -11,11 +11,10 @@ DubitStore = "dubit/dubit-store@^1"
 ```
 
 ## DubitStore Principles
-DubitStore is based on cache, setting data will NOT save that data, it will only set that data in cache, allowing developers to quickly write and read. To push changes made in the cache, use the `:PushAsync` method.
+DubitStore is based on cache, setting data will NOT save that data, it will only set that data in cache, allowing developers to quickly write and read. To push changes made in the cache, use the **PushAsync** method.
 
-:::note
-It is important that cache is cleared for player data once a player leaves.
-:::
+!!! notice
+	It is important that cache is cleared for player data once a player leaves.
 
 ## DubitStore Examples
 Loading Data Example:
@@ -94,7 +93,3 @@ DubitStore:PushAsync("DataStore", "Example", { player }):andThen(function()
 	warn("Saved Player Data!")
 end)
 ```
-
----
-
-> *you can find the latest working examples under the RDT repository: https://bitbucket.org/dubitplatform/rit/src/main/modules/DubitStore/Examples/*
