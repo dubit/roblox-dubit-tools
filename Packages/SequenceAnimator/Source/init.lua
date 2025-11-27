@@ -1,223 +1,303 @@
---!strict
+local RunService = game:GetService("RunService")
 
---[=[
-	@class SequenceAnimator
-]=]
+export type SequenceTrack = {
+	Speed: number,
+	Length: number,
 
-type MoverInstance = Motor6D | BasePart
+	IsPlaying: boolean,
+	Looped: boolean,
+
+	Ended: RBXScriptSignal,
+	DidLoop: RBXScriptSignal,
+
+	Play: (self: SequenceTrack) -> (),
+	Stop: (self: SequenceTrack) -> (),
+}
+
+export type SequenceAnimator = {
+	LoadSequence: (self: SequenceAnimator, sequence: KeyframeSequence) -> SequenceTrack,
+
+	Destroy: (self: SequenceAnimator) -> (),
+}
+
+type SequenceTrackData = {
+	Keyframes: { SequenceKeyframe },
+	KeyframesCount: number,
+
+	EndedBindable: BindableEvent,
+	DidLoopBindable: BindableEvent,
+
+	PreRenderConnection: RBXScriptConnection?,
+}
+
+type SequenceAnimatorData = {
+	Model: Model,
+
+	Movers: { [string]: Motor6D | Bone },
+
+	SequenceData: { [SequenceTrack]: SequenceTrackData },
+
+	DescendantAddedConnection: RBXScriptConnection,
+	AncestryChangedConnection: RBXScriptConnection,
+}
 
 type SequencePose = {
 	CFrame: CFrame,
-	Motor6DName: string,
 }
 
 type SequenceKeyframe = {
 	Time: number,
-	Poses: { SequencePose },
+	Poses: { [string]: SequencePose },
 }
 
-type SequenceAnimation = {
-	Length: number,
-	Keyframes: { SequenceKeyframe },
-}
+local animatorFromTrackLookup: { [SequenceTrack]: SequenceAnimator } = {}
+local animatorData: { [SequenceAnimator]: SequenceAnimatorData } = {}
 
-type SequenceAnimatorInstanceData = {
-	Model: Model,
-	RegisteredAnimations: { [string]: SequenceAnimation },
-}
-
-local SequenceAnimator = {}
-SequenceAnimator.instance = {}
-SequenceAnimator.instanceData = {} :: { [any]: SequenceAnimatorInstanceData }
-SequenceAnimator.private = {}
-SequenceAnimator.public = {}
-
-function SequenceAnimator.private.CreateSequenceKeyframe(keyframe: Keyframe): SequenceKeyframe
-	local poses: { SequencePose } = {}
-
-	for _, pose: Instance in keyframe:GetDescendants() do
-		if not pose:IsA("Pose") then
-			continue
+local function checkAndRegisterMover(sequenceAnimator: SequenceAnimator, instance: Instance)
+	if instance:IsA("Motor6D") or instance:IsA("Bone") then
+		local data = animatorData[sequenceAnimator]
+		if not data then
+			return
 		end
 
-		table.insert(poses, {
-			CFrame = pose.CFrame,
-			Motor6DName = pose.Name,
-		})
-	end
+		local filteredMotor6D = string.gsub(instance.Name, "Motor6D", "")
 
-	return {
-		Time = keyframe.Time,
-		Poses = poses,
-	}
+		data.Movers[instance.Name] = instance
+
+		if filteredMotor6D ~= instance.Name then
+			data.Movers[filteredMotor6D] = instance
+		end
+	end
 end
 
-function SequenceAnimator.private.CreateSequenceAnimation(keyframeSequence: KeyframeSequence): SequenceAnimation
-	local keyframes: { SequenceKeyframe } = {}
-	local animationLength: number = 0
+function sequenceTrackPlay(sequenceTrack: SequenceTrack)
+	local sequenceAnimator = animatorFromTrackLookup[sequenceTrack]
 
-	for _, keyframe: Instance in keyframeSequence:GetChildren() do
+	local data = animatorData[sequenceAnimator]
+	local trackData = data.SequenceData[sequenceTrack]
+
+	if trackData.PreRenderConnection then -- already playing
+		return
+	end
+
+	local keyframes = trackData.Keyframes
+
+	local looped = sequenceTrack.Looped
+	local speed = sequenceTrack.Speed
+
+	local animationT = 0.00
+	local currentIndex = 1
+	trackData.PreRenderConnection = RunService.PreRender:Connect(function(deltaTime)
+		if animationT >= sequenceTrack.Length then
+			if looped then
+				animationT = 0.00
+				currentIndex = 1
+
+				trackData.DidLoopBindable:Fire()
+			else
+				trackData.PreRenderConnection:Disconnect()
+				trackData.PreRenderConnection = nil
+
+				trackData.EndedBindable:Fire()
+				return
+			end
+		end
+
+		while animationT >= keyframes[currentIndex + 1].Time do
+			currentIndex += 1
+		end
+
+		local currentPose = keyframes[currentIndex]
+		local nextPose = keyframes[math.min(trackData.KeyframesCount, currentIndex + 1)]
+
+		local poseT = 1 - (nextPose.Time - animationT) * (1 / (nextPose.Time - currentPose.Time))
+
+		local modelScale = data.Model:GetScale()
+
+		for moverName, pose in currentPose.Poses do
+			local mover = data.Movers[moverName]
+
+			if not mover then
+				continue
+			end
+
+			local transformCFrame = pose.CFrame:Lerp(nextPose.Poses[moverName].CFrame, poseT)
+			local transformRotation = transformCFrame - transformCFrame.Position
+
+			mover.Transform = CFrame.new(transformCFrame.Position * modelScale) * transformRotation
+		end
+
+		animationT += deltaTime * speed
+	end)
+
+	sequenceTrack.IsPlaying = true
+end
+
+function sequenceTrackStop(sequenceTrack: SequenceTrack)
+	local sequenceAnimator = animatorFromTrackLookup[sequenceTrack]
+
+	local data = animatorData[sequenceAnimator]
+	local trackData = data.SequenceData[sequenceTrack]
+
+	sequenceTrack.IsPlaying = false
+
+	if trackData.PreRenderConnection then
+		trackData.PreRenderConnection:Disconnect()
+		trackData.PreRenderConnection = nil
+	end
+end
+
+function sequenceAnimatorLoadKeyframeSequence(self: SequenceAnimator, sequence: KeyframeSequence)
+	local sequenceAnimatorData = animatorData[self]
+
+	local keyframes = {}
+	local animationLength = 0
+
+	for _, keyframe in sequence:GetChildren() do
 		if not keyframe:IsA("Keyframe") then
 			continue
 		end
 
-		local sequenceKeyframe = SequenceAnimator.private.CreateSequenceKeyframe(keyframe)
-		if sequenceKeyframe.Time > animationLength then
-			animationLength = sequenceKeyframe.Time
+		local poses = {}
+
+		for _, pose in keyframe:GetDescendants() do
+			if not pose:IsA("Pose") then
+				continue
+			end
+
+			poses[pose.Name] = {
+				CFrame = pose.CFrame,
+			}
 		end
 
-		table.insert(keyframes, table.freeze(sequenceKeyframe))
+		if keyframe.Time > animationLength then
+			animationLength = keyframe.Time
+		end
+
+		table.insert(
+			keyframes,
+			table.freeze({
+				Time = keyframe.Time,
+				Poses = table.freeze(poses),
+			})
+		)
 	end
 
-	table.sort(keyframes, function(keyframeA: SequenceKeyframe, keyframeB: SequenceKeyframe)
+	table.sort(keyframes, function(keyframeA, keyframeB)
 		return keyframeA.Time < keyframeB.Time
 	end)
 
-	return {
+	local keyframeCount = #keyframes
+
+	local sequenceTrack = {
+		Speed = 1,
 		Length = animationLength,
+
+		IsPlaying = false,
+		Looped = sequence.Loop,
+	}
+
+	local endedBindable = Instance.new("BindableEvent")
+	endedBindable.Parent = script
+
+	local didLoopBindable = Instance.new("BindableEvent")
+	didLoopBindable.Parent = script
+
+	sequenceTrack.Ended = endedBindable.Event
+	sequenceTrack.DidLoop = didLoopBindable.Event
+
+	sequenceTrack.Play = function(sequenceTrack_: SequenceTrack)
+		assert(sequenceTrack == sequenceTrack_, "Expected ':' not '.' calling member function Play")
+
+		sequenceTrackPlay(sequenceTrack_)
+	end
+
+	sequenceTrack.Stop = function(sequenceTrack_: SequenceTrack)
+		assert(sequenceTrack == sequenceTrack_, "Expected ':' not '.' calling member function Stop")
+
+		sequenceTrackStop(sequenceTrack_)
+	end
+
+	animatorFromTrackLookup[sequenceTrack] = self
+	sequenceAnimatorData.SequenceData[sequenceTrack] = {
 		Keyframes = keyframes,
+		KeyframesCount = keyframeCount,
+
+		EndedBindable = endedBindable,
+		DidLoopBindable = didLoopBindable,
 	}
+
+	return sequenceTrack
 end
 
-function SequenceAnimator.private.PoseModel(movers: { [string]: MoverInstance }, poses: { SequencePose })
-	for _, pose in poses do
-		local mover: MoverInstance? = movers[pose.Motor6DName]
+function sequenceAnimatorDestroy(sequenceAnimator: SequenceAnimator)
+	local data = animatorData[sequenceAnimator]
+	animatorData[sequenceAnimator] = nil
 
-		if not mover then
-			continue
+	if not data then
+		return
+	end
+
+	data.DescendantAddedConnection:Disconnect()
+	data.AncestryChangedConnection:Disconnect()
+
+	for _, trackData in data.SequenceData do
+		if trackData.PreRenderConnection then
+			trackData.PreRenderConnection:Disconnect()
 		end
 
-		-- TODO: We need to figure out a good way to handle parts as KeyframeSequences can also animate parts that don't have Motor6Ds
-		if mover:IsA("Motor6D") then
-			mover.Transform = pose.CFrame
-		end
+		trackData.DidLoopBindable:Destroy()
+		trackData.EndedBindable:Destroy()
 	end
 end
 
-function SequenceAnimator.private.CollectMovers(
-	model: Model,
-	sequenceAnimation: SequenceAnimation
-): { [string]: MoverInstance }
-	local movers: { [string]: MoverInstance } = {}
-	for _, pose: SequencePose in sequenceAnimation.Keyframes[1].Poses do
-		local moverPart: Instance? = model:FindFirstChild(pose.Motor6DName)
-		if not moverPart or not moverPart:IsA("BasePart") then
-			continue
-		end
+local SequenceAnimator = {}
 
-		local childMotor6D: Motor6D? = moverPart:FindFirstChildOfClass("Motor6D")
-		if childMotor6D then
-			moverPart = childMotor6D
-		end
+function SequenceAnimator.new(model: Model)
+	local sequenceAnimator = {}
 
-		movers[pose.Motor6DName] = moverPart
+	sequenceAnimator.LoadSequence = function(self: SequenceAnimator, sequence: KeyframeSequence)
+		assert(self == sequenceAnimator, "Expected ':' not '.' calling member function LoadSequence")
+		assert(
+			sequence and typeof(sequence) == "Instance" and sequence:IsA("KeyframeSequence"),
+			"LoadSequence requires a KeyframeSequence Instance"
+		)
+
+		return sequenceAnimatorLoadKeyframeSequence(self, sequence)
 	end
 
-	return movers
-end
+	sequenceAnimator.Destroy = function(self)
+		assert(self == sequenceAnimator, "Expected ':' not '.' calling member function Destroy")
 
---[=[
-	@method AddKeyframeSequence
-	@within SequenceAnimator
+		sequenceAnimatorDestroy(sequenceAnimator)
+	end
 
-	Adds the KeyframeSeqence to the registry so it can be played with :PlaySequence()
-
-	```lua
-	local sequenceAnimator = SequenceAnimator.new(workspace.CoolModel)
-	sequenceAnimator:AddKeyframeSequence("DancePose", ReplicatedStorage.Poses.DancePose)
-	sequenceAnimator:PoseFromSequence("DancePose")
-	```
-]=]
-function SequenceAnimator.instance.AddKeyframeSequence(self: any, name: string, keyframeSequence: KeyframeSequence)
-	local instanceData = SequenceAnimator.instanceData[self]
-	assert(instanceData, "Tried to perform an action on a destroyed SequenceAnimator instance!")
-	assert(
-		not instanceData.RegisteredAnimations[name],
-		"Tried to register a KeyframeSequence with the same name more than once!"
-	)
-
-	instanceData.RegisteredAnimations[name] = SequenceAnimator.private.CreateSequenceAnimation(keyframeSequence)
-end
-
---[=[
-	@method Pose
-	@within SequenceAnimator
-
-	Aligns all the parts within a Model to form a Pose from name, throws an error if pose wasn't registered first.
-
-	```lua
-	local sequenceAnimator = SequenceAnimator.new(workspace.CoolModel)
-	sequenceAnimator:AddKeyframeSequence("DancePose", ReplicatedStorage.Poses.DancePose)
-	sequenceAnimator:PoseFromSequence("DancePose")
-	```
-]=]
-function SequenceAnimator.instance.Pose(self: any, name: string, keyframeIndex: number?)
-	local keyframe: number = keyframeIndex or 1
-	local instanceData = SequenceAnimator.instanceData[self]
-	assert(instanceData, "Tried to perform an action on a destroyed SequenceAnimator instance!")
-	assert(not instanceData.RegisteredAnimations[name], `There is no KeyframeAnimation called '{name}'`)
-
-	local sequenceAnimation: SequenceAnimation = instanceData.RegisteredAnimations[name]
-	local movers: { [string]: MoverInstance } =
-		SequenceAnimator.private.CollectMovers(instanceData.Model, sequenceAnimation)
-
-	SequenceAnimator.private.PoseModel(movers, sequenceAnimation.Keyframes[keyframe].Poses)
-end
-
---[=[
-	@method Destroy
-	@within SequenceAnimator
-
-	Destroys the SequenceAnimator instance.
-]=]
-function SequenceAnimator.instance.Destroy(self: any)
-	SequenceAnimator.instanceData[self] = nil
-end
-
---[=[
-	@method new
-	@within SequenceAnimator
-
-	@param model Model
-
-	@return SequenceAnimator
-
-	Just like there is Animator for Humanoids, we need to create SequenceAnimator, they have similarities but they are two different things.
-]=]
-function SequenceAnimator.public.new(model: Model)
-	local self = setmetatable({}, {
-		__index = SequenceAnimator.instance,
-	})
-
-	SequenceAnimator.instanceData[self] = {
+	local sequenceAnimatorData = {
 		Model = model,
-		RegisteredAnimations = {},
+
+		Movers = {},
+
+		SequenceData = {},
 	}
 
-	return self
+	animatorData[sequenceAnimator] = sequenceAnimatorData :: SequenceAnimatorData
+
+	sequenceAnimatorData.DescendantAddedConnection = model.DescendantAdded:Connect(function(instance: Instance)
+		checkAndRegisterMover(sequenceAnimator, instance)
+	end)
+	for _, descendant in model:GetDescendants() do
+		checkAndRegisterMover(sequenceAnimator, descendant)
+	end
+
+	sequenceAnimatorData.AncestryChangedConnection = model.AncestryChanged:Connect(function()
+		if model.Parent ~= nil then
+			return
+		end
+
+		sequenceAnimatorDestroy(sequenceAnimator)
+	end)
+
+	return table.freeze(sequenceAnimator)
 end
 
---[=[
-	@method poseModelFromKeyframe
-	@within SequenceAnimator
-
-	@param model Model
-	@param keyframeSequence KeyframeSequence
-	@param keyframeIndex number?
-
-	Using this method there is no animator instance created, the Model gets pose applied from the KeyframeSequence,
-	it is advised to use these when a pose needs to be applied once in a lifetime of a Model.
-]=]
-function SequenceAnimator.public.poseModelFromKeyframe(
-	model: Model,
-	keyframeSequence: KeyframeSequence,
-	keyframeIndex: number?
-)
-	local keyframe: number = keyframeIndex or 1
-	local sequenceAnimation: SequenceAnimation = SequenceAnimator.private.CreateSequenceAnimation(keyframeSequence)
-	local movers: { [string]: MoverInstance } = SequenceAnimator.private.CollectMovers(model, sequenceAnimation)
-
-	SequenceAnimator.private.PoseModel(movers, sequenceAnimation.Keyframes[keyframe].Poses)
-end
-
-return SequenceAnimator.public
+return SequenceAnimator

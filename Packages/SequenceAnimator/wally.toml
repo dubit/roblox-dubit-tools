@@ -1,11 +1,11 @@
 [package]
 name = "dubit/sequence-animator"
-version = "0.1.0"
+version = "1.0.0"
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "A library for creating Keyframe Sequences"
+description = "A package for playing Roblox Keyframe Sequences on a Model, which allows playing animations without uploading them to Roblox."
 
 exclude = ["**"]
 include = ["Source", "Source/*", "default.project.json", "wally.toml"]
