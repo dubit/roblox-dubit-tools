@@ -17,8 +17,9 @@ Imgui:NewWidgetDefinition("BeginHorizontal", {
 		UIListLayout.Name = "UIListLayout"
 		UIListLayout.Padding = UDim.new(0, 2)
 		UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+		UIListLayout.HorizontalFlex = Enum.UIFlexAlignment.Fill
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
-		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.Parent = Frame
 

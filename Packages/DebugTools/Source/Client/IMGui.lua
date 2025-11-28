@@ -71,7 +71,7 @@ IMGui.private = {
 	ProcessedInstance = nil :: IMGuiInstance?,
 
 	CurrentConfig = table.freeze({
-		Font = Font.new("rbxasset://fonts/families/Inconsolata.json"),
+		Font = Font.new("rbxassetid://16658221428"),
 
 		Transparency = {
 			Window = 0.15,
@@ -156,6 +156,7 @@ function IMGui.private.ProcessFrame()
 		imGuiInstance.FrameData.WidgetIndex = 0
 		imGuiInstance.FrameData.Stack = {}
 		imGuiInstance.FrameData.WidgetIDs = {}
+
 		IMGui.public:BeginVertical()
 		imGuiInstance.TickLoop()
 		IMGui.public:End()
@@ -263,9 +264,12 @@ function IMGui.private.CreateWidgetFromDefinition(identifier: string, ...)
 		table.insert(activeInstance.FrameData.Stack, widgetInstance)
 	end
 
-	if IMGui.private.ProcessedInstance then
+	if IMGui.private.ProcessedInstance and widgetInstance then
 		widgetInstance.LastUpdateTick = IMGui.private.ProcessedInstance.Tick
-		widgetInstance.TopInstance.LayoutOrder = activeInstance.FrameData.WidgetIndex
+
+		if widgetInstance.TopInstance:IsA("GuiObject") then
+			widgetInstance.TopInstance.LayoutOrder = activeInstance.FrameData.WidgetIndex
+		end
 	end
 
 	return widgetInstance

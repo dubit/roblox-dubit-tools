@@ -21,7 +21,7 @@ task.defer(function()
 end)
 
 Action.new("Default/Set Client FPS", "Set the player FPS (see settings for your default FPS)", function(fps: number)
-	targetFPS = fps
+	targetFPS = math.max(1, fps)
 
 	return
 end, {

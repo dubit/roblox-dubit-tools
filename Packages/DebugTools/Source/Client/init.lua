@@ -11,7 +11,7 @@ type TouchPointData = {
 	InputChangedConnection: RBXScriptConnection?,
 }
 
-if not Authorization:isLocalPlayerAuthorized() then
+if not Authorization:IsLocalPlayerAuthorized() then
 	return { Authorized = false }
 end
 
@@ -32,11 +32,10 @@ DebugTools.interface = {
 
 	BuiltinTabs = {
 		Console = require(script.Builtin.Tabs.Console),
-		Components = require(script.Builtin.Tabs.Components),
+		Tags = require(script.Builtin.Tabs.Tags),
 		Widgets = require(script.Builtin.Tabs.Widgets),
 		Actions = require(script.Builtin.Tabs.Actions),
 		Explorer = require(script.Builtin.Tabs.Explorer),
-		Properties = require(script.Builtin.Tabs.Properties),
 	},
 
 	BuiltinWidgets = {

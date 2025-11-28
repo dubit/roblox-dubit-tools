@@ -3,7 +3,7 @@ local RunService = game:GetService("RunService")
 
 local Action = require(script.Parent.Parent.Parent.Parent.Shared.Action)
 
-local targetTPS = math.huge
+local targetFPS = math.huge
 
 task.defer(function()
 	while true do
@@ -13,18 +13,18 @@ task.defer(function()
 
 		-- selene:allow(empty_loop)
 		repeat
-		until (tick0 + 1 / targetTPS) < tick()
+		until (tick0 + 1 / targetFPS) < tick()
 	end
 end)
 
-Action.new("Default/Set Server TPS", "Set the server TPS (60 is the default TPS)", function(tps: number)
-	targetTPS = tps
+Action.new("Default/Set Server FPS", "Set the server FPS (60 is the default FPS)", function(fps: number)
+	targetFPS = math.max(1, fps)
 
 	return
 end, {
 	{
 		Type = "number",
-		Name = "TPS",
+		Name = "FPS",
 		Default = 60,
 	},
 })

@@ -27,7 +27,7 @@ Imgui:NewWidgetDefinition("ScrollingFrameY", {
 		local UIListLayout = Instance.new("UIListLayout")
 		UIListLayout.Name = "UIListLayout"
 		UIListLayout.Padding = UDim.new(0, 2)
-		UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+		UIListLayout.FillDirection = Enum.FillDirection.Vertical
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.Parent = ScrollingFrameY

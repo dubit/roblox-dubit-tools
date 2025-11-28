@@ -7,7 +7,7 @@ type ImguiBeginVertical = Imgui.WidgetInstance & {
 Imgui:NewWidgetDefinition("BeginVertical", {
 	Construct = function(self: ImguiBeginVertical, parent: GuiObject, alignment: Enum.HorizontalAlignment?)
 		local Frame = Instance.new("Frame")
-		Frame.Name = `Horizontal ({self.ID})`
+		Frame.Name = `Vertical ({self.ID})`
 		Frame.Size = UDim2.fromScale(1.00, 0.00)
 		Frame.AutomaticSize = Enum.AutomaticSize.XY
 		Frame.BackgroundTransparency = 1.00
@@ -17,6 +17,7 @@ Imgui:NewWidgetDefinition("BeginVertical", {
 		UIListLayout.Name = "UIListLayout"
 		UIListLayout.Padding = UDim.new(0, 2)
 		UIListLayout.FillDirection = Enum.FillDirection.Vertical
+		UIListLayout.VerticalFlex = Enum.UIFlexAlignment.Fill
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.Parent = Frame

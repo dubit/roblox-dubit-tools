@@ -37,9 +37,7 @@ function Networking.internal.registerNetworkTarget(player: Player)
 		return
 	end
 
-	local isPlayerAuthorized: boolean = Authorization.isPlayerAuthorized(player)
-
-	if not isPlayerAuthorized then
+	if not Authorization:IsPlayerAuthorized(player) then
 		return
 	end
 
@@ -61,7 +59,7 @@ end
 function Networking.internal.listenToNetworkTraffic()
 	Networking.internal.NetworkTrafficRemote.OnServerEvent:Connect(
 		function(player: Player, messageContent: { any } | string)
-			if not Authorization.isPlayerAuthorized(player) then
+			if not Authorization:IsPlayerAuthorized(player) then
 				player:Kick("Attempted to perform unauthorized action.")
 				return
 			end

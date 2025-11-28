@@ -1,4 +1,3 @@
---!strict
 local Players = game:GetService("Players")
 
 local Action = require(script.Parent.Parent.Parent.Parent.Shared.Action)
@@ -12,9 +11,11 @@ local function validatePlayers()
 	end
 
 	for _, player in Players:GetPlayers() do
-		if not Authorization.isPlayerAuthorized(player) then
-			player:Kick(`This server is currently locked; only users who have access to debug tools can access!`)
-		end
+		task.spawn(function()
+			if not Authorization:IsPlayerAuthorized(player) then
+				player:Kick(`This server is currently locked; only users who have access to debug tools can access!`)
+			end
+		end)
 	end
 end
 
@@ -31,7 +32,6 @@ Action.new(
 		serverLockEnabled = locked
 
 		validatePlayers()
-
 		return
 	end,
 	{

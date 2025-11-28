@@ -3,8 +3,6 @@ local Players = game:GetService("Players")
 local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
-local insetSize: Vector2 = GuiService:GetGuiInset()
-
 local DebugToolRootPath = script.Parent
 local SharedPath = DebugToolRootPath.Parent.Shared
 
@@ -219,6 +217,8 @@ function DebugInterface.private:CreateInterface()
 		then
 			return
 		end
+
+		local insetSize: Vector2 = GuiService:GetGuiInset()
 
 		local frameAbsolutePosition: Vector2 = Vector2.new(
 			backgroundFrame.AbsolutePosition.X,
