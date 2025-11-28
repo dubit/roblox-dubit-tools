@@ -322,8 +322,19 @@ function BufferReader.prototype.ReadString(self: BufferReader, count: number?)
 	end
 
 	local stringLen = buffer.readu8(self.Buffer, self.Cursor)
-	local v = buffer.readstring(self.Buffer, self.Cursor + 1, stringLen)
-	self.Cursor += stringLen + 1
+	local isU16 = bit32.band(stringLen, 1) == 1 -- first bit is 0 for u8 and 1 for u16
+
+	if isU16 then
+		stringLen = buffer.readu16(self.Buffer, self.Cursor)
+		self.Cursor += 1
+	end
+
+	self.Cursor += 1
+
+	stringLen = bit32.rshift(stringLen, 1)
+
+	local v = buffer.readstring(self.Buffer, self.Cursor, stringLen)
+	self.Cursor += stringLen
 	return v
 end
 
@@ -546,9 +557,22 @@ function BufferWriter.prototype.WriteString(self: BufferWriter, value: string, c
 	end
 
 	local stringLength = string.len(value)
-	buffer.writeu8(self.Buffer, self.Cursor, stringLength)
-	buffer.writestring(self.Buffer, self.Cursor + 1, value)
-	self.Cursor += stringLength + 1
+
+	assert(
+		stringLength < (2 ^ 15 - 1),
+		"String value too long, consider serializing this string using the count argument"
+	)
+
+	if stringLength <= 127 then
+		buffer.writeu8(self.Buffer, self.Cursor, bit32.lshift(stringLength, 1)) -- first bit stays 0 for u8
+		self.Cursor += 1
+	else
+		buffer.writeu16(self.Buffer, self.Cursor, bit32.bor(bit32.lshift(stringLength, 1), 1)) -- first bit stays 1 for u16
+		self.Cursor += 2
+	end
+
+	buffer.writestring(self.Buffer, self.Cursor, value)
+	self.Cursor += stringLength
 end
 
 function BufferWriter.prototype.WriteVector2(self: BufferWriter, value: Vector2)
