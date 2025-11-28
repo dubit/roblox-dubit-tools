@@ -113,3 +113,25 @@ SequenceAnimator = "dubit/bolt@^0"
 		end) :: Bolt.ReliableEvent<number>,
 	}
 	```
+
+??? example "Example Usage - More complex custom serialization"
+	Bolt by default doesn't have a way of serializing ColorSequences, but you can add that functionality using a custom seralization and deserialization!
+
+	```luau
+	Bolt.ReliableEvent("Color Sequence Event", function(writer, colorSequence: ColorSequence)
+		writer:WriteU8(#colorSequence.Keypoints)
+		for _, keypoint in colorSequence.Keypoints do
+			writer:WriteU8(math.clamp(keypoint.Time * 255, 0, 255))
+			writer:WriteColor3(keypoint.Value)
+		end
+	end, function(reader)
+		local keypointsCount = reader:ReadU8()
+		local keypoints = table.create(keypointsCount)
+		for i = 1, keypointsCount do
+			local keypointTime = reader:ReadU8() / 255
+			local keypointsColor = reader:ReadColor3()
+			table.insert(keypoints, ColorSequenceKeypoint.new(keypointTime, keypointsColor))
+		end
+		return ColorSequence.new(keypoints)
+	end) :: Bolt.ReliableEvent<ColorSequence>
+	```
