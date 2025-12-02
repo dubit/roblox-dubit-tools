@@ -93,13 +93,11 @@ end
 Tab.new("Tags", function(parent: Frame)
 	return IMGui:Connect(parent, function()
 		IMGui:ScrollingFrameY(UDim2.fromScale(1, 1))
-		IMGui:BeginVertical()
 
 		for _, tag in CollectionService:GetAllTags() do
 			Components.internal.processTags(tag)
 		end
 
-		IMGui:End()
 		IMGui:End()
 	end)
 end)

@@ -4,6 +4,8 @@ type ImguiScrollingFrameY = Imgui.WidgetInstance & {
 	UIListLayout: UIListLayout,
 }
 
+local IMGUI_CONFIG = Imgui:GetConfig()
+
 Imgui:NewWidgetDefinition("ScrollingFrameY", {
 	Construct = function(
 		self: ImguiScrollingFrameY,
@@ -26,7 +28,7 @@ Imgui:NewWidgetDefinition("ScrollingFrameY", {
 
 		local UIListLayout = Instance.new("UIListLayout")
 		UIListLayout.Name = "UIListLayout"
-		UIListLayout.Padding = UDim.new(0, 2)
+		UIListLayout.Padding = UDim.new(0, IMGUI_CONFIG.Sizes.ItemPadding.Y)
 		UIListLayout.FillDirection = Enum.FillDirection.Vertical
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
