@@ -102,4 +102,4 @@ Tab.new("Tags", function(parent: Frame)
 	end)
 end)
 
-return Components.interface
+return nil
