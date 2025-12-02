@@ -93,7 +93,7 @@ function DebugInterface.private:CreateInterface()
 	backgroundFrame.Name = "Frame"
 	backgroundFrame.AnchorPoint = Vector2.new(0.50, 0.50)
 	backgroundFrame.Position = UDim2.fromScale(0.50, 0.50)
-	backgroundFrame.Size = UDim2.fromOffset(624, 375)
+	backgroundFrame.Size = UDim2.fromOffset(600, 400)
 	backgroundFrame.BackgroundTransparency = 0.15
 	backgroundFrame.BackgroundColor3 = Style.BACKGROUND
 	backgroundFrame.BorderSizePixel = 0
@@ -104,6 +104,19 @@ function DebugInterface.private:CreateInterface()
 	uiStroke.Thickness = 2
 	uiStroke.Transparency = 0.50
 	uiStroke.Parent = backgroundFrame
+
+	local resizeButton = Instance.new("TextButton")
+	resizeButton.AutoButtonColor = false
+	resizeButton.Name = "Resize Area"
+	resizeButton.Text = ""
+	resizeButton.AnchorPoint = Vector2.new(1, 1)
+	resizeButton.BackgroundColor3 = Color3.fromRGB(12, 38, 177)
+	resizeButton.BorderColor3 = Color3.new()
+	resizeButton.BorderSizePixel = 0
+	resizeButton.Position = UDim2.fromScale(1, 1)
+	resizeButton.Size = UDim2.fromOffset(12, 12)
+
+	resizeButton.Parent = backgroundFrame
 
 	local headerLabel = Instance.new("TextButton")
 	headerLabel.Name = "Header"
@@ -125,7 +138,22 @@ function DebugInterface.private:CreateInterface()
 	local headerUIPadding = Instance.new("UIPadding")
 	headerUIPadding.Name = "UIPadding"
 	headerUIPadding.PaddingLeft = UDim.new(0, 8)
+	headerUIPadding.PaddingRight = UDim.new(0, 8)
 	headerUIPadding.Parent = headerLabel
+
+	local sendLogsButton = Instance.new("ImageButton")
+	sendLogsButton.Name = "Send Logs"
+	sendLogsButton.AnchorPoint = Vector2.new(1, 0)
+	sendLogsButton.BackgroundTransparency = 1
+	sendLogsButton.Image = "rbxassetid://116990081986995"
+	sendLogsButton.Position = UDim2.fromScale(1, 0)
+	sendLogsButton.Size = UDim2.fromScale(1, 1)
+
+	local uIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+	uIAspectRatioConstraint.Name = "UIAspectRatioConstraint"
+	uIAspectRatioConstraint.Parent = sendLogsButton
+
+	sendLogsButton.Parent = headerLabel
 
 	headerLabel.Parent = backgroundFrame
 
@@ -283,6 +311,59 @@ function DebugInterface.private:CreateInterface()
 		end
 
 		IMGui:End()
+	end)
+
+	resizeButton.InputBegan:Connect(function(beganInputObject: InputObject)
+		if
+			beganInputObject.UserInputType ~= Enum.UserInputType.MouseButton1
+			and beganInputObject.UserInputType ~= Enum.UserInputType.Touch
+		then
+			return
+		end
+
+		local insetSize: Vector2 = GuiService:GetGuiInset()
+
+		local widgetRepresentationAbsolutePosition: Vector2 = backgroundFrame.AbsolutePosition + insetSize
+
+		local offset: Vector2 = UserInputService:GetMouseLocation() - widgetRepresentationAbsolutePosition
+		offset = Vector2.new(math.floor(offset.X), math.floor(offset.Y))
+
+		local sizeBeforeDragging = backgroundFrame.AbsoluteSize
+		local positionBeforeDragging = backgroundFrame.AbsolutePosition
+
+		local inputChangedConnection, inputEndedConnection
+		inputChangedConnection = UserInputService.InputChanged:Connect(function(inputObject: InputObject)
+			if
+				inputObject.UserInputType ~= Enum.UserInputType.MouseMovement
+				and inputObject.UserInputType ~= Enum.UserInputType.Touch
+			then
+				return
+			end
+
+			local newOffset = UserInputService:GetMouseLocation() - widgetRepresentationAbsolutePosition
+			local growthVector = newOffset - offset
+			local newSize = sizeBeforeDragging + growthVector
+			newSize = Vector2.new(math.max(newSize.X, 600), math.max(newSize.Y, 400))
+
+			local newPosition = positionBeforeDragging
+				+ (newSize * backgroundFrame.AnchorPoint)
+				+ GuiService:GetGuiInset()
+
+			backgroundFrame.Position = UDim2.fromOffset(newPosition.X, newPosition.Y)
+			backgroundFrame.Size = UDim2.fromOffset(newSize.X, newSize.Y)
+		end)
+
+		inputEndedConnection = UserInputService.InputEnded:Connect(function(inputObject: InputObject)
+			if
+				inputObject.UserInputType ~= Enum.UserInputType.MouseButton1
+				and inputObject.UserInputType ~= Enum.UserInputType.Touch
+			then
+				return
+			end
+
+			inputEndedConnection:Disconnect()
+			inputChangedConnection:Disconnect()
+		end)
 	end)
 end
 
