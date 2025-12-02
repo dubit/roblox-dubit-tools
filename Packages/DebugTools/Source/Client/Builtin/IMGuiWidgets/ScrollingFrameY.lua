@@ -16,7 +16,7 @@ Imgui:NewWidgetDefinition("ScrollingFrameY", {
 		ScrollingFrameY.Size = size
 		ScrollingFrameY.BackgroundTransparency = 1
 		ScrollingFrameY.BorderSizePixel = 0
-		ScrollingFrameY.AutomaticCanvasSize = Enum.AutomaticSize.Y
+		ScrollingFrameY.AutomaticCanvasSize = Enum.AutomaticSize.XY
 		ScrollingFrameY.CanvasSize = UDim2.fromScale(0, 0)
 		ScrollingFrameY.ScrollBarThickness = 5
 		ScrollingFrameY.Selectable = false

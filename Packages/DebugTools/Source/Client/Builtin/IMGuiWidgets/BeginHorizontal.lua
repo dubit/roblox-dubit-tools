@@ -4,6 +4,8 @@ type ImguiBeginHorizontal = Imgui.WidgetInstance & {
 	UIListLayout: UIListLayout,
 }
 
+local IMGUI_CONFIG = Imgui:GetConfig()
+
 Imgui:NewWidgetDefinition("BeginHorizontal", {
 	Construct = function(self: ImguiBeginHorizontal, parent: GuiObject, alignment: Enum.HorizontalAlignment?)
 		local Frame = Instance.new("Frame")
@@ -15,7 +17,7 @@ Imgui:NewWidgetDefinition("BeginHorizontal", {
 
 		local UIListLayout = Instance.new("UIListLayout")
 		UIListLayout.Name = "UIListLayout"
-		UIListLayout.Padding = UDim.new(0, 2)
+		UIListLayout.Padding = UDim.new(0, IMGUI_CONFIG.Sizes.ItemPadding.X)
 		UIListLayout.FillDirection = Enum.FillDirection.Horizontal
 		UIListLayout.HorizontalFlex = Enum.UIFlexAlignment.Fill
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left

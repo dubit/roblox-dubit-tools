@@ -42,18 +42,15 @@ Imgui:NewWidgetDefinition("ImageButton", {
 
 		buttonInstance.Parent = parent
 
-		Imgui.applyMouseDownStyle(buttonInstance, function() end)
-		Imgui.applyMouseUpStyle(buttonInstance, function() end)
-
 		self.PressConnection = buttonInstance.Activated:Connect(function()
 			self.Pressed = true
 		end)
 
-		self.MouseEnterConnection = Imgui.applyMouseHoverStyle(buttonInstance, function()
+		self.MouseEnterConnection = buttonInstance.MouseEnter:Connect(function()
 			self.Hovering = true
 		end)
 
-		self.MouseLeaveConnection = Imgui.applyMouseHoverEndStyle(buttonInstance, function()
+		self.MouseLeaveConnection = buttonInstance.MouseLeave:Connect(function()
 			self.Hovering = false
 		end)
 

@@ -5,7 +5,6 @@ type ActionArgument = {
 	Type: ActionArgumentType,
 	Name: string?,
 	Default: any?,
-	Optional: boolean?,
 	Options: { any }?,
 }
 
@@ -107,11 +106,6 @@ function Action.interface:Execute(actionName: string, arguments: { any }?): unkn
 	if actionDefinition.Arguments then
 		for argumentIndex: number, argumentDefinition: ActionArgument in actionDefinition.Arguments do
 			local argumentValue: any = arguments[argumentIndex]
-
-			if argumentDefinition.Optional and argumentValue == nil then
-				arguments[argumentIndex] = argumentDefinition.Default
-				continue
-			end
 
 			local argumentType: string = typeof(argumentValue)
 

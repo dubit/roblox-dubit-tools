@@ -8,10 +8,9 @@ local SharedPath = DebugToolRootPath.Parent.Shared
 
 local Tab = require(DebugToolRootPath.Tab)
 local Style = require(DebugToolRootPath.Style)
+local IMGui = require(DebugToolRootPath.IMGui)
 
 local Constants = require(SharedPath.Constants)
-
-local TabFrame = require(script.TabFrame)
 
 local DebugInterface = {}
 DebugInterface.internal = {
@@ -55,16 +54,15 @@ function DebugInterface.internal.focusModule(tabName: string)
 	end
 
 	if activeTab then
-		DebugInterface.internal.Tabs[activeTab.Name]:Unfocus()
 		activeTab.Destructor()
 
-		local contentTabFrameChildren: { Instance } = activeContentTabFrame:GetChildren()
+		local contentTabFrameChildren = activeContentTabFrame:GetChildren()
 
 		if #contentTabFrameChildren > 0 then
 			warn(`Tab '{activeTab.Name}' didn't cleanup unmounted interface properly, there are leftover elements:`)
 
 			for _, childInstance: Instance in contentTabFrameChildren do
-				warn(`  ╠ {childInstance.Name}({childInstance.ClassName})`)
+				warn(`    {childInstance.Name}({childInstance.ClassName})`)
 				childInstance:Destroy()
 			end
 		end
@@ -74,22 +72,12 @@ function DebugInterface.internal.focusModule(tabName: string)
 		Name = tabName,
 		Destructor = tabConstructor(activeContentTabFrame),
 	}
-
-	DebugInterface.internal.Tabs[tabName]:Focus()
 end
 
 function DebugInterface.internal.tabAdded(tabName: string)
-	local tabContainer = TabFrame.new(
-		tabName,
-		DebugInterface.private.InterfaceElements.Tabs,
-		DebugInterface.private.InterfaceElements.ContentFrame
-	)
-
-	tabContainer.TabActivated:Connect(function()
-		DebugInterface.internal.focusModule(tabName)
-	end)
-
-	DebugInterface.internal.Tabs[tabName] = tabContainer
+	DebugInterface.internal.Tabs[tabName] = {
+		Name = tabName,
+	}
 
 	if not DebugInterface.internal.ActiveTab then
 		DebugInterface.internal.focusModule(tabName)
@@ -112,53 +100,34 @@ function DebugInterface.private:CreateInterface()
 
 	local uiStroke: UIStroke = Instance.new("UIStroke")
 	uiStroke.Name = "UIStroke"
-	uiStroke.Color = Color3.fromRGB(98, 114, 164)
+	uiStroke.Color = Color3.fromRGB(12, 38, 177)
+	uiStroke.Thickness = 2
+	uiStroke.Transparency = 0.50
 	uiStroke.Parent = backgroundFrame
 
-	local headerLabel: TextLabel = Instance.new("TextLabel")
+	local headerLabel = Instance.new("TextButton")
 	headerLabel.Name = "Header"
+	headerLabel.AutoButtonColor = false
 	headerLabel.AutoLocalize = false
-	headerLabel.Size = UDim2.new(1.00, 0, 0.00, 18)
-	headerLabel.FontFace =
-		Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-	headerLabel.Text = "DEBUG TOOLS"
-	headerLabel.TextColor3 = Style.TEXT
-	headerLabel.TextSize = 18
-	headerLabel.TextXAlignment = Enum.TextXAlignment.Left
-	headerLabel.BackgroundColor3 = Style.COLOR_WHITE
-	headerLabel.BackgroundTransparency = 1.00
+	headerLabel.Selectable = false
+	headerLabel.BackgroundColor3 = Color3.fromRGB(12, 38, 177)
+	headerLabel.BackgroundTransparency = 0.5
+	headerLabel.BorderColor3 = Color3.new()
 	headerLabel.BorderSizePixel = 0
+	headerLabel.FontFace = Font.new("rbxassetid://16658221428", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	headerLabel.Size = UDim2.new(1, 0, 0, 24)
+	headerLabel.Text = `DEBUG TOOLS v{Constants.VERSION}`
+	headerLabel.TextColor3 = Color3.new(1, 1, 1)
+	headerLabel.TextSize = 14
+	headerLabel.Modal = true
+	headerLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+	local headerUIPadding = Instance.new("UIPadding")
+	headerUIPadding.Name = "UIPadding"
+	headerUIPadding.PaddingLeft = UDim.new(0, 8)
+	headerUIPadding.Parent = headerLabel
+
 	headerLabel.Parent = backgroundFrame
-
-	local versionLabel: TextLabel = Instance.new("TextLabel")
-	versionLabel.Name = "Version"
-	versionLabel.AutoLocalize = false
-	versionLabel.Size = UDim2.new(1.00, 0, 0.00, 18)
-	versionLabel.FontFace =
-		Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-	versionLabel.Text = Constants.VERSION
-	versionLabel.TextColor3 = Style.TEXT
-	versionLabel.TextSize = 10
-	versionLabel.TextTransparency = 0.75
-	versionLabel.TextXAlignment = Enum.TextXAlignment.Right
-	versionLabel.TextYAlignment = Enum.TextYAlignment.Bottom
-	versionLabel.BackgroundColor3 = Style.COLOR_WHITE
-	versionLabel.BackgroundTransparency = 1.00
-	versionLabel.BorderSizePixel = 0
-	versionLabel.Parent = backgroundFrame
-
-	local uiPadding = Instance.new("UIPadding")
-	uiPadding.Name = "UIPadding"
-	uiPadding.PaddingBottom = UDim.new(0.00, 8)
-	uiPadding.PaddingLeft = UDim.new(0.00, 8)
-	uiPadding.PaddingRight = UDim.new(0.00, 8)
-	uiPadding.PaddingTop = UDim.new(0.00, 8)
-	uiPadding.Parent = backgroundFrame
-
-	local uiCorner = Instance.new("UICorner")
-	uiCorner.Name = "UICorner"
-	uiCorner.CornerRadius = UDim.new(0.00, 4)
-	uiCorner.Parent = backgroundFrame
 
 	local contentFrame: Frame = Instance.new("Frame")
 	contentFrame.Name = "Content Frame"
@@ -167,20 +136,34 @@ function DebugInterface.private:CreateInterface()
 	contentFrame.BackgroundTransparency = 1.00
 	contentFrame.BorderSizePixel = 0
 
+	local uiPadding = Instance.new("UIPadding")
+	uiPadding.Name = "UIPadding"
+	uiPadding.PaddingBottom = UDim.new(0.00, 8)
+	uiPadding.PaddingLeft = UDim.new(0.00, 8)
+	uiPadding.PaddingRight = UDim.new(0.00, 8)
+	uiPadding.PaddingTop = UDim.new(0.00, 8)
+	uiPadding.Parent = contentFrame
+
+	local uIListLayout = Instance.new("UIListLayout")
+	uIListLayout.Name = "UIListLayout"
+	uIListLayout.Padding = UDim.new(0, 4)
+	uIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	uIListLayout.VerticalFlex = Enum.UIFlexAlignment.Fill
+	uIListLayout.Parent = contentFrame
+
 	local tabContentFrame: Frame = Instance.new("Frame")
 	tabContentFrame.Name = `Active Tab Content`
-	tabContentFrame.AnchorPoint = Vector2.new(0.00, 1.00)
-	tabContentFrame.Position = UDim2.new(0.00, 0, 1.00, 3)
-	tabContentFrame.Size = UDim2.new(1.00, 0, 1.00, -16)
+	tabContentFrame.Size = UDim2.fromScale(1.00, 1.00)
 	tabContentFrame.BackgroundTransparency = 1.00
 	tabContentFrame.BorderSizePixel = 0
 	tabContentFrame.ClipsDescendants = true
-	tabContentFrame.ZIndex = 2
+	tabContentFrame.LayoutOrder = 2
 	tabContentFrame.Parent = contentFrame
 
 	local tabsListFrame: Frame = Instance.new("Frame")
 	tabsListFrame.Name = "Tabs"
-	tabsListFrame.Size = UDim2.new(1.00, 0, 0.00, 16)
+	tabsListFrame.AutomaticSize = Enum.AutomaticSize.Y
+	tabsListFrame.Size = UDim2.fromScale(1.00, 0.00)
 	tabsListFrame.BackgroundTransparency = 1.00
 	tabsListFrame.BorderSizePixel = 0
 
@@ -195,19 +178,7 @@ function DebugInterface.private:CreateInterface()
 
 	contentFrame.Parent = backgroundFrame
 
-	local dragPanel: TextButton = Instance.new("TextButton")
-	dragPanel.Name = "Drag Detector"
-	dragPanel.Position = UDim2.new(0.00, -8, 0.00, -8)
-	dragPanel.Size = UDim2.new(1.00, 16, 0.00, 30)
-	dragPanel.BorderSizePixel = 0
-	dragPanel.Selectable = false
-	dragPanel.Text = ""
-	dragPanel.BackgroundTransparency = 1.00
-	-- prevents mouse locking
-	dragPanel.Modal = true
-	dragPanel.Parent = backgroundFrame
-
-	dragPanel.InputBegan:Connect(function(beganInputObject: InputObject)
+	headerLabel.InputBegan:Connect(function(beganInputObject: InputObject)
 		if
 			self.Dragging
 			or (
@@ -298,6 +269,20 @@ function DebugInterface.private:CreateInterface()
 		end
 
 		descendantInstance.AutoLocalize = false
+	end)
+
+	IMGui:Connect(tabsListFrame, function()
+		IMGui:BeginHorizontal()
+
+		for _, tab in Tab.getAllTabs() do
+			local isActive = DebugInterface.internal.ActiveTab and DebugInterface.internal.ActiveTab.Name == tab
+
+			if IMGui:Button(isActive and `<b>{tab}</b>` or tab, not isActive).activated() then
+				DebugInterface.internal.focusModule(tab)
+			end
+		end
+
+		IMGui:End()
 	end)
 end
 

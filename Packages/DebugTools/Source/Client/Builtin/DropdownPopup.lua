@@ -3,20 +3,19 @@ local Players = game:GetService("Players")
 local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
-local insetSize: Vector2 = GuiService:GetGuiInset()
-
 local DebugToolRootPath = script.Parent.Parent
 
 local Signal = require(DebugToolRootPath.Parent.Shared.Signal)
 local Constants = require(DebugToolRootPath.Parent.Shared.Constants)
 
-local Style = require(DebugToolRootPath.Style)
+local Imgui = require(DebugToolRootPath.IMGui)
 
 local DropdownPopup = {}
 DropdownPopup.prototype = {}
 DropdownPopup.interface = {}
 
 function DropdownPopup.prototype:IsPointInDropdown(point: Vector2)
+	local insetSize: Vector2 = GuiService:GetGuiInset()
 	local framePosition: Vector2 = self.DropdownFrame.AbsolutePosition
 	framePosition += insetSize
 
@@ -36,7 +35,7 @@ function DropdownPopup.prototype:Destroy()
 	self.InputEndedConnection:Disconnect()
 	self.EntrySelected:Destroy()
 
-	for _, connection: RBXScriptConnection in self.OptionSelectedConnections do
+	for _, connection in self.OptionSelectedConnections do
 		connection:Disconnect()
 	end
 end
@@ -44,12 +43,14 @@ end
 function DropdownPopup.interface.new(parentInstance: GuiObject, options: { string }, initialValue: string)
 	local self
 
+	local insetSize = GuiService:GetGuiInset()
+
 	local entrySelectedSignal: Signal.Signal<string> = Signal.new()
 	local closedSignal: Signal.Signal<()> = Signal.new()
 
-	local absolutePosition: Vector2 = parentInstance.AbsolutePosition
+	local absolutePosition = parentInstance.AbsolutePosition
 	absolutePosition += insetSize
-	local absoluteSize: Vector2 = parentInstance.AbsoluteSize
+	local absoluteSize = parentInstance.AbsoluteSize
 
 	local screenGui: ScreenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Dropdown"
@@ -57,7 +58,7 @@ function DropdownPopup.interface.new(parentInstance: GuiObject, options: { strin
 	screenGui.DisplayOrder = Constants.DROPDOWN_DISPLAY_ORDER
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	local dropdownFrame: Frame = Instance.new("Frame")
+	local dropdownFrame = Instance.new("Frame")
 	dropdownFrame.Name = "Frame"
 	dropdownFrame.AutomaticSize = Enum.AutomaticSize.Y
 	dropdownFrame.Position = UDim2.fromOffset(absolutePosition.X, absolutePosition.Y + absoluteSize.Y)
@@ -65,21 +66,21 @@ function DropdownPopup.interface.new(parentInstance: GuiObject, options: { strin
 	dropdownFrame.BackgroundTransparency = 1.00
 	dropdownFrame.Parent = screenGui
 
-	local uiListLayout: UIListLayout = Instance.new("UIListLayout")
+	local uiListLayout = Instance.new("UIListLayout")
 	uiListLayout.Parent = dropdownFrame
 
 	local optionSelectedConnections: { RBXScriptConnection } = table.create(#options)
-	for _, option: string in options do
-		local dropdownOption: TextButton = Instance.new("TextButton")
+	for _, option in options do
+		local dropdownOption = Instance.new("TextButton")
 		dropdownOption.AutoLocalize = false
 		dropdownOption.Size = UDim2.fromOffset(absoluteSize.X, absoluteSize.Y)
-		dropdownOption.BackgroundColor3 = Style.BACKGROUND_DARK
+		dropdownOption.BackgroundColor3 = parentInstance.BackgroundColor3
 		dropdownOption.BorderSizePixel = 0
-		dropdownOption.Text = option
-		dropdownOption.TextColor3 = Style.COLOR_WHITE
-		dropdownOption.FontFace = Style.FONT
-		dropdownOption.TextSize = 12
+		dropdownOption.Text = tostring(option)
+		dropdownOption.TextXAlignment = Enum.TextXAlignment.Left
 		dropdownOption.Parent = dropdownFrame
+
+		Imgui.applyTextStyle(dropdownOption)
 
 		table.insert(
 			optionSelectedConnections,
@@ -113,6 +114,7 @@ function DropdownPopup.interface.new(parentInstance: GuiObject, options: { strin
 				return
 			end
 
+			local insetSize: Vector2 = GuiService:GetGuiInset()
 			local mousePosition: Vector2 = Vector2.new(inputObject.Position.X, inputObject.Position.Y)
 			mousePosition += insetSize
 

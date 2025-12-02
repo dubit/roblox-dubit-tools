@@ -1,5 +1,4 @@
 local IMGui = require(script.Parent.Parent.Parent.Parent.IMGui)
-local ClassIndex = require(script.Parent.Parent.Parent.Parent.Vendor.ClassIndex)
 
 type IMGuiLabel = IMGui.WidgetInstance & {
 	TopInstance: ImageLabel,
@@ -13,11 +12,7 @@ IMGui:NewWidgetDefinition("ExplorerClassIcon", {
 		imageLabel.BackgroundTransparency = 1
 		imageLabel.BorderSizePixel = 0
 		imageLabel.Size = size
-
-		for property, value in ClassIndex.FetchClassIcon(object.ClassName) do
-			imageLabel[property] = value
-		end
-
+		imageLabel.Image = `rbxassetid://15793477861`
 		imageLabel.Parent = parent
 
 		return imageLabel
@@ -25,10 +20,6 @@ IMGui:NewWidgetDefinition("ExplorerClassIcon", {
 
 	Update = function(self: IMGuiLabel, size: UDim2, object: Instance)
 		self.TopInstance.Size = size
-
-		for property, value in ClassIndex.FetchClassIcon(object.ClassName) do
-			self.TopInstance[property] = value
-		end
 	end,
 })
 

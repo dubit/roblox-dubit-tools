@@ -1,6 +1,6 @@
 --!strict
-local RunService = game:GetService("RunService")
 local Stats = game:GetService("Stats")
+local RunService = game:GetService("RunService")
 
 local DebugToolRootPath = script.Parent.Parent.Parent
 

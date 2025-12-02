@@ -40,6 +40,8 @@ export type WidgetInstance = {
 	LastUpdateTick: number,
 
 	Args: { any },
+
+	[string]: any,
 }
 
 type IMGuiFrame = {
@@ -71,16 +73,16 @@ IMGui.private = {
 	ProcessedInstance = nil :: IMGuiInstance?,
 
 	CurrentConfig = table.freeze({
-		Font = Font.new("rbxassetid://16658221428"),
+		Font = Font.new("rbxassetid://16658221428", Enum.FontWeight.Medium),
 
 		Transparency = {
 			Window = 0.15,
 		},
 
 		Sizes = {
-			TextSize = 12,
+			TextSize = 14,
 
-			FrameCornerRadius = 4,
+			FrameCornerRadius = 2,
 
 			ItemPadding = Vector2.new(4, 4),
 
@@ -93,15 +95,39 @@ IMGui.private = {
 			Text = Color3.new(1.00, 1.00, 1.00),
 			TextDisabled = Color3.new(0.50, 0.50, 0.50),
 
-			Button = Color3.fromRGB(98, 114, 164),
-			ButtonHovered = Color3.new(0.19, 0.20, 0.25),
-			ButtonActive = Color3.new(0.16, 0.16, 0.21),
-
-			Checkbox = Color3.fromRGB(255, 184, 108),
+			Button = Color3.fromRGB(12, 38, 177),
+			ButtonHovered = Color3.fromRGB(9, 26, 124),
+			ButtonActive = Color3.fromRGB(17, 47, 220),
+			ButtonDisabled = Color3.fromRGB(20, 20, 20),
 		},
 	}),
 }
 IMGui.public = {}
+
+function areValuesEqual<A, B>(source: A, other: B)
+	if typeof(source) ~= "table" or typeof(other) ~= "table" then
+		return source == other
+	end
+
+	-- If either or both tables are an array then it will be the quickest method to determine if they are different
+	if #source ~= #other then
+		return false
+	end
+
+	for key, value in source do
+		if not areValuesEqual(value, other[key]) then
+			return false
+		end
+	end
+
+	for key, value in other do
+		if not areValuesEqual(value, source[key]) then
+			return false
+		end
+	end
+
+	return true
+end
 
 -- TODO: Optimize this thing, this is the worst performing thing over here
 function IMGui.private.GetLineUniqueID()
@@ -252,7 +278,7 @@ function IMGui.private.CreateWidgetFromDefinition(identifier: string, ...)
 		local currArgs = { ... }
 
 		for i, value in widgetInstance.Args do
-			if currArgs[i] ~= value then
+			if not areValuesEqual(currArgs[i], value) then
 				widgetInstance.Args = currArgs
 				widgetDefinition.Update(widgetInstance, ...)
 				break
@@ -321,12 +347,16 @@ function IMGui.public.NewWidgetDefinition(_, identifier: string, definition: Wid
 	IMGui.private.WidgetDefinitions[identifier] = definition
 
 	IMGui.public[identifier] = function(_, ...)
-		return IMGui.private.CreateWidgetFromDefinition(identifier, ...)
+		return IMGui.private.CreateWidgetFromDefinition(identifier, ...) :: WidgetInstance
 	end
 end
 
 function IMGui.public.GetTick()
 	return IMGui.private.ProcessedInstance and IMGui.private.ProcessedInstance.Tick or 0
+end
+
+function IMGui.public.GetConfig(_): typeof(IMGui.private.CurrentConfig)
+	return IMGui.private.CurrentConfig
 end
 
 function IMGui.public.applyFrameStyle(instance: Frame | TextButton)
@@ -348,10 +378,6 @@ function IMGui.public.applyFrameStyle(instance: Frame | TextButton)
 	end
 end
 
-function IMGui.public.GetConfig(_): typeof(IMGui.private.CurrentConfig)
-	return IMGui.private.CurrentConfig
-end
-
 function IMGui.public.applyTextStyle(instance: TextLabel | TextButton)
 	instance.FontFace = IMGui.private.CurrentConfig.Font
 
@@ -360,41 +386,6 @@ function IMGui.public.applyTextStyle(instance: TextLabel | TextButton)
 	instance.TextColor3 = IMGui.private.CurrentConfig.Colors.Text
 
 	instance.AutoLocalize = false
-end
-
-function IMGui.public.applyMouseDownStyle(instance: TextButton | ImageButton, callback: () -> ()): RBXScriptConnection
-	return instance.MouseButton1Down:Connect(function()
-		instance.BackgroundColor3 = IMGui.private.CurrentConfig.Colors.ButtonActive
-
-		callback()
-	end)
-end
-
-function IMGui.public.applyMouseUpStyle(instance: TextButton | ImageButton, callback: () -> ()): RBXScriptConnection
-	return instance.MouseButton1Up:Connect(function()
-		instance.BackgroundColor3 = IMGui.private.CurrentConfig.Colors.ButtonHovered
-
-		callback()
-	end)
-end
-
-function IMGui.public.applyMouseHoverStyle(instance: TextButton | ImageButton, callback: () -> ()): RBXScriptConnection
-	return instance.MouseEnter:Connect(function()
-		instance.BackgroundColor3 = IMGui.private.CurrentConfig.Colors.ButtonHovered
-
-		callback()
-	end)
-end
-
-function IMGui.public.applyMouseHoverEndStyle(
-	instance: TextButton | ImageButton,
-	callback: () -> ()
-): RBXScriptConnection
-	return instance.MouseLeave:Connect(function()
-		instance.BackgroundColor3 = IMGui.private.CurrentConfig.Colors.Button
-
-		callback()
-	end)
 end
 
 export type IMGui = typeof(IMGui.public)

@@ -2,8 +2,6 @@
 local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
-local insetSize: Vector2 = GuiService:GetGuiInset()
-
 local DebugToolRootPath = script.Parent.Parent.Parent.Parent
 local SharedRootPath = DebugToolRootPath.Parent.Shared
 
@@ -48,6 +46,8 @@ function WidgetVisual.internal.observeWidgetChanges(widgetVisual)
 			return
 		end
 
+		local insetSize: Vector2 = GuiService:GetGuiInset()
+
 		local widgetRepresentationAbsolutePosition: Vector2 = screenRepresentation.AbsolutePosition + insetSize
 
 		local offset: Vector2 = UserInputService:GetMouseLocation() - widgetRepresentationAbsolutePosition
@@ -72,16 +72,17 @@ function WidgetVisual.internal.observeWidgetChanges(widgetVisual)
 end
 
 function WidgetVisual.prototype:UpdateRepresentation()
-	local parentSize: Vector2 = self.FrameRepresentation.Parent.AbsoluteSize
+	local insetSize = GuiService:GetGuiInset()
+	local parentSize = self.FrameRepresentation.Parent.AbsoluteSize
 
-	local realScreenSize: Vector2 = workspace.CurrentCamera.ViewportSize
-	local realWidgetPosition: Vector2 = self.BoundingInstance.AbsolutePosition + insetSize
-	local realWidgetSize: Vector2 = self.BoundingInstance.AbsoluteSize
-	local realPositionScaled: Vector2 = realWidgetPosition / realScreenSize
-	local realSizeScaled: Vector2 = realWidgetSize / realScreenSize
+	local realScreenSize = workspace.CurrentCamera.ViewportSize
+	local realWidgetPosition = self.BoundingInstance.AbsolutePosition + insetSize
+	local realWidgetSize = self.BoundingInstance.AbsoluteSize
+	local realPositionScaled = realWidgetPosition / realScreenSize
+	local realSizeScaled = realWidgetSize / realScreenSize
 
-	local widgetRepresentationPosition: Vector2 = parentSize * realPositionScaled
-	local widgetRepresentationSize: Vector2 = parentSize * realSizeScaled
+	local widgetRepresentationPosition = parentSize * realPositionScaled
+	local widgetRepresentationSize = parentSize * realSizeScaled
 
 	self.FrameRepresentation.Position = UDim2.fromOffset(widgetRepresentationPosition.X, widgetRepresentationPosition.Y)
 	self.FrameRepresentation.Size = UDim2.fromOffset(widgetRepresentationSize.X, widgetRepresentationSize.Y)

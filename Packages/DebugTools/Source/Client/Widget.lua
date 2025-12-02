@@ -23,19 +23,19 @@ type Widget = {
 	CreateFunction: (parent: ScreenGui) -> () -> nil,
 }
 
-local DebugWidget = {}
-DebugWidget.internal = {
+local Widget = {}
+Widget.internal = {
 	WidgetData = {} :: { [string]: WidgetData },
 }
-DebugWidget.interface = {
+Widget.interface = {
 	WidgetAdded = Signal.new(),
 
 	WidgetMounted = Signal.new(),
 	WidgetUnmounted = Signal.new(),
 }
 
-function DebugWidget.internal.createWidgetScreenGui(widget: Widget): ScreenGui?
-	local widgetData: WidgetData = DebugWidget.internal.WidgetData[widget.Name]
+function Widget.internal.createWidgetScreenGui(widget: Widget): ScreenGui?
+	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
 	if not widgetData then
 		return nil
 	end
@@ -57,21 +57,21 @@ function DebugWidget.internal.createWidgetScreenGui(widget: Widget): ScreenGui?
 	return widgetScreenGui
 end
 
-function DebugWidget.internal.addWidget(widget: Widget)
+function Widget.internal.addWidget(widget: Widget)
 	local widgetData: WidgetData = {
 		Widget = widget,
 
 		Mounted = false,
 	}
-	DebugWidget.internal.WidgetData[widget.Name] = widgetData
+	Widget.internal.WidgetData[widget.Name] = widgetData
 
-	DebugWidget.interface.WidgetAdded:Fire(widget.Name)
+	Widget.interface.WidgetAdded:Fire(widget.Name)
 
-	DebugWidget.internal.mountWidget(widget)
+	Widget.internal.mountWidget(widget)
 end
 
-function DebugWidget.internal.removeWidget(widgetName: string)
-	local widgetData: WidgetData = DebugWidget.internal.WidgetData[widgetName]
+function Widget.internal.removeWidget(widgetName: string)
+	local widgetData: WidgetData = Widget.internal.WidgetData[widgetName]
 
 	if not widgetData then
 		return
@@ -82,19 +82,19 @@ function DebugWidget.internal.removeWidget(widgetName: string)
 		widgetData.ScreenGui = nil
 	end
 
-	DebugWidget.internal.WidgetData[widgetName] = nil
+	Widget.internal.WidgetData[widgetName] = nil
 end
 
-function DebugWidget.internal.mountWidget(widget: Widget)
-	local widgetParent: ScreenGui? = DebugWidget.internal.createWidgetScreenGui(widget)
+function Widget.internal.mountWidget(widget: Widget)
+	local widgetParent: ScreenGui? = Widget.internal.createWidgetScreenGui(widget)
 	assert(widgetParent, `Widget parent doesn't exist for '{widget.Name}'`)
 
-	local widgetData: WidgetData = DebugWidget.internal.WidgetData[widget.Name]
+	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
 
 	widgetData.DestroyFunction = widget.CreateFunction(widgetParent)
 
 	if typeof(widgetData.DestroyFunction) ~= "function" then
-		DebugWidget.internal.removeWidget(widget.Name)
+		Widget.internal.removeWidget(widget.Name)
 
 		warn(
 			`Widget '{widget.Name}' needs to return a destructor of a type 'function' got '{typeof(
@@ -105,7 +105,7 @@ function DebugWidget.internal.mountWidget(widget: Widget)
 	end
 
 	if #widgetParent:GetChildren() == 0 then
-		DebugWidget.internal.removeWidget(widget.Name)
+		Widget.internal.removeWidget(widget.Name)
 
 		warn(`Widget '{widget.Name}' didn't create any interface elements.`)
 		return
@@ -113,11 +113,11 @@ function DebugWidget.internal.mountWidget(widget: Widget)
 
 	widgetData.Mounted = true
 
-	DebugWidget.interface.WidgetMounted:Fire(widget.Name, widgetParent)
+	Widget.interface.WidgetMounted:Fire(widget.Name, widgetParent)
 end
 
-function DebugWidget.internal.unmountWidget(widget: Widget)
-	local widgetData: WidgetData = DebugWidget.internal.WidgetData[widget.Name]
+function Widget.internal.unmountWidget(widget: Widget)
+	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
 	if not widgetData or not widgetData.Mounted then
 		return
 	end
@@ -143,14 +143,14 @@ function DebugWidget.internal.unmountWidget(widget: Widget)
 
 	widgetData.Mounted = false
 
-	DebugWidget.interface.WidgetUnmounted:Fire(widget.Name)
+	Widget.interface.WidgetUnmounted:Fire(widget.Name)
 end
 
-function DebugWidget.internal.getWidgetData(widgetName: string): WidgetData?
-	return DebugWidget.internal.WidgetData[widgetName]
+function Widget.internal.getWidgetData(widgetName: string): WidgetData?
+	return Widget.internal.WidgetData[widgetName]
 end
 
-function DebugWidget.interface.new(widgetName: string, widgetCreateFunction: (parent: ScreenGui) -> () -> nil)
+function Widget.interface.new(widgetName: string, widgetCreateFunction: (parent: ScreenGui) -> () -> nil)
 	assert(type(widgetName) == "string", `Expected parameter #1 'widgetName' to be a string, got {type(widgetName)}`)
 	assert(
 		type(widgetCreateFunction) == "function",
@@ -163,16 +163,16 @@ function DebugWidget.interface.new(widgetName: string, widgetCreateFunction: (pa
 		CreateFunction = widgetCreateFunction,
 	}
 
-	DebugWidget.internal.addWidget(widget)
+	Widget.internal.addWidget(widget)
 end
 
-function DebugWidget.interface:GetAll()
+function Widget.interface:GetAll()
 	local widgets: { [string]: {
 		Mounted: boolean,
 		ScreenGui: ScreenGui?,
 	} } = {}
 
-	for widgetName: string, widgetData: WidgetData in DebugWidget.internal.WidgetData do
+	for widgetName: string, widgetData: WidgetData in Widget.internal.WidgetData do
 		widgets[widgetName] = {
 			Mounted = widgetData.Mounted,
 			ScreenGui = widgetData.ScreenGui,
@@ -182,36 +182,36 @@ function DebugWidget.interface:GetAll()
 	return widgets
 end
 
-function DebugWidget.interface:Hide(widgetName: string)
-	local widgetData: WidgetData? = DebugWidget.internal.getWidgetData(widgetName)
+function Widget.interface:Hide(widgetName: string)
+	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
 	if not widgetData or not widgetData.Mounted then
 		return
 	end
 
-	DebugWidget.internal.unmountWidget(widgetData.Widget)
+	Widget.internal.unmountWidget(widgetData.Widget)
 end
 
-function DebugWidget.interface:Show(widgetName: string)
-	local widgetData: WidgetData? = DebugWidget.internal.getWidgetData(widgetName)
+function Widget.interface:Show(widgetName: string)
+	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
 	if not widgetData or widgetData.Mounted then
 		return
 	end
 
-	DebugWidget.internal.mountWidget(widgetData.Widget)
+	Widget.internal.mountWidget(widgetData.Widget)
 end
 
-function DebugWidget.interface:IsVisible(widgetName: string)
-	local widgetData: WidgetData? = DebugWidget.internal.getWidgetData(widgetName)
+function Widget.interface:IsVisible(widgetName: string)
+	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
 
 	return widgetData and widgetData.Mounted or false
 end
 
-function DebugWidget.interface:SwitchVisibility(widgetName: string)
-	if DebugWidget.interface:IsVisible(widgetName) then
-		DebugWidget.interface:Hide(widgetName)
+function Widget.interface:SwitchVisibility(widgetName: string)
+	if Widget.interface:IsVisible(widgetName) then
+		Widget.interface:Hide(widgetName)
 	else
-		DebugWidget.interface:Show(widgetName)
+		Widget.interface:Show(widgetName)
 	end
 end
 
-return DebugWidget.interface
+return Widget.interface

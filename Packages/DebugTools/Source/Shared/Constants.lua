@@ -1,4 +1,4 @@
-local CONSTANTS = {
+return table.freeze({
 	MOBILE_GESTURE_DETECTION_AREA = 0.20,
 
 	DROPDOWN_DISPLAY_ORDER = 1e+09,
@@ -9,9 +9,5 @@ local CONSTANTS = {
 
 	IS_AUTHORIZED_ATTRIBUTE = "DEBUGTOOLS_ISAUTHORIZED",
 
-	VERSION = "0.3.0",
-}
-
-table.freeze(CONSTANTS)
-
-return CONSTANTS
+	VERSION = "1.0.0",
+})

@@ -1,6 +1,6 @@
-local UserInputService = game:GetService("UserInputService")
 local StarterGui = game:GetService("StarterGui")
 local GuiService = game:GetService("GuiService")
+local UserInputService = game:GetService("UserInputService")
 
 local Authorization = require(script.Authorization)
 local DebugInterface = require(script.Interface)
@@ -156,23 +156,19 @@ function DebugTools.internal.observeConsoleKeyBindsForDevConsole()
 	end)
 end
 
-function DebugTools.internal.init()
-	DebugInterface.init()
+DebugInterface.init()
 
-	DebugTools.internal.observeKeyBinds()
-	DebugTools.internal.observeMobileGesture()
-	DebugTools.internal.observeConsoleKeyBinds()
-	DebugTools.internal.observeConsoleKeyBindsForDevConsole()
+DebugTools.internal.observeKeyBinds()
+DebugTools.internal.observeMobileGesture()
+DebugTools.internal.observeConsoleKeyBinds()
+DebugTools.internal.observeConsoleKeyBindsForDevConsole()
 
-	for _, childInstance: Instance in script.Builtin.IMGuiWidgets:GetChildren() do
-		if not childInstance:IsA("ModuleScript") then
-			continue
-		end
-
-		require(childInstance)
+for _, childInstance in script.Builtin.IMGuiWidgets:GetChildren() do
+	if not childInstance:IsA("ModuleScript") then
+		continue
 	end
-end
 
-DebugTools.internal.init()
+	task.spawn(require, childInstance)
+end
 
 return DebugTools.interface

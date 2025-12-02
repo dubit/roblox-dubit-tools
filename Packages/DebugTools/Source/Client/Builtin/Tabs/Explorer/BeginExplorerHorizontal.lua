@@ -44,10 +44,10 @@ IMGui:NewWidgetDefinition("BeginExplorerHorizontal", {
 		Frame.Name = `ExplorerHorizontal ({self.ID})`
 		Frame.Size = UDim2.fromScale(1, 0)
 		Frame.AutomaticSize = Enum.AutomaticSize.XY
-		Frame.BackgroundTransparency = selected and 0.50 or 1
+		Frame.BackgroundTransparency = selected and 0 or 1
 		Frame.BorderSizePixel = 0
 		Frame.Active = true
-		Frame.BackgroundColor3 = Color3.fromHex("#0b5aaf")
+		Frame.BackgroundColor3 = Color3.fromRGB(12, 38, 177)
 
 		local UIListLayout = Instance.new("UIListLayout")
 		UIListLayout.Name = "UIListLayout"
