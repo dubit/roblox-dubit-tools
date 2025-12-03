@@ -18,6 +18,7 @@ local Constants = require(SharedPath.Constants)
 local INTERFACE_KEY = Enum.KeyCode.F6
 
 local debugScreenGUI: ScreenGui
+local debugScreenFrame: Frame
 local debugScreenTabs: Frame
 local debugScreenContentFrame: Frame
 local dragOffset: Vector2?
@@ -63,13 +64,16 @@ end
 
 local function setupInterface()
 	local backgroundFrame = Instance.new("Frame")
-	backgroundFrame.Name = "Frame"
+	backgroundFrame.Name = "Main Interface"
 	backgroundFrame.AnchorPoint = Vector2.new(0.50, 0.50)
 	backgroundFrame.Position = UDim2.fromScale(0.50, 0.50)
 	backgroundFrame.Size = UDim2.fromOffset(600, 400)
 	backgroundFrame.BackgroundTransparency = 0.33
 	backgroundFrame.BackgroundColor3 = Color3.new()
 	backgroundFrame.BorderSizePixel = 0
+	backgroundFrame.Visible = false
+
+	debugScreenFrame = backgroundFrame
 
 	local uiStroke = Instance.new("UIStroke")
 	uiStroke.Color = Color3.fromRGB(12, 38, 177)
@@ -111,6 +115,28 @@ local function setupInterface()
 	headerUIPadding.PaddingLeft = UDim.new(0, 8)
 	headerUIPadding.PaddingRight = UDim.new(0, 8)
 	headerUIPadding.Parent = headerLabel
+
+	local uIStroke = Instance.new("UIStroke")
+	uIStroke.Transparency = 0.5
+	uIStroke.Parent = headerLabel
+
+	local pastebinLink = Instance.new("TextLabel")
+	pastebinLink.Name = "Pastebin Link"
+	pastebinLink.AnchorPoint = Vector2.new(1, 0)
+	pastebinLink.BackgroundTransparency = 1
+	pastebinLink.FontFace = Font.new("rbxassetid://16658221428", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	pastebinLink.Position = UDim2.new(1, -32, 0, 0)
+	pastebinLink.Size = UDim2.new(1, -32, 1, 0)
+	pastebinLink.Text = "https://pastebin.com/xyz"
+	pastebinLink.TextColor3 = Color3.new(1, 1, 1)
+	pastebinLink.TextSize = 14
+	pastebinLink.TextXAlignment = Enum.TextXAlignment.Right
+
+	local pastebinUIStroke = Instance.new("UIStroke")
+	pastebinUIStroke.Transparency = 0.5
+	pastebinUIStroke.Parent = pastebinLink
+
+	pastebinLink.Parent = headerLabel
 
 	local sendLogsButton = Instance.new("ImageButton")
 	sendLogsButton.Name = "Send Logs"
@@ -245,7 +271,6 @@ local function setupInterface()
 	debugScreenGUI.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
 	debugScreenGUI.ResetOnSpawn = false
 	debugScreenGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	debugScreenGUI.Enabled = false
 
 	if Authorization:IsLocalPlayerAuthorized() then
 		debugScreenGUI.Parent = Players.LocalPlayer.PlayerGui
@@ -350,7 +375,7 @@ local function switchVisibility()
 		return
 	end
 
-	debugScreenGUI.Enabled = not debugScreenGUI.Enabled
+	debugScreenFrame.Visible = not debugScreenFrame.Visible
 
 	if debugScreenGUI.Enabled then
 		if not activeTab then
@@ -463,4 +488,10 @@ Authorization.StatusChanged:Connect(function(authorized)
 	debugScreenGUI.Parent = authorized and Players.LocalPlayer.PlayerGui or script
 end)
 
-return nil
+local Interface = {}
+
+function Interface.GetDebugScreenGUI(self)
+	return debugScreenGUI
+end
+
+return Interface

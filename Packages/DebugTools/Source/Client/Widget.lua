@@ -1,13 +1,9 @@
---!strict
-local Players = game:GetService("Players")
-
 local DebugToolRootPath = script.Parent.Parent
 local SharedRootPath = DebugToolRootPath.Shared
 
 local Signal = require(SharedRootPath.Signal)
-local Constants = require(SharedRootPath.Constants)
 
-local Authorization = require(script.Parent.Authorization)
+local Interface = require(script.Parent.Interface)
 
 type WidgetData = {
 	Widget: Widget,
@@ -35,34 +31,6 @@ Widget.interface = {
 	WidgetMounted = Signal.new(),
 	WidgetUnmounted = Signal.new(),
 }
-
-function Widget.internal.createWidgetScreenGui(widget: Widget): ScreenGui?
-	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
-	if not widgetData then
-		return nil
-	end
-
-	if widgetData.ScreenGui then
-		return widgetData.ScreenGui
-	end
-
-	local widgetScreenGui: ScreenGui = Instance.new("ScreenGui")
-	widgetScreenGui.Name = `[DEBUG] {widget.Name}`
-	widgetScreenGui.DisplayOrder = Constants.WIDGET_DISPLAY_ORDER
-	widgetScreenGui.IgnoreGuiInset = true
-	widgetScreenGui.ResetOnSpawn = false
-	widgetScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-	if Authorization:IsLocalPlayerAuthorized() then
-		widgetScreenGui.Parent = Players.LocalPlayer.PlayerGui
-	else
-		widgetScreenGui.Parent = script
-	end
-
-	widgetData.ScreenGui = widgetScreenGui
-
-	return widgetScreenGui
-end
 
 function Widget.internal.addWidget(widget: Widget)
 	local widgetData: WidgetData = {
@@ -93,7 +61,7 @@ function Widget.internal.removeWidget(widgetName: string)
 end
 
 function Widget.internal.mountWidget(widget: Widget)
-	local widgetParent: ScreenGui? = Widget.internal.createWidgetScreenGui(widget)
+	local widgetParent: ScreenGui? = Interface:GetDebugScreenGUI()
 	assert(widgetParent, `Widget parent doesn't exist for '{widget.Name}'`)
 
 	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
@@ -131,21 +99,6 @@ function Widget.internal.unmountWidget(widget: Widget)
 
 	if widgetData.DestroyFunction then
 		widgetData.DestroyFunction()
-	end
-
-	if widgetData.ScreenGui then
-		local screenGuiChildren: { Instance } = widgetData.ScreenGui:GetChildren()
-
-		if #screenGuiChildren > 0 then
-			warn(`Widget '{widget.Name}' didn't cleanup unmounted interface properly, there are leftover elements:`)
-
-			for _, childInstance: Instance in screenGuiChildren do
-				warn(`  ╠ {childInstance.Name}({childInstance.ClassName})`)
-			end
-		end
-
-		widgetData.ScreenGui:Destroy()
-		widgetData.ScreenGui = nil
 	end
 
 	widgetData.Mounted = false
@@ -220,21 +173,5 @@ function Widget.interface:SwitchVisibility(widgetName: string)
 		Widget.interface:Show(widgetName)
 	end
 end
-
-Authorization.StatusChanged:Connect(function(authorized)
-	if not authorized then
-		for _, widget in Widget.internal.WidgetData do
-			if widget.ScreenGui then
-				widget.ScreenGui.Parent = script
-			end
-		end
-	else
-		for _, widget in Widget.internal.WidgetData do
-			if widget.ScreenGui then
-				widget.ScreenGui.Parent = Players.LocalPlayer.PlayerGui
-			end
-		end
-	end
-end)
 
 return Widget.interface
