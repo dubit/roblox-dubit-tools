@@ -1,6 +1,6 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiButton = Imgui.WidgetInstance & {
+type ImguiButton = IMGui.WidgetInstance & {
 	Button: TextButton,
 
 	Pressed: boolean,
@@ -13,9 +13,9 @@ type ImguiButton = Imgui.WidgetInstance & {
 	MouseDownConnection: RBXScriptConnection,
 }
 
-local IMGUI_CONFIG = Imgui:GetConfig()
+local IMGUI_CONFIG = IMGui:GetConfig()
 
-Imgui:NewWidgetDefinition("Button", {
+IMGui:NewWidgetDefinition("Button", {
 	Events = {
 		["activated"] = {
 			["Evaluate"] = function(self: ImguiButton)
@@ -39,12 +39,12 @@ Imgui:NewWidgetDefinition("Button", {
 		buttonInstance.AutomaticSize = Enum.AutomaticSize.XY
 		buttonInstance.Text = text
 		buttonInstance.RichText = true
-		buttonInstance.BackgroundColor3 = Imgui:GetConfig().Colors.Button
+		buttonInstance.BackgroundColor3 = IMGui:GetConfig().Colors.Button
 		buttonInstance.BorderSizePixel = 0
 		buttonInstance.AutoButtonColor = false
 
-		Imgui.applyTextStyle(buttonInstance)
-		Imgui.applyFrameStyle(buttonInstance)
+		IMGui.applyTextStyle(buttonInstance)
+		IMGui.applyFrameStyle(buttonInstance)
 
 		buttonInstance.Parent = parent
 
@@ -94,11 +94,11 @@ Imgui:NewWidgetDefinition("Button", {
 		end)
 
 		if not self.Clickable then
-			self.Button.BackgroundColor3 = Imgui:GetConfig().Colors.ButtonDisabled
+			self.Button.BackgroundColor3 = IMGui:GetConfig().Colors.ButtonDisabled
 			self.Button.BackgroundTransparency = 0.50
 			self.Button.TextTransparency = 0.25
 		else
-			self.Button.BackgroundColor3 = Imgui:GetConfig().Colors.Button
+			self.Button.BackgroundColor3 = IMGui:GetConfig().Colors.Button
 			self.Button.BackgroundTransparency = 0.00
 			self.Button.TextTransparency = 0.00
 		end
@@ -119,11 +119,11 @@ Imgui:NewWidgetDefinition("Button", {
 		self.Clickable = if clickable ~= nil then clickable else true
 
 		if not self.Clickable then
-			self.Button.BackgroundColor3 = Imgui:GetConfig().Colors.ButtonDisabled
+			self.Button.BackgroundColor3 = IMGui:GetConfig().Colors.ButtonDisabled
 			self.Button.BackgroundTransparency = 0.50
 			self.Button.TextTransparency = 0.25
 		else
-			self.Button.BackgroundColor3 = Imgui:GetConfig().Colors.Button
+			self.Button.BackgroundColor3 = IMGui:GetConfig().Colors.Button
 			self.Button.BackgroundTransparency = 0.00
 			self.Button.TextTransparency = 0.00
 		end

@@ -1,4 +1,4 @@
-local IMGui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
 type IMGuiBeginGroup = IMGui.WidgetInstance & {
 	UIListLayout: UIListLayout,

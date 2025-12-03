@@ -1,6 +1,6 @@
-local IMGui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type UISizeConstraint = Imgui.WidgetInstance & {
+type UISizeConstraint = IMGui.WidgetInstance & {
 	Constraint: UISizeConstraint,
 }
 

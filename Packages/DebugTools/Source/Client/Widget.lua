@@ -7,6 +7,8 @@ local SharedRootPath = DebugToolRootPath.Shared
 local Signal = require(SharedRootPath.Signal)
 local Constants = require(SharedRootPath.Constants)
 
+local Authorization = require(script.Parent.Authorization)
+
 type WidgetData = {
 	Widget: Widget,
 
@@ -50,7 +52,12 @@ function Widget.internal.createWidgetScreenGui(widget: Widget): ScreenGui?
 	widgetScreenGui.IgnoreGuiInset = true
 	widgetScreenGui.ResetOnSpawn = false
 	widgetScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	widgetScreenGui.Parent = Players.LocalPlayer.PlayerGui
+
+	if Authorization:IsLocalPlayerAuthorized() then
+		widgetScreenGui.Parent = Players.LocalPlayer.PlayerGui
+	else
+		widgetScreenGui.Parent = script
+	end
 
 	widgetData.ScreenGui = widgetScreenGui
 
@@ -213,5 +220,21 @@ function Widget.interface:SwitchVisibility(widgetName: string)
 		Widget.interface:Show(widgetName)
 	end
 end
+
+Authorization.StatusChanged:Connect(function(authorized)
+	if not authorized then
+		for _, widget in Widget.internal.WidgetData do
+			if widget.ScreenGui then
+				widget.ScreenGui.Parent = script
+			end
+		end
+	else
+		for _, widget in Widget.internal.WidgetData do
+			if widget.ScreenGui then
+				widget.ScreenGui.Parent = Players.LocalPlayer.PlayerGui
+			end
+		end
+	end
+end)
 
 return Widget.interface

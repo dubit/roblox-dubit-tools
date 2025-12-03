@@ -1,12 +1,10 @@
 local ReflectionService = game:GetService("ReflectionService")
+
 local DebugToolRootPath = script.Parent.Parent.Parent
 
 local Tab = require(DebugToolRootPath.Tab)
 local IMGui = require(DebugToolRootPath.IMGui)
 local Widget = require(DebugToolRootPath.Widget)
-
-require(script.ClassIcon)
-require(script.BeginExplorerHorizontal)
 
 local EXPLORER_CAPABILITIES = SecurityCapabilities.new(
 	Enum.SecurityCapability.Players,
@@ -41,21 +39,16 @@ function Explorer.internal.processInstance(instance: Instance, depth: number)
 		or Explorer.internal.ExpandedInstances[instance] and "http://www.roblox.com/asset/?id=17115119309"
 		or "http://www.roblox.com/asset/?id=17115120806"
 
-	if IMGui:BeginExplorerHorizontal(Explorer.internal.SelectedInstance == instance).activated() then
+	if IMGui:TreeNode(Explorer.internal.SelectedInstance == instance).activated() then
 		Explorer.internal.SelectedInstance = instance
 	end
 
-	IMGui:BeginGroup(UDim2.fromOffset(10 * depth, 0))
+	IMGui:BeginGroup(UDim2.fromOffset(5 * depth, 0))
 	IMGui:End()
 
 	if IMGui:ImageButton(UDim2.fromOffset(16, 16), arrowIcon).activated() then
 		Explorer.internal.ExpandedInstances[instance] = not Explorer.internal.ExpandedInstances[instance]
 	end
-
-	IMGui:ExplorerClassIcon(UDim2.fromOffset(16, 16), instance)
-
-	IMGui:BeginGroup(UDim2.fromOffset(5, 0))
-	IMGui:End()
 
 	IMGui:Label(instance.Name)
 

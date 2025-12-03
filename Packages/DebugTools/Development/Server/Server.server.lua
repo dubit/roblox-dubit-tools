@@ -47,12 +47,12 @@ DebugTools.Server.Action.new("Fruits/Update 'Pick an option'", "Update the optio
 	})
 end)
 
--- DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
--- 	return false
--- end)
+DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
+	return false
+end)
 
--- task.delay(5, function()
--- 	DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
--- 		return RunService:IsStudio() or player:GetRankInGroup(13711091) >= 200
--- 	end)
--- end)
+task.delay(5, function()
+	DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
+		return RunService:IsStudio() or player:GetRankInGroup(13711091) >= 200
+	end)
+end)

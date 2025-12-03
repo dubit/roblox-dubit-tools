@@ -1,5 +1,4 @@
 --!strict
-local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
 local DebugToolRootPath = script.Parent.Parent.Parent

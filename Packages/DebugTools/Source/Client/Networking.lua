@@ -1,11 +1,13 @@
 --!strict
-local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 
 local DebugToolRootPath = script.Parent.Parent
 local SharedPath = DebugToolRootPath.Shared
 
 local Constants = require(SharedPath.Constants)
+
+local Authorization = require(script.Parent.Authorization)
 
 local Networking = {}
 Networking.internal = {
@@ -16,43 +18,6 @@ Networking.internal = {
 	},
 }
 Networking.interface = {}
-
-function Networking.internal.listenToNetworkTraffic()
-	local networkTrafficRemote: RemoteEvent = ReplicatedStorage:WaitForChild(Constants.NETWORK_TRAFFIC_REMOTE_NAME)
-
-	networkTrafficRemote.OnClientEvent:Connect(function(messageContent: { any })
-		for _, message in messageContent do
-			local topic: string = message[1]
-			local params: { any } = message[2]
-
-			if not topic or not params then
-				continue
-			end
-
-			Networking.internal.invokeTopic(topic, table.unpack(params))
-		end
-	end)
-
-	Networking.internal.NetworkTrafficRemote = networkTrafficRemote
-
-	networkTrafficRemote:FireServer("_ready_")
-end
-
-function Networking.internal.initiateTrafficHeartbeat()
-	if not Networking.internal.NetworkTrafficRemote then
-		return
-	end
-
-	RunService.Heartbeat:Connect(function()
-		if #Networking.internal.MessageQueue <= 0 then
-			return
-		end
-
-		Networking.internal.NetworkTrafficRemote:FireServer(Networking.internal.MessageQueue)
-
-		Networking.internal.MessageQueue = {}
-	end)
-end
 
 function Networking.internal.invokeTopic(topic: string, ...)
 	local topicCallbacks = Networking.internal.TopicCallbacks[topic]
@@ -87,7 +52,42 @@ function Networking.interface:SubscribeToTopic(topic: string, callback: (...any)
 	end
 end
 
-Networking.internal.listenToNetworkTraffic()
-Networking.internal.initiateTrafficHeartbeat()
+local networkTrafficRemote = ReplicatedStorage:WaitForChild(Constants.NETWORK_TRAFFIC_REMOTE_NAME) :: RemoteEvent
+
+networkTrafficRemote.OnClientEvent:Connect(function(messageContent: { any })
+	for _, message in messageContent do
+		local topic: string = message[1]
+		local params: { any } = message[2]
+
+		if not topic or not params then
+			continue
+		end
+
+		Networking.internal.invokeTopic(topic, table.unpack(params))
+	end
+end)
+
+Networking.internal.NetworkTrafficRemote = networkTrafficRemote
+
+RunService.Heartbeat:Connect(function()
+	if #Networking.internal.MessageQueue <= 0 then
+		return
+	end
+
+	local messagesToSend = Networking.internal.MessageQueue
+	Networking.internal.MessageQueue = {}
+
+	Networking.internal.NetworkTrafficRemote:FireServer(messagesToSend)
+end)
+
+Authorization.StatusChanged:Connect(function(authorized)
+	if authorized then
+		networkTrafficRemote:FireServer("_ready_")
+	end
+end)
+
+if Authorization:IsLocalPlayerAuthorized() then
+	networkTrafficRemote:FireServer("_ready_")
+end
 
 return Networking.interface

@@ -390,6 +390,16 @@ end
 
 export type IMGui = typeof(IMGui.public)
 
+task.defer(function()
+	for _, child in script:GetChildren() do
+		if not child:IsA("ModuleScript") then
+			continue
+		end
+
+		task.spawn(require, child)
+	end
+end)
+
 RunService.Heartbeat:Connect(IMGui.private.ProcessFrame)
 
 return IMGui.public

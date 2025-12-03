@@ -62,7 +62,7 @@ Tab.new("Actions", function(parent: Frame)
 				actualName = actualName[#actualName]
 
 				if typeof(data) == "table" then
-					if IMGui:BeginExplorerHorizontal(false).activated() then
+					if IMGui:TreeNode(false).activated() then
 						expandedPaths[name] = not expandedPaths[name]
 					end
 
@@ -85,7 +85,7 @@ Tab.new("Actions", function(parent: Frame)
 						processNode(data, depth + 1)
 					end
 				else
-					if IMGui:BeginExplorerHorizontal(selectedAction == data).activated() then
+					if IMGui:TreeNode(selectedAction == data).activated() then
 						selectedAction = data
 
 						local definition = Action:GetDefinition(data)

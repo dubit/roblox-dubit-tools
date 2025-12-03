@@ -1,10 +1,10 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiLabel = Imgui.WidgetInstance & {
+type ImguiLabel = IMGui.WidgetInstance & {
 	TopInstance: TextLabel,
 }
 
-Imgui:NewWidgetDefinition("Label", {
+IMGui:NewWidgetDefinition("Label", {
 	Construct = function(self: ImguiLabel, parent: GuiObject, text: string)
 		local textInstance: TextLabel = Instance.new("TextLabel")
 		textInstance.Name = `Label ({self.ID})`
@@ -14,7 +14,7 @@ Imgui:NewWidgetDefinition("Label", {
 		textInstance.BackgroundTransparency = 1
 		textInstance.BorderSizePixel = 0
 
-		Imgui.applyTextStyle(textInstance)
+		IMGui.applyTextStyle(textInstance)
 
 		textInstance.Parent = parent
 

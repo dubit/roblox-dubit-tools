@@ -1,6 +1,6 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiCheckbox = Imgui.WidgetInstance & {
+type ImguiCheckbox = IMGui.WidgetInstance & {
 	Status: boolean,
 	Pressed: boolean,
 
@@ -14,7 +14,7 @@ type ImguiCheckbox = Imgui.WidgetInstance & {
 	PressConnection: RBXScriptConnection,
 }
 
-Imgui:NewWidgetDefinition("Checkbox", {
+IMGui:NewWidgetDefinition("Checkbox", {
 	Events = {
 		["activated"] = {
 			["Evaluate"] = function(self: ImguiCheckbox)
@@ -41,7 +41,7 @@ Imgui:NewWidgetDefinition("Checkbox", {
 		TextLabel.BorderSizePixel = 0
 		TextLabel.LayoutOrder = 1
 
-		Imgui.applyTextStyle(TextLabel)
+		IMGui.applyTextStyle(TextLabel)
 
 		TextLabel.Parent = Frame
 
@@ -51,7 +51,7 @@ Imgui:NewWidgetDefinition("Checkbox", {
 		UIListLayout.FillDirection = Enum.FillDirection.Horizontal
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.Parent = Frame
-		UIListLayout.Padding = UDim.new(0.00, Imgui:GetConfig().Sizes.ItemPadding.X)
+		UIListLayout.Padding = UDim.new(0.00, IMGui:GetConfig().Sizes.ItemPadding.X)
 
 		local TextButton = Instance.new("TextButton")
 		TextButton.Name = "TextButton"
@@ -71,7 +71,7 @@ Imgui:NewWidgetDefinition("Checkbox", {
 		StatusImageLabel.Name = "Status ImageLabel"
 		StatusImageLabel.Size = UDim2.fromScale(1.00, 1.00)
 		StatusImageLabel.Image = "rbxassetid://15225522557"
-		StatusImageLabel.ImageColor3 = Imgui:GetConfig().Colors.Checkbox
+		StatusImageLabel.ImageColor3 = IMGui:GetConfig().Colors.Checkbox
 		StatusImageLabel.Visible = status
 		StatusImageLabel.BackgroundTransparency = 1.00
 		StatusImageLabel.BorderSizePixel = 0

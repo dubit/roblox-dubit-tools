@@ -1,21 +1,21 @@
-local IMGui = require(script.Parent.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
 local acceptedInputTypes = {
 	[Enum.UserInputType.MouseButton1] = true,
 	[Enum.UserInputType.Touch] = true,
 }
 
-type IMGuiBeginExplorerHorizontal = IMGui.WidgetInstance & {
+type TreeNode = IMGui.WidgetInstance & {
 	UIListLayout: UIListLayout,
 	TopInstance: Frame,
 
 	WasPressed: boolean,
 }
 
-IMGui:NewWidgetDefinition("BeginExplorerHorizontal", {
+IMGui:NewWidgetDefinition("TreeNode", {
 	Events = {
 		["activated"] = {
-			["Setup"] = function(self: IMGuiBeginExplorerHorizontal)
+			["Setup"] = function(self: TreeNode)
 				self.TopInstance.InputBegan:Connect(function(inputObject: InputObject)
 					if not acceptedInputTypes[inputObject.UserInputType] then
 						return
@@ -25,7 +25,7 @@ IMGui:NewWidgetDefinition("BeginExplorerHorizontal", {
 				end)
 			end,
 
-			["Evaluate"] = function(self: IMGuiBeginExplorerHorizontal)
+			["Evaluate"] = function(self: TreeNode)
 				local wasPressed = self.WasPressed
 				self.WasPressed = false
 
@@ -34,12 +34,7 @@ IMGui:NewWidgetDefinition("BeginExplorerHorizontal", {
 		},
 	},
 
-	Construct = function(
-		self: IMGuiBeginExplorerHorizontal,
-		parent: GuiObject,
-		selected: boolean?,
-		alignment: Enum.HorizontalAlignment?
-	)
+	Construct = function(self: TreeNode, parent: GuiObject, selected: boolean?, alignment: Enum.HorizontalAlignment?)
 		local Frame = Instance.new("Frame")
 		Frame.Name = `ExplorerHorizontal ({self.ID})`
 		Frame.Size = UDim2.fromScale(1, 0)
@@ -66,7 +61,7 @@ IMGui:NewWidgetDefinition("BeginExplorerHorizontal", {
 		return Frame, Frame
 	end,
 
-	Update = function(self: IMGuiBeginExplorerHorizontal, selected: boolean?, alignment: Enum.HorizontalAlignment?)
+	Update = function(self: TreeNode, selected: boolean?, alignment: Enum.HorizontalAlignment?)
 		self.UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
 		self.TopInstance.BackgroundTransparency = selected and 0 or 1
 	end,

@@ -57,11 +57,11 @@ function Components.internal.processTags(tag: string)
 					or "http://www.roblox.com/asset/?id=110693549312858"
 				local newDepth = Components.internal.ExpandedInstances[instance] and (index - 1) or 0
 
-				if IMGui:BeginExplorerHorizontal(Explorer.getSelectedObject() == ancestor).activated() then
+				if IMGui:TreeNode(Explorer.getSelectedObject() == ancestor).activated() then
 					Explorer.setSelectedObject(ancestor)
 				end
 
-				IMGui:BeginGroup(UDim2.fromOffset(20 * newDepth, 0))
+				IMGui:BeginGroup(UDim2.fromOffset(10 * newDepth, 0))
 				IMGui:End()
 
 				if IMGui:ImageButton(UDim2.fromOffset(12, 12), arrowIcon).activated() then
@@ -72,11 +72,6 @@ function Components.internal.processTags(tag: string)
 					Components.internal.ExpandedInstances[instance] =
 						not Components.internal.ExpandedInstances[instance]
 				end
-
-				IMGui:ExplorerClassIcon(UDim2.fromOffset(16, 16), ancestor)
-
-				IMGui:BeginGroup(UDim2.fromOffset(5, 0))
-				IMGui:End()
 
 				IMGui:Label(ancestor.Name)
 

@@ -1,12 +1,12 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiScrollingFrameY = Imgui.WidgetInstance & {
+type ImguiScrollingFrameY = IMGui.WidgetInstance & {
 	UIListLayout: UIListLayout,
 }
 
-local IMGUI_CONFIG = Imgui:GetConfig()
+local IMGUI_CONFIG = IMGui:GetConfig()
 
-Imgui:NewWidgetDefinition("ScrollingFrameY", {
+IMGui:NewWidgetDefinition("ScrollingFrameY", {
 	Construct = function(
 		self: ImguiScrollingFrameY,
 		parent: GuiObject,

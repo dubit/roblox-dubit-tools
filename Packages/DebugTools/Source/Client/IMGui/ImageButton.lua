@@ -1,6 +1,6 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiImageButton = Imgui.WidgetInstance & {
+type ImguiImageButton = IMGui.WidgetInstance & {
 	ImageButton: ImageButton,
 
 	Pressed: boolean,
@@ -11,7 +11,7 @@ type ImguiImageButton = Imgui.WidgetInstance & {
 	MouseLeaveConnection: RBXScriptConnection,
 }
 
-Imgui:NewWidgetDefinition("ImageButton", {
+IMGui:NewWidgetDefinition("ImageButton", {
 	Events = {
 		["activated"] = {
 			["Evaluate"] = function(self: ImguiImageButton)

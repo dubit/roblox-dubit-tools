@@ -1,12 +1,12 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-type ImguiBeginVertical = Imgui.WidgetInstance & {
+type ImguiBeginVertical = IMGui.WidgetInstance & {
 	UIListLayout: UIListLayout,
 }
 
-local IMGUI_CONFIG = Imgui:GetConfig()
+local IMGUI_CONFIG = IMGui:GetConfig()
 
-Imgui:NewWidgetDefinition("BeginVertical", {
+IMGui:NewWidgetDefinition("BeginVertical", {
 	Construct = function(self: ImguiBeginVertical, parent: GuiObject, alignment: Enum.HorizontalAlignment?)
 		local Frame = Instance.new("Frame")
 		Frame.Name = `Vertical ({self.ID})`

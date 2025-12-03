@@ -1,8 +1,8 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-local DropdownPopup = require(script.Parent.Parent.Parent.Builtin.DropdownPopup)
+local DropdownPopup = require(script.Parent.Parent.Builtin.DropdownPopup)
 
-type Dropdown = Imgui.WidgetInstance & {
+type Dropdown = IMGui.WidgetInstance & {
 	Button: TextButton,
 
 	Pressed: boolean,
@@ -12,7 +12,7 @@ type Dropdown = Imgui.WidgetInstance & {
 	MouseLeaveConnection: RBXScriptConnection,
 }
 
-Imgui:NewWidgetDefinition("Dropdown", {
+IMGui:NewWidgetDefinition("Dropdown", {
 	Events = {
 		["changed"] = {
 			["Evaluate"] = function(self: Dropdown)
@@ -33,16 +33,15 @@ Imgui:NewWidgetDefinition("Dropdown", {
 		buttonInstance.BorderSizePixel = 0
 		buttonInstance.AutoButtonColor = false
 
-		Imgui.applyTextStyle(buttonInstance)
-		Imgui.applyFrameStyle(buttonInstance)
+		IMGui.applyTextStyle(buttonInstance)
+		IMGui.applyFrameStyle(buttonInstance)
 
 		buttonInstance.Parent = parent
 
-		Imgui.applyMouseDownStyle(buttonInstance, function() end)
-		Imgui.applyMouseUpStyle(buttonInstance, function() end)
+		IMGui.applyMouseDownStyle(buttonInstance, function() end)
+		IMGui.applyMouseUpStyle(buttonInstance, function() end)
 
 		self.PressConnection = buttonInstance.Activated:Connect(function()
-			print("Pressed")
 			local optionsClone = table.clone(options)
 			table.remove(optionsClone, table.find(optionsClone, activeValue))
 
@@ -69,7 +68,6 @@ Imgui:NewWidgetDefinition("Dropdown", {
 	end,
 
 	Update = function(self: Dropdown, text: string, activeValue: any, options: { any })
-		print("Update dropdown")
 		self.Button.Text = tostring(activeValue)
 	end,
 })

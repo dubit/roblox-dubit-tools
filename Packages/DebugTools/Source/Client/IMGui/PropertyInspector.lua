@@ -1,8 +1,8 @@
-local Imgui = require(script.Parent.Parent.Parent.IMGui)
+local IMGui = require(script.Parent)
 
-local DropdownPopup = require(script.Parent.Parent.Parent.Builtin.DropdownPopup)
+local DropdownPopup = require(script.Parent.Parent.Builtin.DropdownPopup)
 
-type PropertyInspector = Imgui.WidgetInstance & {
+type PropertyInspector = IMGui.WidgetInstance & {
 	NameLabel: TextLabel,
 
 	Value: any,
@@ -72,7 +72,7 @@ local function createValueField(
 		textBox.ClearTextOnFocus = false
 		textBox.AutoLocalize = false
 
-		Imgui.applyTextStyle(textBox)
+		IMGui.applyTextStyle(textBox)
 
 		local focusLostConnection = textBox.FocusLost:Once(function(enterPressed)
 			if not enterPressed then
@@ -104,7 +104,7 @@ local function createValueField(
 		textBox.ClearTextOnFocus = false
 		textBox.AutoLocalize = false
 
-		Imgui.applyTextStyle(textBox)
+		IMGui.applyTextStyle(textBox)
 
 		local validValue = value
 
@@ -145,7 +145,7 @@ local function createValueField(
 		textButton.TextXAlignment = Enum.TextXAlignment.Left
 		textButton.AutoLocalize = false
 
-		Imgui.applyTextStyle(textButton)
+		IMGui.applyTextStyle(textButton)
 
 		local activatedConnection = textButton.Activated:Once(function()
 			local validOptions = value.EnumType:GetEnumItems()
@@ -181,7 +181,7 @@ local function createValueField(
 		textButton.TextXAlignment = Enum.TextXAlignment.Left
 		textButton.AutoLocalize = false
 
-		Imgui.applyTextStyle(textButton)
+		IMGui.applyTextStyle(textButton)
 
 		local activatedConnection = textButton.Activated:Once(function()
 			local dropdown = DropdownPopup.new(textButton, value, value[1])
@@ -211,7 +211,7 @@ local function createValueField(
 		textLabel.AutoLocalize = false
 		textLabel.Parent = parent
 
-		Imgui.applyTextStyle(textLabel)
+		IMGui.applyTextStyle(textLabel)
 
 		return function()
 			textLabel:Destroy()
@@ -219,7 +219,7 @@ local function createValueField(
 	end
 end
 
-Imgui:NewWidgetDefinition("PropertyInspector", {
+IMGui:NewWidgetDefinition("PropertyInspector", {
 	Events = {
 		["changed"] = {
 			["Evaluate"] = function(self: PropertyInspector)
@@ -279,7 +279,7 @@ Imgui:NewWidgetDefinition("PropertyInspector", {
 		valueFrame.Size = UDim2.fromScale(1, 1)
 		valueFrame.Parent = inspector
 
-		Imgui.applyTextStyle(name)
+		IMGui.applyTextStyle(name)
 
 		self.ValueFrame = valueFrame
 

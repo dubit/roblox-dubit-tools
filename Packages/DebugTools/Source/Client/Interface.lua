@@ -1,5 +1,6 @@
 --!strict
 local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
 local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
@@ -7,38 +8,29 @@ local DebugToolRootPath = script.Parent
 local SharedPath = DebugToolRootPath.Parent.Shared
 
 local Tab = require(DebugToolRootPath.Tab)
-local Style = require(DebugToolRootPath.Style)
 local IMGui = require(DebugToolRootPath.IMGui)
+local Authorization = require(DebugToolRootPath.Authorization)
+
+local Console = require(DebugToolRootPath.Console)
 
 local Constants = require(SharedPath.Constants)
 
+local INTERFACE_KEY = Enum.KeyCode.F6
+
+local debugScreenGUI: ScreenGui
+local debugScreenTabs: Frame
+local debugScreenContentFrame: Frame
+local dragOffset: Vector2?
+
+local activeTab: {
+	Name: string,
+	Destructor: () -> nil,
+}? = nil
+
 local DebugInterface = {}
-DebugInterface.internal = {
-	Tabs = {} :: { [string]: any },
+DebugInterface.internal = {}
 
-	ActiveTab = nil :: {
-		Name: string,
-		Destructor: () -> nil,
-	}?,
-
-	ActiveContentTabFrame = nil :: Frame?,
-}
-DebugInterface.private = {
-	Dragging = false,
-	InterfaceCreated = false,
-
-	InterfaceElements = {
-		Tabs = nil,
-		ContentFrame = nil :: Frame?,
-		ScreenGui = nil :: ScreenGui?,
-	},
-
-	Tabs = {},
-}
-DebugInterface.interface = {}
-
-function DebugInterface.internal.focusModule(tabName: string)
-	local activeTab = DebugInterface.internal.ActiveTab
+local function focusTab(tabName: string)
 	if activeTab and activeTab.Name == tabName then
 		return
 	end
@@ -48,15 +40,10 @@ function DebugInterface.internal.focusModule(tabName: string)
 		return
 	end
 
-	local activeContentTabFrame: Frame? = DebugInterface.internal.ActiveContentTabFrame
-	if not activeContentTabFrame then
-		return
-	end
-
 	if activeTab then
 		activeTab.Destructor()
 
-		local contentTabFrameChildren = activeContentTabFrame:GetChildren()
+		local contentTabFrameChildren = debugScreenContentFrame:GetChildren()
 
 		if #contentTabFrameChildren > 0 then
 			warn(`Tab '{activeTab.Name}' didn't cleanup unmounted interface properly, there are leftover elements:`)
@@ -68,38 +55,23 @@ function DebugInterface.internal.focusModule(tabName: string)
 		end
 	end
 
-	DebugInterface.internal.ActiveTab = {
+	activeTab = {
 		Name = tabName,
-		Destructor = tabConstructor(activeContentTabFrame),
+		Destructor = tabConstructor(debugScreenContentFrame),
 	}
 end
 
-function DebugInterface.internal.tabAdded(tabName: string)
-	DebugInterface.internal.Tabs[tabName] = {
-		Name = tabName,
-	}
-
-	if not DebugInterface.internal.ActiveTab then
-		DebugInterface.internal.focusModule(tabName)
-	end
-end
-
-function DebugInterface.private:CreateInterface()
-	assert(not self.InterfaceCreated, `Tried to create interface when it was already created!`)
-
-	self.InterfaceCreated = true
-
-	local backgroundFrame: Frame = Instance.new("Frame")
+local function setupInterface()
+	local backgroundFrame = Instance.new("Frame")
 	backgroundFrame.Name = "Frame"
 	backgroundFrame.AnchorPoint = Vector2.new(0.50, 0.50)
 	backgroundFrame.Position = UDim2.fromScale(0.50, 0.50)
 	backgroundFrame.Size = UDim2.fromOffset(600, 400)
-	backgroundFrame.BackgroundTransparency = 0.15
-	backgroundFrame.BackgroundColor3 = Style.BACKGROUND
+	backgroundFrame.BackgroundTransparency = 0.33
+	backgroundFrame.BackgroundColor3 = Color3.new()
 	backgroundFrame.BorderSizePixel = 0
 
-	local uiStroke: UIStroke = Instance.new("UIStroke")
-	uiStroke.Name = "UIStroke"
+	local uiStroke = Instance.new("UIStroke")
 	uiStroke.Color = Color3.fromRGB(12, 38, 177)
 	uiStroke.Thickness = 2
 	uiStroke.Transparency = 0.50
@@ -136,7 +108,6 @@ function DebugInterface.private:CreateInterface()
 	headerLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 	local headerUIPadding = Instance.new("UIPadding")
-	headerUIPadding.Name = "UIPadding"
 	headerUIPadding.PaddingLeft = UDim.new(0, 8)
 	headerUIPadding.PaddingRight = UDim.new(0, 8)
 	headerUIPadding.Parent = headerLabel
@@ -153,11 +124,15 @@ function DebugInterface.private:CreateInterface()
 	uIAspectRatioConstraint.Name = "UIAspectRatioConstraint"
 	uIAspectRatioConstraint.Parent = sendLogsButton
 
+	sendLogsButton.Activated:Connect(function()
+		warn(Console:GetOutputLog())
+	end)
+
 	sendLogsButton.Parent = headerLabel
 
 	headerLabel.Parent = backgroundFrame
 
-	local contentFrame: Frame = Instance.new("Frame")
+	local contentFrame = Instance.new("Frame")
 	contentFrame.Name = "Content Frame"
 	contentFrame.Position = UDim2.fromOffset(0, 24)
 	contentFrame.Size = UDim2.new(1.00, 0, 1.00, -24)
@@ -165,7 +140,6 @@ function DebugInterface.private:CreateInterface()
 	contentFrame.BorderSizePixel = 0
 
 	local uiPadding = Instance.new("UIPadding")
-	uiPadding.Name = "UIPadding"
 	uiPadding.PaddingBottom = UDim.new(0.00, 8)
 	uiPadding.PaddingLeft = UDim.new(0.00, 8)
 	uiPadding.PaddingRight = UDim.new(0.00, 8)
@@ -173,13 +147,12 @@ function DebugInterface.private:CreateInterface()
 	uiPadding.Parent = contentFrame
 
 	local uIListLayout = Instance.new("UIListLayout")
-	uIListLayout.Name = "UIListLayout"
 	uIListLayout.Padding = UDim.new(0, 4)
 	uIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	uIListLayout.VerticalFlex = Enum.UIFlexAlignment.Fill
 	uIListLayout.Parent = contentFrame
 
-	local tabContentFrame: Frame = Instance.new("Frame")
+	local tabContentFrame = Instance.new("Frame")
 	tabContentFrame.Name = `Active Tab Content`
 	tabContentFrame.Size = UDim2.fromScale(1.00, 1.00)
 	tabContentFrame.BackgroundTransparency = 1.00
@@ -188,15 +161,14 @@ function DebugInterface.private:CreateInterface()
 	tabContentFrame.LayoutOrder = 2
 	tabContentFrame.Parent = contentFrame
 
-	local tabsListFrame: Frame = Instance.new("Frame")
+	local tabsListFrame = Instance.new("Frame")
 	tabsListFrame.Name = "Tabs"
 	tabsListFrame.AutomaticSize = Enum.AutomaticSize.Y
 	tabsListFrame.Size = UDim2.fromScale(1.00, 0.00)
 	tabsListFrame.BackgroundTransparency = 1.00
 	tabsListFrame.BorderSizePixel = 0
 
-	local uiListLayout: UIListLayout = Instance.new("UIListLayout")
-	uiListLayout.Name = "UIListLayout"
+	local uiListLayout = Instance.new("UIListLayout")
 	uiListLayout.FillDirection = Enum.FillDirection.Horizontal
 	uiListLayout.SortOrder = Enum.SortOrder.Name
 	uiListLayout.Parent = tabsListFrame
@@ -208,7 +180,7 @@ function DebugInterface.private:CreateInterface()
 
 	headerLabel.InputBegan:Connect(function(beganInputObject: InputObject)
 		if
-			self.Dragging
+			dragOffset
 			or (
 				beganInputObject.UserInputType ~= Enum.UserInputType.MouseButton1
 				and beganInputObject.UserInputType ~= Enum.UserInputType.Touch
@@ -224,10 +196,10 @@ function DebugInterface.private:CreateInterface()
 			backgroundFrame.AbsolutePosition.Y
 		) + insetSize
 
-		self.Dragging = true
-		self.DragOffset = frameAbsolutePosition - UserInputService:GetMouseLocation()
+		dragOffset = frameAbsolutePosition - UserInputService:GetMouseLocation()
 
-		self.InputChangedConnection = UserInputService.InputChanged:Connect(function(inputObject: InputObject)
+		local inputChanged, inputEnded
+		inputChanged = UserInputService.InputChanged:Connect(function(inputObject: InputObject)
 			if
 				inputObject.UserInputType ~= Enum.UserInputType.MouseMovement
 				and inputObject.UserInputType ~= Enum.UserInputType.Touch
@@ -235,10 +207,14 @@ function DebugInterface.private:CreateInterface()
 				return
 			end
 
+			if not dragOffset then
+				return
+			end
+
 			local anchorOffset: Vector2 = -(backgroundFrame.AbsoluteSize * -backgroundFrame.AnchorPoint)
 
 			local newFramePosition: Vector2 = Vector2.new(inputObject.Position.X, inputObject.Position.Y)
-				+ self.DragOffset
+				+ dragOffset
 				+ insetSize
 				+ anchorOffset
 
@@ -247,7 +223,7 @@ function DebugInterface.private:CreateInterface()
 			backgroundFrame.Position = UDim2.fromOffset(newFramePosition.X, newFramePosition.Y)
 		end)
 
-		self.InputEndedConnection = UserInputService.InputEnded:Connect(function(inputObject: InputObject)
+		inputEnded = UserInputService.InputEnded:Connect(function(inputObject: InputObject)
 			if
 				inputObject.UserInputType ~= Enum.UserInputType.MouseButton1
 				and inputObject.UserInputType ~= Enum.UserInputType.Touch
@@ -255,37 +231,39 @@ function DebugInterface.private:CreateInterface()
 				return
 			end
 
-			self.Dragging = false
+			dragOffset = nil
 
-			self.InputEndedConnection:Disconnect()
-			self.InputChangedConnection:Disconnect()
+			inputEnded:Disconnect()
+			inputChanged:Disconnect()
 		end)
 	end)
 
-	local debugInterfaceScreenGui: ScreenGui = Instance.new("ScreenGui")
-	debugInterfaceScreenGui.Name = "[DEBUG] Main Interface"
-	debugInterfaceScreenGui.DisplayOrder = Constants.DEBUG_TOOL_DISPLAY_ORDER
-	debugInterfaceScreenGui.IgnoreGuiInset = true
-	debugInterfaceScreenGui.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
-	debugInterfaceScreenGui.ResetOnSpawn = false
-	debugInterfaceScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	debugInterfaceScreenGui.Enabled = false
+	debugScreenGUI = Instance.new("ScreenGui")
+	debugScreenGUI.Name = "[DEBUG] Main Interface"
+	debugScreenGUI.DisplayOrder = Constants.DEBUG_TOOL_DISPLAY_ORDER
+	debugScreenGUI.IgnoreGuiInset = true
+	debugScreenGUI.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
+	debugScreenGUI.ResetOnSpawn = false
+	debugScreenGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	debugScreenGUI.Enabled = false
 
-	backgroundFrame.Parent = debugInterfaceScreenGui
+	if Authorization:IsLocalPlayerAuthorized() then
+		debugScreenGUI.Parent = Players.LocalPlayer.PlayerGui
+	else
+		debugScreenGUI.Parent = script
+	end
 
-	debugInterfaceScreenGui.Parent = Players.LocalPlayer.PlayerGui
+	backgroundFrame.Parent = debugScreenGUI
 
-	self.InterfaceElements.ContentFrame = contentFrame
-	self.InterfaceElements.Tabs = tabsListFrame
-	self.InterfaceElements.ScreenGui = debugInterfaceScreenGui
+	debugScreenTabs = tabsListFrame
 
-	DebugInterface.internal.ActiveContentTabFrame = tabContentFrame
+	debugScreenContentFrame = tabContentFrame
 
-	debugInterfaceScreenGui.DescendantAdded:Connect(function(descendantInstance: Instance)
+	debugScreenGUI.DescendantAdded:Connect(function(descendantInstance: Instance)
 		if
 			not descendantInstance:IsA("TextLabel")
-			and not descendantInstance:IsA("TextButton")
-			and not descendantInstance:IsA("TextBox")
+			or not descendantInstance:IsA("TextButton")
+			or not descendantInstance:IsA("TextBox")
 		then
 			return
 		end
@@ -303,10 +281,10 @@ function DebugInterface.private:CreateInterface()
 		IMGui:BeginHorizontal()
 
 		for _, tab in Tab.getAllTabs() do
-			local isActive = DebugInterface.internal.ActiveTab and DebugInterface.internal.ActiveTab.Name == tab
+			local isActive = activeTab and activeTab.Name == tab
 
 			if IMGui:Button(isActive and `<b>{tab}</b>` or tab, not isActive).activated() then
-				DebugInterface.internal.focusModule(tab)
+				focusTab(tab)
 			end
 		end
 
@@ -367,32 +345,122 @@ function DebugInterface.private:CreateInterface()
 	end)
 end
 
-function DebugInterface.private:ListenToModules()
-	for _, tabName: string in Tab.getAllTabs() do
-		DebugInterface.internal.tabAdded(tabName)
-	end
-
-	Tab.TabAdded:Connect(function(tabName: any)
-		DebugInterface.internal.tabAdded(tabName)
-	end)
-end
-
-function DebugInterface.interface.getTabsFrame()
-	return DebugInterface.private.InterfaceElements.Tabs
-end
-
-function DebugInterface.interface.init()
-	DebugInterface.private:CreateInterface()
-	DebugInterface.private:ListenToModules()
-end
-
-function DebugInterface.interface.switchVisibility()
-	local debugInterfaceScreenGui: ScreenGui? = DebugInterface.private.InterfaceElements.ScreenGui
-	if not debugInterfaceScreenGui then
+local function switchVisibility()
+	if not Authorization:IsLocalPlayerAuthorized() then
 		return
 	end
 
-	debugInterfaceScreenGui.Enabled = not debugInterfaceScreenGui.Enabled
+	debugScreenGUI.Enabled = not debugScreenGUI.Enabled
+
+	if debugScreenGUI.Enabled then
+		if not activeTab then
+			focusTab(Tab.getAllTabs()[1])
+		end
+	end
 end
 
-return DebugInterface.interface
+local function observeKeyBinds()
+	UserInputService.InputBegan:Connect(function(inputObject: InputObject, gameProcessedEvent: boolean)
+		if gameProcessedEvent or inputObject.KeyCode ~= INTERFACE_KEY then
+			return
+		end
+
+		switchVisibility()
+	end)
+end
+
+local function observeMobileGesture()
+	local touchPoints: { InputObject } = {}
+
+	local function removeTouchPoint(inputObject: InputObject)
+		for objectIndex: number, otherInputObject: InputObject in touchPoints do
+			if otherInputObject == inputObject then
+				table.remove(touchPoints, objectIndex)
+				return
+			end
+		end
+	end
+
+	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
+		if inputObject.UserInputType ~= Enum.UserInputType.Touch then
+			return
+		end
+
+		local viewportSize: Vector2 = workspace.CurrentCamera.ViewportSize
+
+		local pointXMiddlePercentage: number =
+			math.abs((viewportSize.X / 2.00 - inputObject.Position.X) / viewportSize.X)
+		local pointYPercentage: number = inputObject.Position.Y / viewportSize.Y
+		if pointYPercentage > 0.00 or pointXMiddlePercentage >= 0.10 then
+			return
+		end
+
+		table.insert(touchPoints, inputObject)
+
+		if #touchPoints >= 3 then
+			for _, otherInputObject: InputObject in touchPoints do
+				removeTouchPoint(otherInputObject)
+			end
+
+			switchVisibility()
+		end
+
+		task.delay(0.75, function()
+			removeTouchPoint(inputObject)
+		end)
+	end)
+end
+
+local function observeConsoleKeyBinds()
+	local consoleActivationButtons = {
+		[Enum.KeyCode.ButtonL1] = true,
+		[Enum.KeyCode.ButtonR1] = true,
+		[Enum.KeyCode.ButtonY] = true,
+	}
+
+	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
+		if consoleActivationButtons[inputObject.KeyCode] then
+			for buttonKey in consoleActivationButtons do
+				if not UserInputService:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, buttonKey) then
+					return
+				end
+			end
+
+			switchVisibility()
+
+			GuiService.SelectedObject = debugScreenTabs:FindFirstChildWhichIsA("TextButton")
+		end
+	end)
+end
+
+local function observeConsoleKeyBindsForDevConsole()
+	local consoleActivationButtons = {
+		[Enum.KeyCode.ButtonL1] = true,
+		[Enum.KeyCode.ButtonR1] = true,
+		[Enum.KeyCode.ButtonX] = true,
+	}
+
+	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
+		if consoleActivationButtons[inputObject.KeyCode] then
+			for buttonKey in consoleActivationButtons do
+				if not UserInputService:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, buttonKey) then
+					return
+				end
+			end
+
+			StarterGui:SetCore("DevConsoleVisible", not StarterGui:GetCore("DevConsoleVisible"))
+		end
+	end)
+end
+
+setupInterface()
+observeKeyBinds()
+observeMobileGesture()
+observeConsoleKeyBinds()
+observeConsoleKeyBindsForDevConsole()
+
+Authorization.StatusChanged:Connect(function(authorized)
+	debugScreenGUI.Parent = authorized and Players.LocalPlayer.PlayerGui or script
+end)
+
+return nil
