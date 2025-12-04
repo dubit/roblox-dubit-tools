@@ -3,7 +3,6 @@ return table.freeze({
 
 	DROPDOWN_DISPLAY_ORDER = 1e+09,
 	DEBUG_TOOL_DISPLAY_ORDER = 1e+09 - 1,
-	WIDGET_DISPLAY_ORDER = 1e+09 - 2,
 
 	NETWORK_TRAFFIC_REMOTE_NAME = "*Mystery Remote Event*",
 

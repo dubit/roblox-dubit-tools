@@ -147,16 +147,25 @@ local function createValueField(
 
 		IMGui.applyTextStyle(textButton)
 
-		local activatedConnection = textButton.Activated:Once(function()
+		local activeDropdown
+		local activatedConnection = textButton.Activated:Connect(function()
+			if activeDropdown then
+				activeDropdown:Destroy()
+				activeDropdown = nil
+				return
+			end
+
 			local validOptions = value.EnumType:GetEnumItems()
 
 			for i = 1, #validOptions do
 				validOptions[i] = validOptions[i].Name
 			end
 
-			local dropdown = DropdownPopup.new(textButton, validOptions, value.Name)
-			dropdown.EntrySelected:Connect(function(newValue: string)
+			activeDropdown = DropdownPopup.new(textButton, validOptions, value.Name, function(newValue)
 				changedCallback(value.EnumType:FromName(newValue))
+				activeDropdown = nil
+			end, function()
+				activeDropdown = nil
 			end)
 		end)
 
@@ -183,10 +192,19 @@ local function createValueField(
 
 		IMGui.applyTextStyle(textButton)
 
-		local activatedConnection = textButton.Activated:Once(function()
-			local dropdown = DropdownPopup.new(textButton, value, value[1])
-			dropdown.EntrySelected:Connect(function(newValue)
+		local activeDropdown
+		local activatedConnection = textButton.Activated:Connect(function()
+			if activeDropdown then
+				activeDropdown:Destroy()
+				activeDropdown = nil
+				return
+			end
+
+			activeDropdown = DropdownPopup.new(textButton, value, value[1], function(newValue)
 				changedCallback(newValue)
+				activeDropdown = nil
+			end, function()
+				activeDropdown = nil
 			end)
 		end)
 

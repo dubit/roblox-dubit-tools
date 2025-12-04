@@ -1,5 +1,4 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
 
 local DebugTools = require(ReplicatedStorage.Packages.DebugTools)
 
@@ -45,14 +44,4 @@ DebugTools.Server.Action.new("Fruits/Update 'Pick an option'", "Update the optio
 			Options = updated and alternativeFruitList or fruitList,
 		},
 	})
-end)
-
-DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
-	return false
-end)
-
-task.delay(5, function()
-	DebugTools.Server.Authorization:SetAuthorizationCallback(function(player)
-		return RunService:IsStudio() or player:GetRankInGroup(13711091) >= 200
-	end)
 end)
