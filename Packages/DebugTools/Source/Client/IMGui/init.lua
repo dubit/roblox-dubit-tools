@@ -80,7 +80,7 @@ IMGui.private = {
 		},
 
 		Sizes = {
-			TextSize = 14,
+			TextSize = 16,
 
 			FrameCornerRadius = 2,
 
