@@ -93,7 +93,7 @@ function Widget.internal.mountWidget(widget: Widget)
 end
 
 function Widget.internal.unmountWidget(widget: Widget)
-	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
+	local widgetData = Widget.internal.WidgetData[widget.Name]
 	if not widgetData or not widgetData.Mounted then
 		return
 	end
@@ -137,7 +137,7 @@ function Widget.interface:GetAll()
 		ScreenGui: ScreenGui?,
 	} } = {}
 
-	for widgetName: string, widgetData: WidgetData in Widget.internal.WidgetData do
+	for widgetName, widgetData in Widget.internal.WidgetData do
 		widgets[widgetName] = {
 			Mounted = widgetData.Mounted,
 			ScreenGui = widgetData.ScreenGui,
@@ -148,7 +148,7 @@ function Widget.interface:GetAll()
 end
 
 function Widget.interface:Hide(widgetName: string)
-	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
+	local widgetData = Widget.internal.getWidgetData(widgetName)
 	if not widgetData or not widgetData.Mounted then
 		return
 	end
@@ -157,7 +157,7 @@ function Widget.interface:Hide(widgetName: string)
 end
 
 function Widget.interface:Show(widgetName: string)
-	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
+	local widgetData = Widget.internal.getWidgetData(widgetName)
 	if not widgetData or widgetData.Mounted then
 		return
 	end
@@ -166,7 +166,7 @@ function Widget.interface:Show(widgetName: string)
 end
 
 function Widget.interface:IsVisible(widgetName: string)
-	local widgetData: WidgetData? = Widget.internal.getWidgetData(widgetName)
+	local widgetData = Widget.internal.getWidgetData(widgetName)
 
 	return widgetData and widgetData.Mounted or false
 end

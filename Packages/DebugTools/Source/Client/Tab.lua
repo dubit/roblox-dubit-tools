@@ -25,7 +25,7 @@ function Tab.new(name: string, constructorFunction: (parent: Frame) -> () -> ())
 	Tab.TabAdded:Fire(name)
 end
 
-function Tab.getTabConstructor(name: string): ((Frame) -> () -> nil)?
+function Tab.getTabConstructor(name: string)
 	for _, tab in registeredTabs do
 		if tab.Name == name then
 			return tab.CreateFunction
@@ -35,13 +35,13 @@ function Tab.getTabConstructor(name: string): ((Frame) -> () -> nil)?
 	return nil
 end
 
-function Tab.getAllTabs(): { string }
-	local tabNames: { string } = {}
+function Tab.getAllTabs()
+	local tabNames = {}
 	for _, tab in registeredTabs do
 		table.insert(tabNames, tab.Name)
 	end
 
-	table.sort(tabNames, function(a: string, b: string): boolean
+	table.sort(tabNames, function(a, b)
 		return a < b
 	end)
 

@@ -19,7 +19,6 @@ end)
 
 Action.new("Default/Set Server FPS", "Set the server FPS (60 is the default FPS)", function(fps: number)
 	targetFPS = math.max(1, fps)
-
 	return
 end, {
 	{

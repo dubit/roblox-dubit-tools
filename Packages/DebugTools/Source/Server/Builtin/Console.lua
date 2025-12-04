@@ -1,19 +1,20 @@
---!strict
 local RunService = game:GetService("RunService")
 local LogService = game:GetService("LogService")
 
-local Module = require(script.Parent.Parent.Module)
 local Networking = require(script.Parent.Parent.Networking)
 
-local MESSAGE_HISTORY_LENGTH: number = 100
+local MESSAGE_HISTORY_LENGTH = 100
 
-local ConsoleModule = Module.new("Console")
-local Internal = {
-	MessagesHistory = {},
-}
+local outputLog: {
+	{
+		Message: string,
+		MessageType: Enum.MessageType,
+		Timestamp: number,
+	}
+} = {}
 
-function Internal.sendMessagesHistory(player: Player)
-	for _, messageData in Internal.MessagesHistory do
+local function sendMessagesHistory(player: Player)
+	for _, messageData in outputLog do
 		Networking:SendMessageToPlayer(
 			player,
 			"console_messages",
@@ -24,36 +25,28 @@ function Internal.sendMessagesHistory(player: Player)
 	end
 end
 
-function ConsoleModule:Init()
-	-- In studio all server and client side errors get printed within LogService.MessageOut
-	-- on client side either way, nice...
-	if RunService:IsStudio() then
-		return
-	end
-
-	LogService.MessageOut:Connect(function(message: string, messageType: Enum.MessageType)
-		local timestamp: number = math.floor(os.clock() * 1000) / 1000
+-- In studio all server and client side errors get printed within LogService.MessageOut on client side either way
+if not RunService:IsStudio() then
+	LogService.MessageOut:Connect(function(message, messageType)
+		local timestamp = math.floor(os.clock() * 1000) / 1000
 
 		Networking:SendMessage("console_messages", messageType, message, timestamp)
 
-		table.insert(Internal.MessagesHistory, {
+		table.insert(outputLog, {
 			Message = message,
 			MessageType = messageType,
 			Timestamp = timestamp,
 		})
 
-		if #Internal.MessagesHistory > MESSAGE_HISTORY_LENGTH then
-			table.remove(Internal.MessagesHistory, 1)
+		if #outputLog > MESSAGE_HISTORY_LENGTH then
+			table.remove(outputLog, 1)
 		end
 	end)
 
-	for _, player: Player in Networking:GetNetworkTargets() do
-		Internal.sendMessagesHistory(player)
+	Networking.NetworkTargetAdded:Connect(sendMessagesHistory)
+	for _, player in Networking:GetNetworkTargets() do
+		task.spawn(sendMessagesHistory, player)
 	end
-
-	Networking.NetworkTargetAdded:Connect(function(player: Player)
-		Internal.sendMessagesHistory(player)
-	end)
 end
 
-return ConsoleModule
+return nil

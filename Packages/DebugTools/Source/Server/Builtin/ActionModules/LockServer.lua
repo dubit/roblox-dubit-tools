@@ -20,9 +20,7 @@ local function validatePlayers()
 end
 
 Players.PlayerAdded:Connect(function()
-	task.defer(function()
-		validatePlayers()
-	end)
+	task.defer(validatePlayers)
 end)
 
 Action.new(

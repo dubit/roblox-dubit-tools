@@ -126,7 +126,6 @@ end
 
 Players.PlayerRemoving:Connect(playerRemoved)
 Players.PlayerAdded:Connect(playerAdded)
-
 for _, player in Players:GetPlayers() do
 	task.spawn(playerAdded, player)
 end
