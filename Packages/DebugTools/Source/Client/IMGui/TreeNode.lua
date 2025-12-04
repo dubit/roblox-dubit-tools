@@ -36,7 +36,7 @@ IMGui:NewWidgetDefinition("TreeNode", {
 
 	Construct = function(self: TreeNode, parent: GuiObject, selected: boolean?, alignment: Enum.HorizontalAlignment?)
 		local Frame = Instance.new("Frame")
-		Frame.Name = `ExplorerHorizontal ({self.ID})`
+		Frame.Name = `TreeNode ({self.ID})`
 		Frame.Size = UDim2.fromScale(1, 0)
 		Frame.AutomaticSize = Enum.AutomaticSize.XY
 		Frame.BackgroundTransparency = selected and 0 or 1
@@ -45,7 +45,6 @@ IMGui:NewWidgetDefinition("TreeNode", {
 		Frame.BackgroundColor3 = Color3.fromRGB(12, 38, 177)
 
 		local UIListLayout = Instance.new("UIListLayout")
-		UIListLayout.Name = "UIListLayout"
 		UIListLayout.Padding = UDim.new(0, 2)
 		UIListLayout.FillDirection = Enum.FillDirection.Horizontal
 		UIListLayout.HorizontalAlignment = alignment or Enum.HorizontalAlignment.Left
