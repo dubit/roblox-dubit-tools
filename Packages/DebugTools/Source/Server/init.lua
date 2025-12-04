@@ -5,6 +5,7 @@ require(script.Builtin.Actions)
 require(script.Builtin.ActionModules.SetFPS)
 require(script.Builtin.ActionModules.LockServer)
 require(script.Builtin.Info)
+require(script.Logging)
 
 ServerDebugTools.Module = require(script.Module)
 ServerDebugTools.Action = require(script.Parent.Shared.Action)

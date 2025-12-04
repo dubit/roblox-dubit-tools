@@ -35,8 +35,4 @@ function Module.interface.new(name: string)
 	return self
 end
 
-function Module.interface.getAllModules()
-	return table.clone(Module.internal.Modules)
-end
-
 return Module.interface

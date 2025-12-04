@@ -13,9 +13,7 @@ WidgetVisual.prototype = {}
 WidgetVisual.interface = {}
 
 function WidgetVisual.internal.createWidgetRepresentation(widgetVisual, representationParent: Frame)
-	local screenBoundingInstance: GuiBase = widgetVisual.WidgetScreenGui:GetChildren()[1]
-
-	local screenRepresentation: TextButton = Instance.new("TextButton")
+	local screenRepresentation = Instance.new("TextButton")
 	screenRepresentation.Name = widgetVisual.WidgetName
 	screenRepresentation.AutoLocalize = false
 	screenRepresentation.Size = UDim2.fromOffset(60, 30)
@@ -24,13 +22,12 @@ function WidgetVisual.internal.createWidgetRepresentation(widgetVisual, represen
 	screenRepresentation.BorderSizePixel = 0
 	screenRepresentation.Text = ""
 
-	local uiCorner: UICorner = Instance.new("UICorner")
-	uiCorner.Name = "UICorner"
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.CornerRadius = UDim.new(0.00, 4)
 	uiCorner.Parent = screenRepresentation
 
 	widgetVisual.FrameRepresentation = screenRepresentation
-	widgetVisual.BoundingInstance = screenBoundingInstance
+	widgetVisual.BoundingInstance = widgetVisual.WidgetScreenGui:GetChildren()[1]
 
 	screenRepresentation.Parent = representationParent
 end

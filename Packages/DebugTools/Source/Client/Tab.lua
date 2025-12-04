@@ -41,6 +41,10 @@ function Tab.getAllTabs(): { string }
 		table.insert(tabNames, tab.Name)
 	end
 
+	table.sort(tabNames, function(a: string, b: string): boolean
+		return a < b
+	end)
+
 	return tabNames
 end
 

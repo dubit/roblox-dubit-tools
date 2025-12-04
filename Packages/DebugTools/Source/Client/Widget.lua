@@ -18,7 +18,7 @@ type WidgetData = {
 type Widget = {
 	Name: string,
 
-	CreateFunction: (parent: ScreenGui) -> () -> nil,
+	CreateFunction: (parent: ScreenGui) -> (),
 }
 
 local Widget = {}
@@ -46,27 +46,34 @@ function Widget.internal.addWidget(widget: Widget)
 end
 
 function Widget.internal.removeWidget(widgetName: string)
-	local widgetData: WidgetData = Widget.internal.WidgetData[widgetName]
+	local widgetData = Widget.internal.WidgetData[widgetName]
+	Widget.internal.WidgetData[widgetName] = nil
 
 	if not widgetData then
 		return
 	end
 
-	if widgetData.ScreenGui then
-		widgetData.ScreenGui:Destroy()
-		widgetData.ScreenGui = nil
+	if widgetData.DestroyFunction then
+		widgetData.DestroyFunction()
 	end
 
-	Widget.internal.WidgetData[widgetName] = nil
+	if widgetData.ScreenGui then
+		widgetData.ScreenGui:Destroy()
+	end
 end
 
 function Widget.internal.mountWidget(widget: Widget)
-	local widgetParent: ScreenGui? = Interface:GetDebugScreenGUI()
-	assert(widgetParent, `Widget parent doesn't exist for '{widget.Name}'`)
+	local debugScreenGUI = Interface:GetDebugScreenGUI()
 
-	local widgetData: WidgetData = Widget.internal.WidgetData[widget.Name]
+	local widgetFrame = Instance.new("Frame")
+	widgetFrame.Name = `[WIDGET] {widget.Name}`
+	widgetFrame.Size = UDim2.fromScale(1.00, 1.00)
+	widgetFrame.BackgroundTransparency = 1
+	widgetFrame.Parent = debugScreenGUI
 
-	widgetData.DestroyFunction = widget.CreateFunction(widgetParent)
+	local widgetData = Widget.internal.WidgetData[widget.Name]
+
+	widgetData.DestroyFunction = widget.CreateFunction(widgetFrame)
 
 	if typeof(widgetData.DestroyFunction) ~= "function" then
 		Widget.internal.removeWidget(widget.Name)
@@ -79,16 +86,10 @@ function Widget.internal.mountWidget(widget: Widget)
 		return
 	end
 
-	if #widgetParent:GetChildren() == 0 then
-		Widget.internal.removeWidget(widget.Name)
-
-		warn(`Widget '{widget.Name}' didn't create any interface elements.`)
-		return
-	end
-
 	widgetData.Mounted = true
+	widgetData.ScreenGui = widgetFrame
 
-	Widget.interface.WidgetMounted:Fire(widget.Name, widgetParent)
+	Widget.interface.WidgetMounted:Fire(widget.Name, widgetFrame)
 end
 
 function Widget.internal.unmountWidget(widget: Widget)
@@ -99,6 +100,10 @@ function Widget.internal.unmountWidget(widget: Widget)
 
 	if widgetData.DestroyFunction then
 		widgetData.DestroyFunction()
+	end
+
+	if widgetData.ScreenGui then
+		widgetData.ScreenGui:Destroy()
 	end
 
 	widgetData.Mounted = false

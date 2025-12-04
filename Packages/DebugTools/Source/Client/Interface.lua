@@ -1,4 +1,5 @@
 --!strict
+local EncodingService = game:GetService("EncodingService")
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local GuiService = game:GetService("GuiService")
@@ -9,6 +10,7 @@ local SharedPath = DebugToolRootPath.Parent.Shared
 
 local Tab = require(DebugToolRootPath.Tab)
 local IMGui = require(DebugToolRootPath.IMGui)
+local Networking = require(DebugToolRootPath.Networking)
 local Authorization = require(DebugToolRootPath.Authorization)
 
 local Console = require(DebugToolRootPath.Console)
@@ -72,6 +74,7 @@ local function setupInterface()
 	backgroundFrame.BackgroundColor3 = Color3.new()
 	backgroundFrame.BorderSizePixel = 0
 	backgroundFrame.Visible = false
+	backgroundFrame.ZIndex = math.huge
 
 	debugScreenFrame = backgroundFrame
 
@@ -120,17 +123,20 @@ local function setupInterface()
 	uIStroke.Transparency = 0.5
 	uIStroke.Parent = headerLabel
 
-	local pastebinLink = Instance.new("TextLabel")
+	local pastebinLink = Instance.new("TextBox")
 	pastebinLink.Name = "Pastebin Link"
 	pastebinLink.AnchorPoint = Vector2.new(1, 0)
-	pastebinLink.BackgroundTransparency = 1
+	pastebinLink.AutomaticSize = Enum.AutomaticSize.X
+	pastebinLink.BackgroundTransparency = 1.00
 	pastebinLink.FontFace = Font.new("rbxassetid://16658221428", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
 	pastebinLink.Position = UDim2.new(1, -32, 0, 0)
-	pastebinLink.Size = UDim2.new(1, -32, 1, 0)
-	pastebinLink.Text = "https://pastebin.com/xyz"
+	pastebinLink.Size = UDim2.fromScale(0, 1)
+	pastebinLink.Text = ""
 	pastebinLink.TextColor3 = Color3.new(1, 1, 1)
 	pastebinLink.TextSize = 14
 	pastebinLink.TextXAlignment = Enum.TextXAlignment.Right
+	pastebinLink.ClearTextOnFocus = false
+	pastebinLink.TextEditable = false
 
 	local pastebinUIStroke = Instance.new("UIStroke")
 	pastebinUIStroke.Transparency = 0.5
@@ -151,7 +157,18 @@ local function setupInterface()
 	uIAspectRatioConstraint.Parent = sendLogsButton
 
 	sendLogsButton.Activated:Connect(function()
-		warn(Console:GetOutputLog())
+		sendLogsButton.Active = false
+		sendLogsButton.ImageTransparency = 0.50
+
+		Networking:SendMessage(
+			"send_log",
+			EncodingService:CompressBuffer(buffer.fromstring(Console:GetOutputLog()), Enum.CompressionAlgorithm.Zstd)
+		)
+
+		task.delay(30, function()
+			sendLogsButton.Active = true
+			sendLogsButton.ImageTransparency = 0
+		end)
 	end)
 
 	sendLogsButton.Parent = headerLabel
@@ -265,7 +282,7 @@ local function setupInterface()
 	end)
 
 	debugScreenGUI = Instance.new("ScreenGui")
-	debugScreenGUI.Name = "[DEBUG] Main Interface"
+	debugScreenGUI.Name = "DEBUG TOOLS"
 	debugScreenGUI.DisplayOrder = Constants.DEBUG_TOOL_DISPLAY_ORDER
 	debugScreenGUI.IgnoreGuiInset = true
 	debugScreenGUI.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
@@ -367,6 +384,22 @@ local function setupInterface()
 			inputEndedConnection:Disconnect()
 			inputChangedConnection:Disconnect()
 		end)
+	end)
+
+	Networking:SubscribeToTopic("send_log_result", function(success, result)
+		if success == nil then
+			print(`Tried to generate a log too quickly, wait for {result} more seconds`)
+			return
+		end
+
+		if not success then
+			warn(`An issue occured while trying to upload your logs\n    {result}`)
+			return
+		end
+
+		result = string.gsub(result, "\n", "")
+
+		pastebinLink.Text = result
 	end)
 end
 
