@@ -48,7 +48,7 @@ local function createValueField(
 
 		checkbox.Parent = parent
 
-		local activatedConnection = checkbox.Activated:Once(function()
+		local activatedConnection = checkbox.Activated:Connect(function()
 			changedCallback(not value)
 		end)
 
@@ -74,7 +74,7 @@ local function createValueField(
 
 		IMGui.applyTextStyle(textBox)
 
-		local focusLostConnection = textBox.FocusLost:Once(function(enterPressed)
+		local focusLostConnection = textBox.FocusLost:Connect(function(enterPressed)
 			if not enterPressed then
 				return
 			end
@@ -108,7 +108,7 @@ local function createValueField(
 
 		local validValue = value
 
-		local focusLostConnection = textBox.FocusLost:Once(function(enterPressed)
+		local focusLostConnection = textBox.FocusLost:Connect(function(enterPressed)
 			if not enterPressed then
 				return
 			end
