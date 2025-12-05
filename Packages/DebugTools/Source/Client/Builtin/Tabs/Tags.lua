@@ -10,14 +10,7 @@ local IMGui = require(DebugToolRootPath.IMGui)
 
 local Explorer = require(script.Parent.Explorer)
 
-local Components = {}
-
-Components.interface = {}
-Components.internal = {
-	ExpandedInstances = {},
-}
-
-function Components.internal.processTags(tag: string)
+local function processTags(tag: string)
 	local taggedInstances = CollectionService:GetTagged(tag)
 
 	IMGui:Label(`<b>{tag}</b> / {#taggedInstances} in total`)
@@ -90,7 +83,7 @@ Tab.new("Tags", function(parent: Frame)
 		IMGui:ScrollingFrameY(UDim2.fromScale(1, 1))
 
 		for _, tag in CollectionService:GetAllTags() do
-			Components.internal.processTags(tag)
+			processTags(tag)
 		end
 
 		IMGui:End()

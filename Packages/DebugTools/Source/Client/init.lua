@@ -1,5 +1,3 @@
-require(script.Interface)
-
 local function requireInstanceIfModuleScript(instance: Instance)
 	if not instance:IsA("ModuleScript") then
 		return
@@ -8,36 +6,34 @@ local function requireInstanceIfModuleScript(instance: Instance)
 	task.spawn(require, instance)
 end
 
+require(script:WaitForChild("Interface"))
+
 local builtinFolder = script:WaitForChild("Builtin")
 local widgetsFolder = builtinFolder:WaitForChild("Widgets")
-local actionsFolder = builtinFolder:WaitForChild("Actions")
+local tabsFolder = builtinFolder:WaitForChild("Tabs")
 
 widgetsFolder.ChildAdded:Connect(requireInstanceIfModuleScript)
 for _, childInstance in widgetsFolder:GetChildren() do
 	requireInstanceIfModuleScript(childInstance)
 end
 
-actionsFolder.ChildAdded:Connect(requireInstanceIfModuleScript)
-for _, childInstance in actionsFolder:GetChildren() do
+tabsFolder.ChildAdded:Connect(requireInstanceIfModuleScript)
+for _, childInstance in tabsFolder:GetChildren() do
 	requireInstanceIfModuleScript(childInstance)
 end
 
 local DebugTools = {}
 
 DebugTools.interface = {
-	Tab = require(script.Tab),
-	Widget = require(script.Widget),
-	Action = require(script.Parent.Shared.Action),
-	Networking = require(script.Networking),
-	IMGui = require(script.IMGui),
-	Console = require(script.Console),
+	-- Client specific
+	Tab = require(script:WaitForChild("Tab")),
+	IMGui = require(script:WaitForChild("IMGui")),
+	Widget = require(script:WaitForChild("Widget")),
+	Console = require(script:WaitForChild("Console")),
 
-	BuiltinTabs = {
-		Tags = require(script.Builtin.Tabs.Tags),
-		Widgets = require(script.Builtin.Tabs.Widgets),
-		Actions = require(script.Builtin.Tabs.Actions),
-		Explorer = require(script.Builtin.Tabs.Explorer),
-	},
+	-- Shared API with server
+	Networking = require(script.Networking),
+	Action = require(script.Parent.Shared.Action),
 }
 
 return DebugTools.interface

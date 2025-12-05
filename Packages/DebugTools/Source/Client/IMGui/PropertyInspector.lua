@@ -76,6 +76,7 @@ local function createValueField(
 
 		local focusLostConnection = textBox.FocusLost:Connect(function(enterPressed)
 			if not enterPressed then
+				textBox.Text = value
 				return
 			end
 
@@ -110,6 +111,7 @@ local function createValueField(
 
 		local focusLostConnection = textBox.FocusLost:Connect(function(enterPressed)
 			if not enterPressed then
+				textBox.Text = validValue
 				return
 			end
 
