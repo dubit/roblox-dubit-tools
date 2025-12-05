@@ -1,38 +1,30 @@
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
+local Signal = require(script.Parent.Parent.Shared.Signal)
 local Constants = require(script.Parent.Parent.Shared.Constants)
 
-local Authorization = {}
-Authorization.internal = {}
-Authorization.interface = {}
+local statusChangedSignal = Signal.new()
 
---[[
-	Yields until the DEBUGTOOLS_ISAUTHORIZED attribute is found under the player, or the timeout is reached
-]]
-function Authorization.waitForAuthorizationAttribute(timeout: number)
-	local startTime = tick()
-	while true do
-		if Players.LocalPlayer:GetAttribute(Constants.IS_AUTHORIZED_ATTRIBUTE) ~= nil then
-			break
-		end
+local Authorization = {
+	StatusChanged = statusChangedSignal,
+}
 
-		if tick() - startTime > timeout then
-			break
-		end
+function Authorization.IsLocalPlayerAuthorized(self)
+	assert(self == Authorization, "Expected ':' not '.' calling member function IsLocalPlayerAuthorized")
 
+	local authorized
+
+	repeat
 		task.wait()
-	end
+		authorized = Players.LocalPlayer:GetAttribute(Constants.IS_AUTHORIZED_ATTRIBUTE)
+	until typeof(authorized) == "boolean"
+
+	return authorized
 end
 
-function Authorization.interface.isLocalPlayerAuthorized(): boolean
-	if RunService:IsStudio() then
-		return true
-	end
+Players.LocalPlayer:GetAttributeChangedSignal(Constants.IS_AUTHORIZED_ATTRIBUTE):Connect(function()
+	local isAuthorized = Players.LocalPlayer:GetAttribute(Constants.IS_AUTHORIZED_ATTRIBUTE) == true
+	statusChangedSignal:Fire(isAuthorized)
+end)
 
-	Authorization.waitForAuthorizationAttribute(5)
-
-	return Players.LocalPlayer:GetAttribute(Constants.IS_AUTHORIZED_ATTRIBUTE) == true
-end
-
-return Authorization.interface
+return Authorization

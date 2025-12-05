@@ -1,5 +1,6 @@
 --!strict
 local RunService = game:GetService("RunService")
+local Stats = game:GetService("Stats")
 
 local DebugToolRootPath = script.Parent.Parent.Parent
 
@@ -15,8 +16,7 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 	contentFrame.BackgroundTransparency = 0.50
 	contentFrame.AutomaticSize = Enum.AutomaticSize.XY
 
-	local fpsLabel: TextLabel = Instance.new("TextLabel")
-	fpsLabel.Name = "FPSLabel"
+	local fpsLabel = Instance.new("TextLabel")
 	fpsLabel.AutoLocalize = false
 	fpsLabel.Size = UDim2.fromOffset(0, 24)
 	fpsLabel.FontFace =
@@ -30,19 +30,17 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 	fpsLabel.LayoutOrder = 1
 	fpsLabel.Parent = contentFrame
 
-	local uiPadding: UIPadding = Instance.new("UIPadding")
-	uiPadding.Name = "UIPadding"
+	local uiPadding = Instance.new("UIPadding")
 	uiPadding.PaddingBottom = UDim.new(0.00, 8)
 	uiPadding.PaddingLeft = UDim.new(0.00, 8)
 	uiPadding.PaddingRight = UDim.new(0.00, 8)
 	uiPadding.PaddingTop = UDim.new(0.00, 8)
 	uiPadding.Parent = contentFrame
 
-	local uiCorner: UICorner = Instance.new("UICorner")
-	uiCorner.Name = "UICorner"
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.Parent = contentFrame
 
-	local physicsFPSLabel: TextLabel = Instance.new("TextLabel")
+	local physicsFPSLabel = Instance.new("TextLabel")
 	physicsFPSLabel.Name = "PhysicsFPSLabel"
 	physicsFPSLabel.AutoLocalize = false
 	physicsFPSLabel.Size = UDim2.fromOffset(0, 14)
@@ -70,8 +68,7 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 	placeVersionLabel.LayoutOrder = 4
 	placeVersionLabel.Parent = contentFrame
 
-	local serverIp: TextLabel = Instance.new("TextLabel")
-	serverIp.Name = "ServerIp"
+	local serverIp = Instance.new("TextLabel")
 	serverIp.AutoLocalize = false
 	serverIp.Size = UDim2.fromOffset(0, 14)
 	serverIp.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
@@ -84,8 +81,7 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 	serverIp.LayoutOrder = 5
 	serverIp.Parent = contentFrame
 
-	local serverLocation: TextLabel = Instance.new("TextLabel")
-	serverLocation.Name = "ServerLocation"
+	local serverLocation = Instance.new("TextLabel")
 	serverLocation.AutoLocalize = false
 	serverLocation.Size = UDim2.fromOffset(0, 14)
 	serverLocation.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
@@ -99,34 +95,15 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 	serverLocation.Parent = contentFrame
 
 	local uiListLayout = Instance.new("UIListLayout")
-	uiListLayout.Name = "UIListLayout"
 	uiListLayout.Padding = UDim.new(0, 2)
 	uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	uiListLayout.Parent = contentFrame
 
 	contentFrame.Parent = parent
 
-	local frameUpdateTable: { [number]: number? } = {}
-	local fpsTrackStartTime: number = os.clock()
-	local heartbeatConnection: RBXScriptConnection = RunService.Heartbeat:Connect(function()
-		-- https://devforum.roblox.com/t/get-client-fps-trough-a-script/282631/
-
-		local lastIteration = os.clock()
-
-		for Index = #frameUpdateTable, 1, -1 do
-			frameUpdateTable[Index + 1] = frameUpdateTable[Index] >= lastIteration - 1 and frameUpdateTable[Index]
-				or nil
-		end
-
-		frameUpdateTable[1] = lastIteration
-
-		local fps: number = math.floor(
-			os.clock() - fpsTrackStartTime >= 1 and #frameUpdateTable
-				or #frameUpdateTable / (os.clock() - fpsTrackStartTime)
-		)
-
-		fpsLabel.Text = `FPS: {fps}`
-		physicsFPSLabel.Text = `Physics FPS: {math.floor(workspace:GetRealPhysicsFPS())}`
+	local heartbeatConnection = RunService.Heartbeat:Connect(function()
+		fpsLabel.Text = `FPS: {math.floor(1 / Stats.FrameTime)}`
+		physicsFPSLabel.Text = `Physics Step Time: {string.format("%.4f", Stats.PhysicsStepTime)}`
 	end)
 
 	Networking:SubscribeToTopic("server_info", function(ip, location)
@@ -136,10 +113,8 @@ Widget.new("Place Stats", function(parent: ScreenGui)
 
 	return function()
 		contentFrame:Destroy()
-		contentFrame = nil
 
 		heartbeatConnection:Disconnect()
-		heartbeatConnection = nil
 	end
 end)
 

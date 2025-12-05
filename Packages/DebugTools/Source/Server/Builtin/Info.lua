@@ -1,16 +1,12 @@
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
-local Module = require(script.Parent.Parent.Module)
 local Networking = require(script.Parent.Parent.Networking)
 
 local isQueryingServerInfo = false
 local serverInfo
 
-local InfoModule = Module.new("Info")
-local Info = {}
-
-function Info.queryServerInfo()
+local function queryServerInfo()
 	while isQueryingServerInfo do
 		task.wait()
 	end
@@ -54,20 +50,15 @@ function Info.queryServerInfo()
 	end
 end
 
-function Info.sendServerInfo(player: Player)
-	local info = Info.queryServerInfo()
+local function sendServerInfo(player: Player)
+	local info = queryServerInfo()
 
 	Networking:SendMessageToPlayer(player, "server_info", info.Ip, info.Location)
 end
 
-function InfoModule:Init()
-	for _, player: Player in Networking:GetNetworkTargets() do
-		Info.sendServerInfo(player)
-	end
-
-	Networking.NetworkTargetAdded:Connect(function(player: Player)
-		Info.sendServerInfo(player)
-	end)
+Networking.NetworkTargetAdded:Connect(sendServerInfo)
+for _, player in Networking:GetNetworkTargets() do
+	task.spawn(sendServerInfo, player)
 end
 
-return InfoModule
+return nil

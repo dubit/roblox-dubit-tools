@@ -5,7 +5,6 @@ local DebugToolRootPath = script.Parent.Parent.Parent
 
 local Widget = require(DebugToolRootPath.Widget)
 
-local KEY_LIFETIME: number = 1.70
 local KEY_NAMES_MAP: { [Enum.KeyCode]: string } = {
 	[Enum.KeyCode.One] = "1",
 	[Enum.KeyCode.Two] = "2",
@@ -43,17 +42,17 @@ local KEY_NAMES_MAP: { [Enum.KeyCode]: string } = {
 }
 
 local function createKeyVisual(keyCode: Enum.KeyCode): Frame
-	local keyVisualFrame: Frame = Instance.new("Frame")
+	local keyVisualFrame = Instance.new("Frame")
 	keyVisualFrame.Name = "Key"
 	keyVisualFrame.Size = UDim2.fromOffset(32, 32)
 	keyVisualFrame.BackgroundColor3 = Color3.fromRGB(49, 47, 40)
 	keyVisualFrame.BorderSizePixel = 0
 
-	local uiCorner: UICorner = Instance.new("UICorner")
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.Name = "UICorner"
 	uiCorner.Parent = keyVisualFrame
 
-	local keyLabel: TextLabel = Instance.new("TextLabel")
+	local keyLabel = Instance.new("TextLabel")
 	keyLabel.Name = "KeyLabel"
 	keyLabel.AutoLocalize = false
 	keyLabel.Size = UDim2.fromScale(1.00, 1.00)
@@ -70,7 +69,7 @@ local function createKeyVisual(keyCode: Enum.KeyCode): Frame
 end
 
 Widget.new("Keyboard Input", function(parent: ScreenGui)
-	local minimalContentFrame: Frame = Instance.new("Frame")
+	local minimalContentFrame = Instance.new("Frame")
 	minimalContentFrame.Name = "MinimalContent"
 	minimalContentFrame.AnchorPoint = Vector2.new(0.00, 1.00)
 	minimalContentFrame.Position = UDim2.new(0.00, 8, 1.00, -120)
@@ -79,7 +78,7 @@ Widget.new("Keyboard Input", function(parent: ScreenGui)
 	minimalContentFrame.BackgroundTransparency = 1
 	minimalContentFrame.BorderSizePixel = 0
 
-	local contentFrame: Frame = Instance.new("Frame")
+	local contentFrame = Instance.new("Frame")
 	contentFrame.Name = "Content"
 	contentFrame.Size = UDim2.fromOffset(48, 48)
 	contentFrame.AutomaticSize = Enum.AutomaticSize.XY
@@ -87,7 +86,7 @@ Widget.new("Keyboard Input", function(parent: ScreenGui)
 	contentFrame.BackgroundTransparency = 0.5
 	contentFrame.Visible = false
 
-	local uiPadding: UIPadding = Instance.new("UIPadding")
+	local uiPadding = Instance.new("UIPadding")
 	uiPadding.Name = "UIPadding"
 	uiPadding.PaddingBottom = UDim.new(0.00, 8)
 	uiPadding.PaddingLeft = UDim.new(0.00, 8)
@@ -95,11 +94,11 @@ Widget.new("Keyboard Input", function(parent: ScreenGui)
 	uiPadding.PaddingTop = UDim.new(0.00, 8)
 	uiPadding.Parent = contentFrame
 
-	local uiCorner: UICorner = Instance.new("UICorner")
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.Name = "UICorner"
 	uiCorner.Parent = contentFrame
 
-	local uiListLayout: UIListLayout = Instance.new("UIListLayout")
+	local uiListLayout = Instance.new("UIListLayout")
 	uiListLayout.Name = "UIListLayout"
 	uiListLayout.Padding = UDim.new(0.00, 2)
 	uiListLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -110,38 +109,47 @@ Widget.new("Keyboard Input", function(parent: ScreenGui)
 
 	minimalContentFrame.Parent = parent
 
-	local keys: number = 0
+	local keys = 0
+	local keyInstances = {}
 
-	local inputBeganConnection: RBXScriptConnection = UserInputService.InputBegan:Connect(
-		function(inputObject: InputObject)
-			if inputObject.KeyCode == Enum.KeyCode.Unknown then
-				return
-			end
-
-			local visualFrame: Frame = createKeyVisual(inputObject.KeyCode)
-			visualFrame.Parent = contentFrame
-
-			keys += 1
-			contentFrame.Visible = true
-
-			task.delay(KEY_LIFETIME, function()
-				visualFrame:Destroy()
-
-				keys -= 1
-
-				if keys <= 0 and contentFrame then
-					contentFrame.Visible = false
-				end
-			end)
+	local inputBeganConnection = UserInputService.InputBegan:Connect(function(inputObject: InputObject)
+		if inputObject.KeyCode == Enum.KeyCode.Unknown then
+			return
 		end
-	)
+
+		local visualFrame: Frame = createKeyVisual(inputObject.KeyCode)
+		visualFrame.Parent = contentFrame
+
+		keys += 1
+		contentFrame.Visible = true
+
+		keyInstances[inputObject.KeyCode] = visualFrame
+	end)
+
+	local inputEndedConnection = UserInputService.InputEnded:Connect(function(inputObject: InputObject)
+		if inputObject.KeyCode == Enum.KeyCode.Unknown then
+			return
+		end
+
+		local keyInstance = keyInstances[inputObject.KeyCode]
+		keyInstances[inputObject.KeyCode] = nil
+
+		if keyInstance then
+			keyInstance:Destroy()
+		end
+
+		keys -= 1
+
+		if keys <= 0 and contentFrame then
+			contentFrame.Visible = false
+		end
+	end)
 
 	return function()
 		minimalContentFrame:Destroy()
-		minimalContentFrame = nil
 
 		inputBeganConnection:Disconnect()
-		inputBeganConnection = nil
+		inputEndedConnection:Disconnect()
 	end
 end)
 

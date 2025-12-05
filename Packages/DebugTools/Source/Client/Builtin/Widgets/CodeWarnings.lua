@@ -2,14 +2,19 @@
 local RunService = game:GetService("RunService")
 local DebugToolRootPath = script.Parent.Parent.Parent
 
-local Console = require(DebugToolRootPath.Builtin.Tabs.Console)
+local Console = require(DebugToolRootPath.Console)
 
+local IMGui = require(DebugToolRootPath.IMGui)
 local Widget = require(DebugToolRootPath.Widget)
-local Style = require(DebugToolRootPath.Style)
+
+local IMGuiConfig = IMGui:GetConfig()
+
+local WARN_COLOR = Color3.fromRGB(243, 173, 82)
+local ERROR_COLOR = Color3.fromRGB(255, 81, 70)
 
 type MessageData = {
 	Message: string,
-	Type: string,
+	Type: Enum.MessageType,
 	Amount: number,
 	TextLabel: TextLabel,
 	Lifetime: number,
@@ -18,47 +23,45 @@ type MessageData = {
 local CodeWarnings = {}
 CodeWarnings.internal = {
 	ContentFrame = nil :: Frame?,
-	OnScreenMessages = {} :: {
-		[number]: MessageData,
-	},
+	OnScreenMessages = {} :: { MessageData },
 }
 
 function CodeWarnings.internal.createOutputLabel(): TextLabel
-	local outputLabel: TextLabel = Instance.new("TextLabel")
-	outputLabel.Name = "OutputLabel"
+	local outputLabel = Instance.new("TextLabel")
 	outputLabel.AutoLocalize = false
-	outputLabel.FontFace = Style.FONT_BOLD
-	outputLabel.TextColor3 = Color3.fromRGB(255, 81, 70)
+	outputLabel.FontFace = IMGuiConfig.Font
+	outputLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
 	outputLabel.TextSize = 14
-	outputLabel.TextStrokeTransparency = 0.50
+	outputLabel.TextStrokeTransparency = 1.00
 	outputLabel.TextWrapped = true
 	outputLabel.TextXAlignment = Enum.TextXAlignment.Left
 	outputLabel.AutomaticSize = Enum.AutomaticSize.XY
 	outputLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	outputLabel.BackgroundTransparency = 0.50
 
-	local uiPadding: UIPadding = Instance.new("UIPadding")
-	uiPadding.Name = "UIPadding"
+	local uiPadding = Instance.new("UIPadding")
 	uiPadding.PaddingBottom = UDim.new(0.00, 4)
 	uiPadding.PaddingLeft = UDim.new(0.00, 8)
 	uiPadding.PaddingRight = UDim.new(0.00, 8)
 	uiPadding.PaddingTop = UDim.new(0.00, 4)
 	uiPadding.Parent = outputLabel
 
-	local uiCorner: UICorner = Instance.new("UICorner")
-	uiCorner.Name = "UICorner"
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.Parent = outputLabel
 
-	local uiSizeConstraint: UISizeConstraint = Instance.new("UISizeConstraint")
-	uiSizeConstraint.Name = "UISizeConstraint"
+	local uiSizeConstraint = Instance.new("UISizeConstraint")
 	uiSizeConstraint.MaxSize = Vector2.new(500, math.huge)
 	uiSizeConstraint.Parent = outputLabel
+
+	local uiStroke = Instance.new("UIStroke")
+	uiStroke.Transparency = 0.50
+	uiStroke.Parent = outputLabel
 
 	return outputLabel
 end
 
 function CodeWarnings.internal.getLatestMessageData(): MessageData?
-	local messagesCount: number = #CodeWarnings.internal.OnScreenMessages
+	local messagesCount = #CodeWarnings.internal.OnScreenMessages
 	if messagesCount == 0 then
 		return
 	end
@@ -66,13 +69,13 @@ function CodeWarnings.internal.getLatestMessageData(): MessageData?
 	return CodeWarnings.internal.OnScreenMessages[messagesCount]
 end
 
-function CodeWarnings.internal.addMessage(message: string, messageType: string)
+function CodeWarnings.internal.addMessage(message: string, messageType: Enum.MessageType)
 	local latestMessageData = CodeWarnings.internal.getLatestMessageData()
 	if latestMessageData and (latestMessageData.Message == message and latestMessageData.Type == messageType) then
 		latestMessageData.Amount += 1
 		latestMessageData.Lifetime = 6.00
 
-		local amountLabel: string = latestMessageData.Amount < 99 and tostring(latestMessageData.Amount) or "99+"
+		local amountLabel = latestMessageData.Amount < 99 and tostring(latestMessageData.Amount) or "99+"
 		latestMessageData.TextLabel.Text = `(x{amountLabel}) {latestMessageData.Message}`
 		return
 	end
@@ -80,10 +83,10 @@ function CodeWarnings.internal.addMessage(message: string, messageType: string)
 	local outputLabel = CodeWarnings.internal.createOutputLabel()
 	outputLabel.Text = message
 
-	if messageType == "WARNING" then
-		outputLabel.TextColor3 = Style.COLOR_ORANGE
-	elseif messageType == "ERROR" then
-		outputLabel.TextColor3 = Style.COLOR_RED
+	if messageType == Enum.MessageType.MessageWarning then
+		outputLabel.TextColor3 = WARN_COLOR
+	elseif messageType == Enum.MessageType.MessageError then
+		outputLabel.TextColor3 = ERROR_COLOR
 	end
 
 	outputLabel.Parent = CodeWarnings.internal.ContentFrame
@@ -98,15 +101,15 @@ function CodeWarnings.internal.addMessage(message: string, messageType: string)
 end
 
 RunService.Heartbeat:Connect(function(deltaTime: number)
-	for messageIndex: number, messageData: MessageData in CodeWarnings.internal.OnScreenMessages do
-		messageData.Lifetime -= deltaTime
+	for index, message in CodeWarnings.internal.OnScreenMessages do
+		message.Lifetime -= deltaTime
 
-		if messageData.Lifetime > 0.00 then
+		if message.Lifetime > 0.00 then
 			continue
 		end
 
-		messageData.TextLabel:Destroy()
-		table.remove(CodeWarnings.internal.OnScreenMessages, messageIndex)
+		message.TextLabel:Destroy()
+		table.remove(CodeWarnings.internal.OnScreenMessages, index)
 	end
 end)
 
@@ -118,7 +121,7 @@ Widget.new("Code Warnings", function(parent: ScreenGui)
 	content.BackgroundTransparency = 1.00
 	content.AutomaticSize = Enum.AutomaticSize.XY
 
-	local uiListLayout: UIListLayout = Instance.new("UIListLayout")
+	local uiListLayout = Instance.new("UIListLayout")
 	uiListLayout.Name = "UIListLayout"
 	uiListLayout.Padding = UDim.new(0.00, 4)
 	uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -128,8 +131,8 @@ Widget.new("Code Warnings", function(parent: ScreenGui)
 
 	CodeWarnings.internal.ContentFrame = content
 
-	local messageAddedConnection = Console.MessageAdded:Connect(function(message: string, messageType: string)
-		if messageType == "INFO" then
+	local messageAddedConnection = Console.MessageAdded:Connect(function(message, messageType)
+		if messageType == Enum.MessageType.MessageInfo then
 			return
 		end
 
@@ -137,7 +140,7 @@ Widget.new("Code Warnings", function(parent: ScreenGui)
 	end)
 
 	return function()
-		for _, messageData: MessageData in CodeWarnings.internal.OnScreenMessages do
+		for _, messageData in CodeWarnings.internal.OnScreenMessages do
 			messageData.TextLabel:Destroy()
 		end
 
