@@ -101,7 +101,10 @@ Tab.new("Utils", function(parent: Frame)
 			invisiblePartsShown = newInvisiblePartsValue
 
 			if invisiblePartsShown then
-				workspace.DescendantAdded:Connect(processPontentialInvisibleInstance)
+				table.insert(
+					potentialInvisiblePartConnections,
+					workspace.DescendantAdded:Connect(processPontentialInvisibleInstance)
+				)
 				for _, instance in workspace:GetDescendants() do
 					processPontentialInvisibleInstance(instance)
 				end
