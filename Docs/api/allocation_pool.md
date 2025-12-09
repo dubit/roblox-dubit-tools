@@ -160,6 +160,22 @@ AllocationPool.ResetPoolAsync(player, poolName)
 
 ---
 
+### .ResetConsumedAsync
+```luau { .fn_type }
+AllocationPool.ResetConsumedAsync(player: Player, poolName: string?): Promise
+```
+
+Will remove the users data from allocation pools datastore
+
+If the second parameter 'PoolName' is given, this function will remove all references to the pool name given.
+If the second parameter 'PoolName' is not given, this function will remove all pools from the users pools consumption.
+
+```luau
+AllocationPool.ResetConsumedAsync(player, poolName):expect()
+```
+
+---
+
 ### .UpdatePoolLimitAsync
 ```luau { .fn_type }
 AllocationPool.UpdatePoolLimitAsync(poolName: string, poolLimit: number): ()
@@ -172,3 +188,14 @@ This function updates the pool's maximum allocation limit in the datastore. The 
 ```luau
 AllocationPool.UpdatePoolLimitAsync("MyPool", 10):expect()
 ```
+
+---
+
+### .Initialize
+```luau { .fn_type }
+AllocationPool.Initialize(): ()
+```
+
+Initializes the AllocationPool service and starts the pool synchronization loop.
+	
+This function sets up player cleanup and continuously updates pool consumption while managing budget limits.
