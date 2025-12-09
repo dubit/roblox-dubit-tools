@@ -1,10 +1,8 @@
 --!strict
-local Module = require(script.Parent.Parent.Module)
 local Networking = require(script.Parent.Parent.Networking)
 
 local Action = require(script.Parent.Parent.Parent.Shared.Action)
 
-local ActionsModule = Module.new("Actions")
 local Internal = {
 	ActionListeners = {},
 }
@@ -38,44 +36,42 @@ function Internal:SendActionsList(player: Player)
 	Networking:SendMessageToPlayer(player, "actions_update", actionsToSend)
 end
 
-function ActionsModule.Init()
-	Action.ActionAdded:Connect(function(actionName: string)
-		local actionDefinition = Action:GetDefinition(actionName)
+Action.ActionAdded:Connect(function(actionName: string)
+	local actionDefinition = Action:GetDefinition(actionName)
 
-		for player: Player, playerData in Internal.ActionListeners do
-			if not playerData.Listening then
-				continue
-			end
-
-			playerData.SentActions[actionName] = true
-
-			Networking:SendMessageToPlayer(player, "actions_update", { actionDefinition })
+	for player, playerData in Internal.ActionListeners do
+		if not playerData.Listening then
+			continue
 		end
-	end)
 
-	Action.ActionRemoved:Connect(function(actionName: string)
-		for player: Player, playerData in Internal.ActionListeners do
-			if not playerData.Listening then
-				continue
-			end
+		playerData.SentActions[actionName] = true
 
-			playerData.SentActions[actionName] = nil
+		Networking:SendMessageToPlayer(player, "actions_update", { actionDefinition })
+	end
+end)
 
-			Networking:SendMessageToPlayer(player, "actions_remove", actionName)
+Action.ActionRemoved:Connect(function(actionName: string)
+	for player, playerData in Internal.ActionListeners do
+		if not playerData.Listening then
+			continue
 		end
-	end)
 
-	Networking:SubscribeToTopic("actions_listening", function(player: Player, isListening: boolean)
-		if isListening then
-			Internal:SendActionsList(player)
-		else
-			Internal.ActionListeners[player].Listening = false
-		end
-	end)
+		playerData.SentActions[actionName] = nil
 
-	Networking:SubscribeToTopic("actions_execute", function(_, actionName: string, arguments: { any }?)
-		Action:Execute(actionName, arguments)
-	end)
-end
+		Networking:SendMessageToPlayer(player, "actions_remove", actionName)
+	end
+end)
 
-return ActionsModule
+Networking:SubscribeToTopic("actions_listening", function(player: Player, isListening: boolean)
+	if isListening then
+		Internal:SendActionsList(player)
+	else
+		Internal.ActionListeners[player].Listening = false
+	end
+end)
+
+Networking:SubscribeToTopic("actions_execute", function(_, actionName: string, arguments: { any }?)
+	Action:Execute(actionName, arguments)
+end)
+
+return nil

@@ -1,179 +1,39 @@
-local UserInputService = game:GetService("UserInputService")
-local StarterGui = game:GetService("StarterGui")
-local GuiService = game:GetService("GuiService")
+local function requireInstanceIfModuleScript(instance: Instance)
+	if not instance:IsA("ModuleScript") then
+		return
+	end
 
-local Authorization = require(script.Authorization)
-local DebugInterface = require(script.Interface)
+	task.spawn(require, instance)
+end
 
-type TouchPointData = {
-	Position: Vector2,
-	HoldTime: number,
-	InputChangedConnection: RBXScriptConnection?,
-}
+require(script:WaitForChild("Interface"))
 
-if not Authorization:isLocalPlayerAuthorized() then
-	return { Authorized = false }
+local builtinFolder = script:WaitForChild("Builtin")
+local widgetsFolder = builtinFolder:WaitForChild("Widgets")
+local tabsFolder = builtinFolder:WaitForChild("Tabs")
+
+widgetsFolder.ChildAdded:Connect(requireInstanceIfModuleScript)
+for _, childInstance in widgetsFolder:GetChildren() do
+	requireInstanceIfModuleScript(childInstance)
+end
+
+tabsFolder.ChildAdded:Connect(requireInstanceIfModuleScript)
+for _, childInstance in tabsFolder:GetChildren() do
+	requireInstanceIfModuleScript(childInstance)
 end
 
 local DebugTools = {}
 
-DebugTools.internal = {
-	SwitchKey = Enum.KeyCode.F6,
-}
-
 DebugTools.interface = {
-	Tab = require(script.Tab),
-	Widget = require(script.Widget),
-	Action = require(script.Parent.Shared.Action),
+	-- Client specific
+	Tab = require(script:WaitForChild("Tab")),
+	IMGui = require(script:WaitForChild("IMGui")),
+	Widget = require(script:WaitForChild("Widget")),
+	Console = require(script:WaitForChild("Console")),
+
+	-- Shared API with server
 	Networking = require(script.Networking),
-	IMGui = require(script.IMGui),
-
-	Authorized = true,
-
-	BuiltinTabs = {
-		Console = require(script.Builtin.Tabs.Console),
-		Components = require(script.Builtin.Tabs.Components),
-		Widgets = require(script.Builtin.Tabs.Widgets),
-		Actions = require(script.Builtin.Tabs.Actions),
-		Explorer = require(script.Builtin.Tabs.Explorer),
-		Properties = require(script.Builtin.Tabs.Properties),
-	},
-
-	BuiltinWidgets = {
-		PlaceStats = require(script.Builtin.Widgets.PlaceStats),
-		Coordinates = require(script.Builtin.Widgets.Coordinates),
-		KeyboardInput = require(script.Builtin.Widgets.KeyboardInput),
-		CodeWarnings = require(script.Builtin.Widgets.CodeWarnings),
-		PerformanceStats = require(script.Builtin.Widgets.PerformanceStats),
-	},
-
-	BuiltinActions = {
-		ShowCollisions = require(script.Builtin.Actions.ShowCollisions),
-		SetWalkspeed = require(script.Builtin.Actions.SetWalkspeed),
-		SetNoclip = require(script.Builtin.Actions.SetNoclip),
-		SetFPS = require(script.Builtin.Actions.SetFPS),
-	},
-
-	Style = require(script.Style),
-
-	Accessible = true,
+	Action = require(script.Parent.Shared.Action),
 }
-
-function DebugTools.internal.observeKeyBinds()
-	UserInputService.InputBegan:Connect(function(inputObject: InputObject, gameProcessedEvent: boolean)
-		if gameProcessedEvent then
-			return
-		end
-
-		if inputObject.KeyCode ~= DebugTools.internal.SwitchKey then
-			return
-		end
-
-		DebugInterface.switchVisibility()
-	end)
-end
-
-function DebugTools.internal.observeMobileGesture()
-	local touchPoints: { InputObject } = {}
-
-	local function removeTouchPoint(inputObject: InputObject)
-		for objectIndex: number, otherInputObject: InputObject in touchPoints do
-			if otherInputObject == inputObject then
-				table.remove(touchPoints, objectIndex)
-				return
-			end
-		end
-	end
-
-	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
-		if inputObject.UserInputType ~= Enum.UserInputType.Touch then
-			return
-		end
-
-		local viewportSize: Vector2 = workspace.CurrentCamera.ViewportSize
-
-		local pointXMiddlePercentage: number =
-			math.abs((viewportSize.X / 2.00 - inputObject.Position.X) / viewportSize.X)
-		local pointYPercentage: number = inputObject.Position.Y / viewportSize.Y
-		if pointYPercentage > 0.00 or pointXMiddlePercentage >= 0.10 then
-			return
-		end
-
-		table.insert(touchPoints, inputObject)
-
-		if #touchPoints >= 3 then
-			for _, otherInputObject: InputObject in touchPoints do
-				removeTouchPoint(otherInputObject)
-			end
-
-			DebugInterface.switchVisibility()
-		end
-
-		task.delay(0.75, function()
-			removeTouchPoint(inputObject)
-		end)
-	end)
-end
-
-function DebugTools.internal.observeConsoleKeyBinds()
-	local consoleActivationButtons = {
-		[Enum.KeyCode.ButtonL1] = true,
-		[Enum.KeyCode.ButtonR1] = true,
-		[Enum.KeyCode.ButtonY] = true,
-	}
-
-	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
-		if consoleActivationButtons[inputObject.KeyCode] then
-			for buttonKey in consoleActivationButtons do
-				if not UserInputService:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, buttonKey) then
-					return
-				end
-			end
-
-			DebugInterface.switchVisibility()
-
-			GuiService.SelectedObject = DebugInterface.getTabsFrame():FindFirstChildWhichIsA("TextButton")
-		end
-	end)
-end
-
-function DebugTools.internal.observeConsoleKeyBindsForDevConsole()
-	local consoleActivationButtons = {
-		[Enum.KeyCode.ButtonL1] = true,
-		[Enum.KeyCode.ButtonR1] = true,
-		[Enum.KeyCode.ButtonX] = true,
-	}
-
-	UserInputService.InputBegan:Connect(function(inputObject: InputObject)
-		if consoleActivationButtons[inputObject.KeyCode] then
-			for buttonKey in consoleActivationButtons do
-				if not UserInputService:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, buttonKey) then
-					return
-				end
-			end
-
-			StarterGui:SetCore("DevConsoleVisible", not StarterGui:GetCore("DevConsoleVisible"))
-		end
-	end)
-end
-
-function DebugTools.internal.init()
-	DebugInterface.init()
-
-	DebugTools.internal.observeKeyBinds()
-	DebugTools.internal.observeMobileGesture()
-	DebugTools.internal.observeConsoleKeyBinds()
-	DebugTools.internal.observeConsoleKeyBindsForDevConsole()
-
-	for _, childInstance: Instance in script.Builtin.IMGuiWidgets:GetChildren() do
-		if not childInstance:IsA("ModuleScript") then
-			continue
-		end
-
-		require(childInstance)
-	end
-end
-
-DebugTools.internal.init()
 
 return DebugTools.interface

@@ -2,8 +2,6 @@
 local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
-local insetSize: Vector2 = GuiService:GetGuiInset()
-
 local DebugToolRootPath = script.Parent.Parent.Parent.Parent
 local SharedRootPath = DebugToolRootPath.Parent.Shared
 
@@ -15,9 +13,7 @@ WidgetVisual.prototype = {}
 WidgetVisual.interface = {}
 
 function WidgetVisual.internal.createWidgetRepresentation(widgetVisual, representationParent: Frame)
-	local screenBoundingInstance: GuiBase = widgetVisual.WidgetScreenGui:GetChildren()[1]
-
-	local screenRepresentation: TextButton = Instance.new("TextButton")
+	local screenRepresentation = Instance.new("TextButton")
 	screenRepresentation.Name = widgetVisual.WidgetName
 	screenRepresentation.AutoLocalize = false
 	screenRepresentation.Size = UDim2.fromOffset(60, 30)
@@ -26,13 +22,12 @@ function WidgetVisual.internal.createWidgetRepresentation(widgetVisual, represen
 	screenRepresentation.BorderSizePixel = 0
 	screenRepresentation.Text = ""
 
-	local uiCorner: UICorner = Instance.new("UICorner")
-	uiCorner.Name = "UICorner"
+	local uiCorner = Instance.new("UICorner")
 	uiCorner.CornerRadius = UDim.new(0.00, 4)
 	uiCorner.Parent = screenRepresentation
 
 	widgetVisual.FrameRepresentation = screenRepresentation
-	widgetVisual.BoundingInstance = screenBoundingInstance
+	widgetVisual.BoundingInstance = widgetVisual.WidgetScreenGui:GetChildren()[1]
 
 	screenRepresentation.Parent = representationParent
 end
@@ -47,6 +42,8 @@ function WidgetVisual.internal.observeWidgetChanges(widgetVisual)
 		then
 			return
 		end
+
+		local insetSize: Vector2 = GuiService:GetGuiInset()
 
 		local widgetRepresentationAbsolutePosition: Vector2 = screenRepresentation.AbsolutePosition + insetSize
 
@@ -72,16 +69,17 @@ function WidgetVisual.internal.observeWidgetChanges(widgetVisual)
 end
 
 function WidgetVisual.prototype:UpdateRepresentation()
-	local parentSize: Vector2 = self.FrameRepresentation.Parent.AbsoluteSize
+	local insetSize = GuiService:GetGuiInset()
+	local parentSize = self.FrameRepresentation.Parent.AbsoluteSize
 
-	local realScreenSize: Vector2 = workspace.CurrentCamera.ViewportSize
-	local realWidgetPosition: Vector2 = self.BoundingInstance.AbsolutePosition + insetSize
-	local realWidgetSize: Vector2 = self.BoundingInstance.AbsoluteSize
-	local realPositionScaled: Vector2 = realWidgetPosition / realScreenSize
-	local realSizeScaled: Vector2 = realWidgetSize / realScreenSize
+	local realScreenSize = workspace.CurrentCamera.ViewportSize
+	local realWidgetPosition = self.BoundingInstance.AbsolutePosition + insetSize
+	local realWidgetSize = self.BoundingInstance.AbsoluteSize
+	local realPositionScaled = realWidgetPosition / realScreenSize
+	local realSizeScaled = realWidgetSize / realScreenSize
 
-	local widgetRepresentationPosition: Vector2 = parentSize * realPositionScaled
-	local widgetRepresentationSize: Vector2 = parentSize * realSizeScaled
+	local widgetRepresentationPosition = parentSize * realPositionScaled
+	local widgetRepresentationSize = parentSize * realSizeScaled
 
 	self.FrameRepresentation.Position = UDim2.fromOffset(widgetRepresentationPosition.X, widgetRepresentationPosition.Y)
 	self.FrameRepresentation.Size = UDim2.fromOffset(widgetRepresentationSize.X, widgetRepresentationSize.Y)
