@@ -1,23 +1,5 @@
---[=[
-	@class DubitUtils.Camera
-]=]
-
 local Camera = {}
 
---[=[
-	Zooms the provided Camera instance to the extents of the provided BasePart or Model instance.
-
-	@within DubitUtils.Camera
-
-	@param camera Camera -- The camera instance to zoom.
-	@param extentsInstance BasePart | Model -- The BasePart or Model instance to zoom the camera to the extents of.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.Camera.zoomToExtents(workspace.CurrentCamera, currentShopItemModel)
-	```
-]=]
 function Camera.zoomToExtents(camera: Camera, extentsInstance: BasePart | Model)
 	--[[ An intermediary variable is used to workaround a LuauLSP error, wherein it cannot correctly infer the properties
 	of the variable based on it's type due to it having 2 possible types, thus causing "Missing key" errors. ]]

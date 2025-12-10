@@ -1,7 +1,3 @@
---[=[
-	@class DubitUtils.Character
-]=]
-
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 
@@ -10,22 +6,6 @@ local descendantAddedTransparencyConnections = {}
 
 local Character = {}
 
---[=[
-	Creates a clone of the provided character, without overhead display of display name & health.
-	
-	@within DubitUtils.Character
-
-	@param character Model -- The character model to create a clone of.
-	@param isAnchored boolean? -- Whether the cloned character should be anchored. Defaults to false.
-
-	@return Model? -- The cloned character model.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.Character.cloneCharacter(Players.LocalPlayer.Character, true)
-	```
-]=]
 function Character.cloneCharacter(character: Model, isAnchored: boolean?): Model?
 	if typeof(character) ~= "Instance" or not character:IsA("Model") then
 		return
@@ -46,29 +26,6 @@ function Character.cloneCharacter(character: Model, isAnchored: boolean?): Model
 	return clone
 end
 
---[=[
-	@yields
-
-	Sets the transparency of all valid parts within the provided character to the provided value.
-	This will also apply to any valid parts which become a descendant of the character before transparency values are reset.
-	
-	@within DubitUtils.Character
-
-	@param character Model -- The character model to set the transprency of.
-	@param targetTransparency number -- The transparency value to set. Supports values between 0 and 1 (inclusive).
-	@param tweenInfo TweenInfo? -- The TweenInfo to apply to the transparency change. Will not tween if not provided.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.Character.setCharacterTransparency(Players.LocalPlayer.Character, 0.7, true)
-	```
-
-	:::info
-	This function is usually intended to be used in conjunction with resetCharacterTransparency, as it will
-	restore the original transparency values of each part, which are stored through this function.
-	:::
-]=]
 function Character.setCharacterTransparency(character: Model, targetTransparency: number, tweenInfo: TweenInfo?)
 	if typeof(targetTransparency) ~= "number" then
 		return
@@ -142,27 +99,6 @@ function Character.setCharacterTransparency(character: Model, targetTransparency
 	end
 end
 
---[=[
-	Resets the transparency of all parts within the provided character to the original value,
-	if it was made invisible via Character.setCharacterTransparency.
-	
-	@within DubitUtils.Character
-
-	@param character Model -- The character model to reset the transparency of.
-	@param tweenInfo TweenInfo? -- The TweenInfo to apply to the transparency change. Will not tween if not provided.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.Character.makeCharacterVisible(Players.LocalPlayer.Character, false)
-	```
-
-	:::info
-	This function must be used in conjunction with Character.setCharacterTransparency, which stores the original
-	transparency values of each part.
-	If the character did not have its transparency modified via that function, this function will fail.
-	:::
-]=]
 function Character.resetCharacterTransparency(character: Model, tweenInfo: TweenInfo?)
 	if not next(modifiedTransparencyCharacters) or not modifiedTransparencyCharacters[character] then
 		return
@@ -181,20 +117,6 @@ function Character.resetCharacterTransparency(character: Model, tweenInfo: Tween
 	modifiedTransparencyCharacters[character] = nil
 end
 
---[=[
-	Set a provided character to be frozen or unfrozen.
-	
-	@within DubitUtils.Character
-
-	@param character Model -- The character model to freeze/unfreeze.
-	@param frozen boolean? -- Whether to freeze or unfreeze the character. Defaults to true.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.Character.setCharacterFrozen(Players.LocalPlayer.Character, true)
-	```
-]=]
 function Character.setCharacterFrozen(character: Model, frozen: boolean?)
 	frozen = if typeof(frozen) == "boolean" then frozen else true
 	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")

@@ -1,39 +1,7 @@
---[=[
-	@class DubitUtils.RobloxGroup
-
-	Contains utility functions for working with Roblox Groups.
-]=]
-
 local RunService = game:GetService("RunService")
 
 local RobloxGroup = {}
 
---[=[
-	@yields
-
-	Check if the specified player is at or above the provided group rank, or otherwise succeeds the permissions of that rank.
-	Returns `true` if any of the following conditions have been met:
-	- The group rank of the player in the specified group matches or exceeds the minimum group rank
-	- The player is the owner of the game
-	- The player is whitelisted
-	- The game is running in Studio
-	
-	@within DubitUtils.RobloxGroup
-
-	@param player Player -- The player to check.
-	@param minimumGroupRank number -- The minimum group rank to check the player's rank against.
-	@param whitelist { [number]: any  }? -- An optional dictionary of player ID keys to pass this check, regardless of group rank.
-	@param retries number? -- The number of times to retry getting the player's group rank. Defaults to 4.
-	@param creatorIdOverride number? -- An optional override of the creator ID to check the player's rank in, if not desired to be that of the current experience.
-
-	@return boolean -- Whether the player's rank matches or exceeds the minimum given, or otherwise succeeds its permissions.
-
-	#### Example Usage
-
-	```lua
-	DubitUtils.RobloxGroup.isPlayerAboveGroupRank(playerWhoJustJoined, 250, { [aSpecificExternalPlayer.UserId] = true }, 3, 0000000)
-	```
-]=]
 function RobloxGroup.isPlayerAboveGroupRank(
 	player: Player,
 	minimumGroupRank: number,
@@ -94,7 +62,7 @@ end
 	this function will fail and return nil.
 	:::
 ]=]
-function RobloxGroup.getMemberRank(player: Player, groupId: number?, retries: number?): number?
+function RobloxGroup.getMemberRank(player: Player, groupId: number?, retries: number?): number
 	local attemptIndex = 0
 	local success, rank
 
@@ -103,12 +71,12 @@ function RobloxGroup.getMemberRank(player: Player, groupId: number?, retries: nu
 		finalGroupId = groupId
 	else
 		if game.CreatorType ~= Enum.CreatorType.Group then
-			warn("Cannot get group rank if experience's creator ID is not that of a group.")
-			return nil
+			error("Cannot get group rank if experience's creator ID is not that of a group.")
 		end
 
 		finalGroupId = game.CreatorId
 	end
+
 	retries = if typeof(retries) == "number" then retries else 4
 
 	repeat
@@ -125,8 +93,7 @@ function RobloxGroup.getMemberRank(player: Player, groupId: number?, retries: nu
 	until success or attemptIndex == retries
 
 	if not success then
-		warn(`Failed to get group rank for player '{player.Name}': {rank}`)
-		return nil
+		error("Failed to fetch group rank for the player")
 	end
 
 	return rank

@@ -16,7 +16,6 @@ return {
 	Accessory = require(script.Accessory),
 	BufferReader = require(script.BufferReader),
 	BufferWriter = require(script.BufferWriter),
-	MD5 = require(script.MD5),
 	Stack = require(script.Stack),
 	fzy = require(script.fzy),
 }

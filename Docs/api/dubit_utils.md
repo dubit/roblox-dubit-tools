@@ -104,7 +104,7 @@ Finds & returns the first ancestor of the given instance with the provided tag, 
 
 #### .findDescendantsWithTag
 ```luau { .fn_type }
-DubitUtils.InstanceUtility.findDescendantsWithTag(instance: Instance, tag: string): Instance?
+DubitUtils.InstanceUtility.findDescendantsWithTag(instance: Instance, tag: string): { Instance }
 ```
 
 !!! danger
@@ -113,13 +113,13 @@ DubitUtils.InstanceUtility.findDescendantsWithTag(instance: Instance, tag: strin
 Finds & returns a table of descendants of the given instance which have the provided tag.
 
 !!! notice
-	This function will ignore the provided instance, and only check its ancestors.
+	This function will ignore the provided instance, and only check its descendants.
 
 ---
 
 #### .setDescendantTransparency
 ```luau { .fn_type }
-DubitUtils.InstanceUtility.setDescendantTransparency(instance: Instance, transparency: number): Instance?
+DubitUtils.InstanceUtility.setDescendantTransparency(instance: Instance, transparency: number): ()
 ```
 
 Sets the transparency of a given instance and all of its descendants to a provided value. The transprency to set may be any number, however only values between 0 and 1 are supported (e.g. providing a value above 1 will be equivalent to providing 1).
@@ -137,7 +137,7 @@ DubitUtils.InstanceUtility.verifyInstance(instanceName: string, instanceType: st
 !!! danger
 	This function yields.
 
-Ensure that an Instance exists within the given parent Instance, and create it if it does not exist.=
+Ensure that an Instance exists within the given parent Instance, and create it if it does not exist.
 
 !!! danger
 	Developers should ensure that the provided 'instanceType' equates to a valid Instance subclass. This is something that as of current can not be natively checked in Lua/Luau, so will cause an error if it is not valid.
@@ -156,6 +156,17 @@ Wait for a series of children to appear in an instance.
 
 !!! warning
 	Will return nil if any of the children do not appear within the provided timeout.
+
+---
+
+#### .findInstance
+```luau { .fn_type }
+DubitUtils.InstanceUtility.findInstance(parent: Instance, path: string): Instance?
+```
+
+Find instance within a parent, this function removes a need for chaining **[FindFirstChild](https://create.roblox.com/docs/reference/engine/classes/Instance#FindFirstChild)** calls.
+
+The path string must follow the format: instance_name.instance_name.instance_name...
 
 ## Number
 
@@ -180,23 +191,6 @@ Abbreviates the given number with a large number notation, depending on the near
 
 ---
 
-#### .formatDigitLength
-```luau { .fn_type }
-DubitUtils.Number.formatDigitLength(numberToFormat: number, minimumDigitLength: number): string
-```
-
-!!! danger
-	It is advised to use **[string.format](https://www.lua.org/pil/20.html)** instead, there is really no reason for this function to exist.
-
-Adds trailing zeros preceding the given number until it is at least the given length of digits.
-
-??? example "Example Usage"
-	```lua
-	print(DubitUtils.Number.formatDigitLength(48, 4)) --> 0048
-	```
-
----
-
 #### .roundToNearest
 ```luau { .fn_type }
 DubitUtils.Number.roundToNearest(numberToRound: number, roundTo: number): number
@@ -211,28 +205,19 @@ Rounds a given number to the nearest multiple of the given 'roundTo' number.
 
 ---
 
-#### .lerp
+#### .commaSeparate
 ```luau { .fn_type }
-DubitUtils.Number.roundToNearest(valueA: number, valueB: number, time: number): number
+DubitUtils.Number.commaSeparate(numberToSeparate: number): string
 ```
 
-!!! danger
-	It is advised to use **[math.lerp](https://luau.org/library#math-library)** instead.
-
-Linearly interpolates between valueA and valueB by time.
-
-When time = 0 returns a When time = 1 return b When time = 0.5 returns the midpoint of a and b
-
-The time value isn't clamped!
+Separate the given number with commas every three digits to make the number more human-readable.
 
 ??? example "Example Usage"
 	```lua
-	print(DubitUtils.Number.lerp(1.00, 2.00, 0.50)) --> 1.50
-	print(DubitUtils.Number.lerp(0.00, 1.00, 0.70)) --> 0.70
-	print(DubitUtils.Number.lerp(15.00, 30.00, 0.20)) --> 18.00
-	print(DubitUtils.Number.lerp(0.00, 1.00, 2.00)) --> 2.00
+	DubitUtils.Number.commaSeparate(528) --> 528
+	DubitUtils.Number.commaSeparate(59678) --> 59,678
+	DubitUtils.Number.commaSeparate(1000000000) --> 1,000,000,000
 	```
-
 
 ## RobloxGroup
 
@@ -261,9 +246,130 @@ Check if the specified player is at or above the provided group rank, or otherwi
 - The player is whitelisted
 - The game is running in Studio
 
+??? example "Example Usage"
+	```lua
+	DubitUtils.RobloxGroup.isPlayerAboveGroupRank(playerWhoJustJoined, 250, { [aSpecificExternalPlayer.UserId] = true }, 3, 0)
+	```
+
+## Stack
+
+### Properties
+
+#### first
+```luau { .fn_type }
+DubitUtils.Stack.first: number
+```
+
+---
+
+#### last
+```luau { .fn_type }
+DubitUtils.Stack.last: number
+```
+
+---
+
+#### size
+```luau { .fn_type }
+DubitUtils.Stack.size: number
+```
+
+### Functions
+
+#### .new
+```luau { .fn_type }
+DubitUtils.Stack.new<T>(): Stack<T>
+```
+
+---
+
+#### :push
+```luau { .fn_type }
+DubitUtils.Stack:push<T>(value: T): ()
+```
+
+---
+
+#### :pushFirst
+```luau { .fn_type }
+DubitUtils.Stack:pushFirst<T>(value: T): ()
+```
+
+---
+
+#### :pushLast
+```luau { .fn_type }
+DubitUtils.Stack:pushFirst<T>(value: T): ()
+```
+
+---
+
+#### :pop
+```luau { .fn_type }
+DubitUtils.Stack:pop<T>(): T?
+```
+
+---
+
+#### :popFirst
+```luau { .fn_type }
+DubitUtils.Stack:popFirst<T>(): T?
+```
+
+---
+
+#### :popLast
+```luau { .fn_type }
+DubitUtils.Stack:popLast<T>(): T?
+```
+
+---
+
+#### :peek
+```luau { .fn_type }
+DubitUtils.Stack:peek<T>(): T?
+```
+
+---
+
+#### :peekFirst
+```luau { .fn_type }
+DubitUtils.Stack:peekFirst<T>(): T?
+```
+
+---
+
+#### :peekLast
+```luau { .fn_type }
+DubitUtils.Stack:peekLast<T>(): T?
+```
+
 ## Table
 
 ### Functions
+
+#### .construct
+```luau { .fn_type }
+DubitUtils.Table.construct<T>(constructingFunction: () -> T): T
+```
+
+Construct a table from a given function.
+
+The only reason it exists so the code looks "cleaner" (very subjective).
+
+??? example "Example Usage"
+	```lua
+	local COLOR_PALETTE = DubitUtils.Table.construct(function()
+		local hexColors = { "#FF0000", "#00FF00", "#0000FF" }
+		local colors = {}
+		for i, hex in hexColors do
+			colors[i] = Color3.fromHex(hex)
+		end
+		return colors
+	end)
+	```
+
+---
 
 #### .compare
 ```luau { .fn_type }
@@ -294,7 +400,7 @@ Cyclical References not supported.
 
 #### .compareDeep
 ```luau { .fn_type }
-DubitUtils.Table.compareDeep(source: {[any]: any}, other: {[any]: any}): boolean
+DubitUtils.Table.compareDeep<A, B>(source: A, other: B): boolean
 ```
 
 This function deeply compares two tables, both arrays and dictionaries are supported.
@@ -321,7 +427,7 @@ Cyclical References not supported.
 
 #### .deepClone
 ```luau { .fn_type }
-DubitUtils.Table.deepClone(tbl: T): T
+DubitUtils.Table.deepClone<T>(tbl: T): T
 ```
 
 This function creates a deep copy of given table.
@@ -340,7 +446,7 @@ Cyclical References not supported.
 
 #### .deepFreeze
 ```luau { .fn_type }
-DubitUtils.Table.deepFreeze(tbl: {[any]: any})
+DubitUtils.Table.deepFreeze<T>(tbl: T): T
 ```
 
 This function deep freezes the table making it read only.
@@ -383,9 +489,9 @@ Gets a random entry (key-value pair) from a given dictionary.
 
 ---
 
-#### .TableToString
+#### .stringify
 ```luau { .fn_type }
-DubitUtils.Table.TableToString(tableBase: {[any]: any}), options: { spaces: number?, usesemicolon: boolean?, depth: number? }): string
+DubitUtils.Table.stringify(tableBase: {[any]: any}), options: { spaces: number?, usesemicolon: boolean?, depth: number? }): string
 ```
 
 'Stringifies' a table, recursively converting it to a string representation of its contents.
@@ -398,7 +504,7 @@ Options:
 ??? example "Example Usage"
 	```lua
 	local tbl = { test = true, foo = 8 }
-	local stringifiedTable = DubitUtils.Table.TableToString(tbl)
+	local stringifiedTable = DubitUtils.Table.stringify(tbl)
 	print(stringifiedTable)
 	--> {
 	--> 	["test"] = true;
@@ -439,6 +545,23 @@ Formats seconds to race like timer format (mm:ss:msms). This differs from Time.f
 	print(DubitUtils.Time.formatToRaceTimer(127.138)) --> 02:07.138
 	print(DubitUtils.Time.formatToRaceTimer(16.552)) --> 00:16.552
 	print(DubitUtils.Time.formatToRaceTimer(6)) --> 00:06.000
+	```
+
+---
+
+#### .formatToRaceTimerDetailed
+```luau { .fn_type }
+DubitUtils.Time.formatToRaceTimerDetailed(seconds: number): string
+```
+
+Formats seconds to race like timer format (mm:ss:msms). This differs from Time.formatToRaceTimer as this one gives a lot more precise time back. (Useful for racing games)
+
+??? example "Example Usage"
+	```lua
+	print(DubitUtils.Time.formatToRaceTimer(59.99)) --> 00:59.9900
+	print(DubitUtils.Time.formatToRaceTimer(127.138)) --> 02:07.1380
+	print(DubitUtils.Time.formatToRaceTimer(16.552)) --> 00:16.5520
+	print(DubitUtils.Time.formatToRaceTimer(6)) --> 00:06.0000
 	```
 
 ---
@@ -502,13 +625,20 @@ DubitUtils.Vector.getRandomPointInPart(part: BasePart, randomiseYPosition: boole
 
 Gets and returns a random position within a given part, with the option to only randomise along the X & Z axes and optionally Y axis.
 
+---
+
+#### .quadraticBezier
+```luau { .fn_type }
+DubitUtils.Vector.quadraticBezier(time: number, p0, p1, p2)
+```
+
 ## fzy
 
 ### Functions
 
 #### .filter
 ```luau { .fn_type }
-DubitUtils.fzy.filter(needle: string, haystack: string, caseSensitive: boolean?): {{number,{number},number}}
+DubitUtils.fzy.filter(needle: string, haystack: string, caseSensitive: boolean?): { {number, { number }, number } }
 ```
 
 ---
@@ -526,7 +656,7 @@ Usually called before score or positions.
 
 #### .positions
 ```luau { .fn_type }
-DubitUtils.fzy.positions(needle: string, haystack: string, caseSensitive: boolean?): {[number]: number}
+DubitUtils.fzy.positions(needle: string, haystack: string, caseSensitive: boolean?): { [number]: number }
 ```
 
 Compute the locations where fzy matches a string.
