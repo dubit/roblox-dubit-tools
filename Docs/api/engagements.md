@@ -16,6 +16,7 @@ Engagements.TrackGui(gui: ScreenGui, identifier: string): ()
 ```
 
 Tracks when a GUI is viewed or interacted with by:
+
 - Setting a unique identifier as an attribute on the GUI.
 - Tagging the GUI so it can be recognized later.
 - This allows the client side system to detect and respond to GUI visibility and interactions.
@@ -31,6 +32,7 @@ Engagements.TrackVideo(video: VideoFrame, identifier: string?): ()
 ```
 
 Tracks when a video is watched by:
+
 - Setting a unique identifier as an attribute on the video.
 - Tagging the video so it can be recognized later.
 - This allows the client side system to detect and respond to video playback. The WatchedVideo signal will be triggered when the video ends or loops.
@@ -46,6 +48,7 @@ Engagements.TrackZone(zone: Model, identifier: string?): ()
 ```
 
 Tracks when a player enters or leaves a zone by:
+
 - Setting a unique identifier as an attribute on the zone.
 - Tagging the zone so it can be recognized later.
 - This allows the client side system to detect and respond to player movement in and out of designated zones. The ZoneEntered and ZoneLeft signals will be triggered when relevant.
@@ -61,11 +64,36 @@ Engagements.TrackObject(object: Model, identifier: string?): ()
 ```
 
 Tracks when an object enters the players viewport:
+
 - Setting a unique identifier as an attribute on the zone.
 - Tagging the zone so it can be recognized later.
 
 This allows the client side system to detect and respond to objects appearing in the players viewport. This function will invoke the following signals:
+
 - InScreenshot
 
 !!! success ""
 	This is a server only method.
+
+---
+
+### Initialize
+```luau { .fn_type }
+Engagements.Initialize(): ()
+```
+
+Initializes the Engagements package by setting up necessary event listeners and tracking systems.
+
+How It Works:
+
+  - Ensures initialization only happens once.
+  - Retrieves the package's remote event for communication.
+  - If running on the **server**, it listens for `ZoneEntered` and `ZoneLeft` events
+   from clients and fires corresponding signals.
+  - If running on the **client**, it:
+    - Tracks engagement zones by binding to tagged objects.
+    - Runs validation checks each frame (`Heartbeat`).
+    - Updates character overlap parameters when the player’s character is added or removed.
+
+!!! warning
+	The Engagements package initializes itself automatically. Developers requiring this module do not need to call this function.
