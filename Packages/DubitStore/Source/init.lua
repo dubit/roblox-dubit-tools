@@ -1,8 +1,6 @@
 --[[
 	Roblox DubitStore:
 		A feature-rich Roblox DataStore wrapper.
-
-	Documentation has been written in a Moonwave styled format, for documentation outside of moonwave - comments have been made to provide insight.
 ]]
 --
 
@@ -25,58 +23,25 @@ local MAX_YIELD_FOR_SESSION_LOCKING = ROBLOX_GET_CACHE_TIME * TIMES_TO_RETRY_DAT
 
 local MAX_THREADS_AWAITING_FOR_GET = 5
 
---[=[
-	@class DubitStore
-
-	DubitStore is a feature-rich Roblox DataStore wrapper, enabling developers to take advantage over a multitude of advanced features.
-
-	---
-
-	DubitStore offers quite a lot of features, however, it does not force developers to use these features.. it is up to the developer to choose what features are necessary vs what features to avoid.
-
-	An brief overview on what DubitStore offers;
-	- **Middleware implementation**
-		- Middleware enable both developers & DubitStore to write code that mutates the data before or after the data is downloaded or uplodaded.
-		- *⚠️ Use middleware with caution as it can introduce the ability to corrupt data if miss-used.*
-	- **Reconciling data**
-		- To reconcile data is to help flatten two data's into a single entity, in DubitStore's case it'll be merging remote data with our schema format.
-		- To be able to reconcile data, developers must create a "Schema", this schema represents what the latets version of that data will look like.
-			- *ℹ️ Schemas will only fill in data which does not exist with an existing data object.*
-	- **Session Locking**
-		- Session locking isn't enforced in DubitStore, this is because we don't know the application, maybe we do want servers to read & write to data when other servers can.. for instance, a totalizer.
-	- **Data Corruption**
-		- In the case middleware fail to mutate the state of data, the Data Corrupted signal will be invoked to indicate that data was unable to be processed.
-	- **Autosaving data**
-		- As DubitStore still doesn't know the use case, we've implemented an abstract way to save player data.. allowing you to bind a function to an autosave key, when this key is fired, your function will be called. It's up to the developer to then save that data.
-		- Autosaving intervals can be set, as well as manually called. We do not advise you call an autosave function once that data is dropped.
-			- For instance, an example of this could be invoking the autosave function to save data when the player leaves.. this is because AutoSaving may serve a different purpose to saving data at the end of a session.
-	- **Removing existing data**
-		- Since DubitStore isn't player orientated, it does not have the ability to remove player cached data when that player leaves.. this will need to be done through a developer to ensure that when that player joins back, they will not recieve an older version of said data.
-		- This is one of the cons for DubitStore, however enables us to use this module in things like Leaderboards and so on.
-
-	Some of the dubit store background handywork;
-	- **Type Support**
-		- DubitStore has the ability to save objects such as Vector3's, CFrame's and so on.
-		- DubitStore achieves this by breaking each object down into a table, implementing components and things of that sort.
-	- **BindToClose**
-		- DubitStore has full support for when a studio/server is shutting down, it's goal being to save all player data before shutdown.
-	- **Cache**
-		- DubitStore will only build a cache once a get request is made and there is already no existing cache. The principle behind this is to enable developers to quickly SET & GET data without making multiple datastore requests..
-		- This however means, in order to send that data over to the server, you need to "Push" that data, Pushing data is the act where we move what we currently have in cache over to the server.
-			- *⚠️ If a developer doesn't push any data, no data will be saved as it'll only exist under that specific servers cache.*
-	- **Internal Queue & Budgeting**
-		- DubitStore relies on both a Queue system and DataStore budgets to regulate how fast requests are made to each endpoint.. this also includes awareness for "key cooldown" mentioned in the below document
-			- https://devforum.roblox.com/t/details-on-datastoreservice-for-advanced-developers/175804
-	- **Multi-Threading**
-		- DubitStore takes advantage of roblox's parallel thread implementation, allowing DubitStore to work alongside the Roblox VM.
-
-	---
-]=]
 local DubitStore = {}
 
 DubitStore.reporter = Console:CreateReporter("DubitStore")
 
-DubitStore.interface = {}
+DubitStore.interface = {
+	Provider = require(script.Provider),
+	Validator = require(script.Validator),
+	Serialisation = require(script.Serialisation),
+
+	Container = require(script.Container),
+	Middleware = require(script.Middleware),
+
+	GetRequestFailed = Signal.new(),
+	SetRequestFailed = Signal.new(),
+	OrderedGetRequestFailed = Signal.new(),
+	OrderedSetRequestFailed = Signal.new(),
+	DataCorrupted = Signal.new(),
+	PushCompleted = Signal.new(),
+}
 DubitStore.schemas = {}
 
 DubitStore.middleware = {}
@@ -91,66 +56,6 @@ DubitStore.awaitingThreads = {}
 
 DubitStore.autosave.threads = {}
 DubitStore.autosave.signals = {}
-
-DubitStore.interface.Provider = require(script.Provider)
-DubitStore.interface.Validator = require(script.Validator)
-DubitStore.interface.Serialisation = require(script.Serialisation)
-
---[=[
-	@prop Container Container
-	@within DubitStore
-]=]
---
-DubitStore.interface.Container = require(script.Container)
-
---[=[
-	@prop Middleware Middleware
-	@within DubitStore
-]=]
---
-DubitStore.interface.Middleware = require(script.Middleware)
-
---[=[
-	@prop GetRequestFailed Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.GetRequestFailed = Signal.new()
-
---[=[
-	@prop SetRequestFailed Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.SetRequestFailed = Signal.new()
-
---[=[
-	@prop OrderedGetRequestFailed Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.OrderedGetRequestFailed = Signal.new()
-
---[=[
-	@prop OrderedSetRequestFailed Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.OrderedSetRequestFailed = Signal.new()
-
---[=[
-	@prop DataCorrupted Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.DataCorrupted = Signal.new()
-
---[=[
-	@prop PushCompleted Signal
-	@within DubitStore
-]=]
---
-DubitStore.interface.PushCompleted = Signal.new()
 
 --[[
 	Errors if the datastoreKey is neither a player or a string, will return the stringified version of a user id if the input is a player.
@@ -196,48 +101,10 @@ function DubitStore.internal:InvokeMiddleware(state: { any: any }, middlewareAct
 	return state
 end
 
---[=[
-	When set to true, all of the debugging logs DubitStore creates will appear, by default this is set to false so only warning+ will appear.
-
-	```lua
-	DubitStore:SetVerbosity(true)
-	```
-
-	@method SetVerbosity
-	@within DubitStore
-
-	@param isVerboise boolean
-
-	@return ()
-]=]
---
 function DubitStore.interface:SetVerbosity(isVerbose: boolean): ()
 	Console:SetLogLevel(isVerbose and ConsoleLib.LogLevel.Debug or ConsoleLib.LogLevel.Warn)
 end
 
---[=[
-	This function will return the size of a key in Bytes, this can be used to find how large you can scale your systems.
-
-	```lua
-	local DataStoreModule = require(path.to.module)
-	local DataEnum = require(path.to.enum)
-
-	local MAX_DATA_SIZE = 4194303
-
-	DubitStore:GetDataAsync(DataEnum.PlayerStatData, "player1"):await()
-
-	local dataSizeInBytes = DubitStore:GetSizeInBytes(DataEnum.PlayerStatData, "player1")
-	local consumedDataBudget = (dataSizeInBytes / MAX_DATA_SIZE) * 100
-	```
-
-	@method GetSizeInBytes
-	@within DubitStore
-
-	@param datastoreIdentifier string
-
-	@return number
-]=]
---
 function DubitStore.interface:GetSizeInBytes(datastoreIdentifier: string, datastoreKey: string | Player): number
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -264,112 +131,26 @@ function DubitStore.interface:GetSizeInBytes(datastoreIdentifier: string, datast
 	return string.len(dataSize)
 end
 
---[=[
-	This function will return a boolean depening on if the library is "online", online meaning able to push to a live roblox datastore.
-
-	Ideally this is useful in scenarios where developers are inside of studio or want to run tests.
-
-	```lua
-	DubitStore:IsOffline()
-	```
-
-	@method IsOffline
-	@within DubitStore
-
-	@return boolean
-]=]
---
 function DubitStore.interface:IsOffline(): boolean
 	return DubitStore.interface.Provider.isOffline and not DubitStore.interface.Provider.onlineState
 end
 
---[=[
-	This function will override and set the "online" state of the library, online meaning able to push to a live roblox datastore.
-
-	```lua
-	DubitStore:SetOnlineState(true)
-	```
-
-	@method SetOnlineState
-	@within DubitStore
-
-	@param state boolean
-
-	@return ()
-]=]
---
 function DubitStore.interface:SetOnlineState(state: boolean): ()
 	DubitStore.reporter:Debug(`Set 'offline' state to: {state}`)
 
 	DubitStore.interface.Provider.onlineState = state
 end
 
---[=[
-	This function will set the development channel for DubitStore, if the development channel is anything other than "PRODUCTION" then specific cooldowns won't apply.
-
-	- We suggest leaving this unchecked unless you're either developing or debugging an issue.
-
-	```lua
-	DubitStore:SetDevelopmentChannel("DEVELOPMENT")
-	```
-
-	@method SetDevelopmentChannel
-	@within DubitStore
-
-	@param channel boolean
-
-	@return ()
-]=]
---
 function DubitStore.interface:SetDevelopmentChannel(channel: string): ()
 	DubitStore.reporter:Debug(`Set 'development' channel to: {channel}`)
 
 	DubitStore.interface.Provider.channel = channel
 end
 
---[=[
-	This function will retrieve the current channel of the library, in the majority of cases, this channel will be "Production
-
-	```lua
-	local channelName = DubitStore:GetDevelopmentChannel()
-	local isProduction = channelName == "Production"
-	```
-
-	@method GetDevelopmentChannel
-	@within DubitStore
-
-	@return string
-]=]
---
 function DubitStore.interface:GetDevelopmentChannel(): string
 	return DubitStore.interface.Provider.channel
 end
 
---[=[
-	This method will help developers implement middleware to recieve & modify data before we set and get that data.
-
-	```lua
-	local middleware = DubitStore.Middleware.new(function(data, middlewareActionType)
-		if middlewareActionType == DubitStore.Middleware.action.Get then
-			-- we can do stuff with 'data' before our library "gets" that data.
-
-			...
-		end
-
-		return data
-	end)
-
-	DubitStore:ImplementMiddleware(middleware)
-	```
-
-	@method ImplementMiddleware
-	@within DubitStore
-
-	@param middleware Middleware
-
-	@return Middleware
-]=]
---
 function DubitStore.interface:ImplementMiddleware(middleware: Types.MiddlewareObject): Types.MiddlewareObject
 	assert(self.Middleware.is(middleware), "Expected parameter #1 'middleware' to represent a middleware type")
 
@@ -378,29 +159,6 @@ function DubitStore.interface:ImplementMiddleware(middleware: Types.MiddlewareOb
 	return middleware
 end
 
---[=[
-	This method will remove any existing Middleware from DubitStore
-
-	```lua
-	local middleware = DubitStore.Middleware.new(function()
-		...
-	end)
-
-	DubitStore:ImplementMiddleware(middleware)
-
-	doSomething()
-
-	DubitStore:RemoveMiddleware(middleware)
-	```
-
-	@method RemoveMiddleware
-	@within DubitStore
-
-	@param middleware Middleware
-
-	@return Middleware
-]=]
---
 function DubitStore.interface:RemoveMiddleware(middleware: Types.MiddlewareObject): Types.MiddlewareObject
 	assert(self.Middleware.is(middleware), "Expected parameter #1 'middleware' to represent a middleware type")
 
@@ -413,28 +171,6 @@ function DubitStore.interface:RemoveMiddleware(middleware: Types.MiddlewareObjec
 	return middleware
 end
 
---[=[
-	This function will serialise a schema into a standard Lua table
-
-	```lua
-	local data = DubitStore:GenerateRawTable({
-		ExampleSchemaString = DubitStore.Container.new("Super Awesome String!")
-		ExampleSchemaEntry = DubitStore.Cotainer.new({
-			ExampleSchemaSubEntry = DubitStore.Container.new("Super Awesome String 2!")
-		})
-	})
-
-	print(data.ExampleSchemaString) -- > "Super Awesome String!"
-	```
-
-	@method GenerateRawTable
-	@within DubitStore
-
-	@param schemaTable { [string]: Container }
-
-	@return { [string]: any }
-]=]
---
 function DubitStore.interface:GenerateRawTable(schemaTable: Types.Schema): { any }
 	local success, exceptionMessage = self:ValidateDataSchema(schemaTable)
 
@@ -453,26 +189,6 @@ function DubitStore.interface:GenerateRawTable(schemaTable: Types.Schema): { any
 	return generatedTable
 end
 
---[=[
-	This function will validate schemas generated by developers.
-
-	```lua
-	local success, errorMessage = DubitStore:ValidateDataSchema({
-		ExampleSchemaString = DubitStore.Container.new("Super Awesome String!")
-		ExampleSchemaEntry = DubitStore.Cotainer.new({
-			ExampleSchemaSubEntry = DubitStore.Container.new("Super Awesome String 2!")
-		})
-	})
-	```
-
-	@method ValidateDataSchema
-	@within DubitStore
-
-	@param schemaTable { [string]: Container }
-
-	@return boolean, string
-]=]
---
 function DubitStore.interface:ValidateDataSchema(schemaTable: Types.Schema): (boolean, string)
 	for key, container in schemaTable do
 		if typeof(key) ~= "string" then
@@ -495,29 +211,6 @@ function DubitStore.interface:ValidateDataSchema(schemaTable: Types.Schema): (bo
 	return true
 end
 
---[=[
-	This function will create a data schema, data schemas should be used to validate data as well as update outdated data.
-
-	```lua
-	DubitStore:CreateDataSchema("schemaIdentifier", {
-		ExampleSchemaString = DubitStore.Container.new("Super Awesome String!")
-		ExampleSchemaEntry = DubitStore.Cotainer.new({
-			ExampleSchemaSubEntry = DubitStore.Container.new("Super Awesome String 2!")
-		})
-	})
-
-	-- "schemaIdentifier" is now a direct link to the above schema, we can now use this schema to update/maintain our data!
-	```
-
-	@method CreateDataSchema
-	@within DubitStore
-
-	@param schemaIdentifier string
-	@param schemaTable { [string]: Container }
-
-	@return ()
-]=]
---
 function DubitStore.interface:CreateDataSchema(schemaIdentifier: string, schemaTable: Types.Schema): ()
 	assert(
 		DubitStore.schemas[schemaIdentifier] == nil,
@@ -533,21 +226,6 @@ function DubitStore.interface:CreateDataSchema(schemaIdentifier: string, schemaT
 	DubitStore.reporter:Debug(`Registered the '{schemaIdentifier}' data schema`)
 end
 
---[=[
-	This function will return the initial schema implemented through `DubitStore:CreateDataSchema`
-
-	```lua
-	local dataSchema = DubitStore:GetDataSchema("schemaIdentifier")
-	```
-
-	@method GetDataSchema
-	@within DubitStore
-
-	@param schemaIdentifier string
-
-	@return { [string]: Container }
-]=]
---
 function DubitStore.interface:GetDataSchema(schemaIdentifier: string): Types.Schema
 	assert(
 		DubitStore.schemas[schemaIdentifier] ~= nil,
@@ -557,48 +235,10 @@ function DubitStore.interface:GetDataSchema(schemaIdentifier: string): Types.Sch
 	return DubitStore.schemas[schemaIdentifier]
 end
 
---[=[
-	This function will return a boolean depending on if the schema identifier is linked to a schema object
-
-	```lua
-	local doesSchemaExist = DubitStore:SchemaExists("schemaIdentifier")
-	```
-
-	@method SchemaExists
-	@within DubitStore
-
-	@param schemaIdentifier string
-
-	@return boolean
-]=]
---
 function DubitStore.interface:SchemaExists(schemaIdentifier: string): boolean
 	return DubitStore.schemas[schemaIdentifier] ~= nil
 end
 
---[=[
-	This function will fill in the data with the contents of a schema if the data doesn't exist.
-
-	```lua
-	DubitStore:CreateDataSchema("schemaIdentifier", {
-		Exp = DubitStore.Container.new(42),
-		Level = DubitStore.Container.new(2)
-	})
-
-	local schema = DubitStore:ReconcileData({ Level = 1 }, "schemaIdentifier")
-
-	print(schema.Level) --> 1
-	print(schema.Exp) --> 42
-	```
-
-	@method ReconcileData
-	@within DubitStore
-
-	@param schemaIdentifier string
-
-	@return boolean
-]=]
---
 function DubitStore.interface:ReconcileData(data: { any }, schemaIdentifier: string): { any }
 	assert(typeof(schemaIdentifier) == "string", "Expected parameter #2 'schemaIdentifier' to represent a string type")
 	assert(
@@ -616,26 +256,6 @@ function DubitStore.interface:ReconcileData(data: { any }, schemaIdentifier: str
 	return Sift.Dictionary.mergeDeep(rawSchemaTable, data)
 end
 
---[=[
-	This function returns a signal which'll be invoked each autosave occurance.
-
-	```lua
-	local DataStoreModule = require(path.to.module)
-	local DataEnum = require(path.to.enum)
-
-	DataStoreModule:OnAutosave(DataEnum.PlayerStatData):Connect(function()
-		...
-	end)
-	```
-
-	@method OnAutosave
-	@within DubitStore
-
-	@param datastoreIdentifier string
-
-	@return Signal
-]=]
---
 function DubitStore.interface:OnAutosave(datastoreIdentifier: string): RBXScriptSignal
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -649,24 +269,6 @@ function DubitStore.interface:OnAutosave(datastoreIdentifier: string): RBXScript
 	return DubitStore.autosave.signals[datastoreIdentifier]
 end
 
---[=[
-	This function will invoke the autosave signal
-
-	```lua
-	local DataStoreModule = require(path.to.module)
-	local DataEnum = require(path.to.enum)
-
-	DataStoreModule:InvokeAutosave(DataEnum.PlayerStatData)
-	```
-
-	@method InvokeAutosave
-	@within DubitStore
-
-	@param datastoreIdentifier string
-
-	@return ()
-]=]
---
 function DubitStore.interface:InvokeAutosave(datastoreIdentifier: string): ()
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -682,24 +284,6 @@ function DubitStore.interface:InvokeAutosave(datastoreIdentifier: string): ()
 	DubitStore.autosave.signals[datastoreIdentifier]:Fire()
 end
 
---[=[
-	This function will cancel any background workers spawned through DubitStore:SetAutosaveInterval
-
-	```lua
-	local DataStoreModule = require(path.to.module)
-	local DataEnum = require(path.to.enum)
-
-	DataStoreModule:CancelAutosave(DataEnum.PlayerStatData)
-	```
-
-	@method CancelAutosave
-	@within DubitStore
-
-	@param datastoreIdentifier string
-
-	@return ()
-]=]
---
 function DubitStore.interface:CancelAutosave(datastoreIdentifier: string): ()
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -716,27 +300,6 @@ function DubitStore.interface:CancelAutosave(datastoreIdentifier: string): ()
 	DubitStore.autosave.threads[datastoreIdentifier] = nil
 end
 
---[=[
-	This function will spawn a new background worker that'll invoke an autosave signal each interval
-
-	```lua
-	local DataStoreModule = require(path.to.module)
-	local DataEnum = require(path.to.enum)
-
-	local AUTO_SAVE_INTERVAL_SECONDS = 60 * 5 -- 5 mins.
-
-	DataStoreModule:SetAutosaveInterval(DataEnum.PlayerStatData, AUTO_SAVE_INTERVAL_SECONDS)
-	```
-
-	@method SetAutosaveInterval
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param interval number
-
-	@return ()
-]=]
---
 function DubitStore.interface:SetAutosaveInterval(datastoreIdentifier: string, interval: number): ()
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -760,22 +323,6 @@ function DubitStore.interface:SetAutosaveInterval(datastoreIdentifier: string, i
 	end)
 end
 
---[=[
-	This function will remove cached data for a data store key, however if a key is not defined, the datastore cache will be removed instead.
-
-	```lua
-	DubitStore:ClearCache("PlayerData", "Player")
-	```
-
-	@method ClearCache
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey? string?
-
-	@return ()
-]=]
---
 function DubitStore.interface:ClearCache(datastoreIdentifier: string, datastoreKey: string | Player): ()
 	datastoreKey = DubitStore.internal:AssertDataStoreKey(datastoreKey)
 
@@ -811,31 +358,6 @@ function DubitStore.interface:ClearCache(datastoreIdentifier: string, datastoreK
 	end
 end
 
---[=[
-	This function will halt the execution of the current thread until either the datastore key can be written to, or the maximum yield time is surpassed
-
-	If no yield time is passed, then the function will indefinitely wait.
-
-	```lua
-	local unlocked = DubitStore:YieldUntilDataUnlocked("datastoreIdentifier", "datastoreKey", 10)
-
-	local schema = DubitStore:ReconcileData({ Level = 1 }, "schemaIdentifier")
-
-	print(schema.Level) --> 
-	print(schema.Exp)
-	```
-
-	@method YieldUntilDataUnlocked
-	@within DubitStore
-	@yields
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param maximumYieldTime? number?
-
-	@return boolean
-]=]
---
 function DubitStore.interface:YieldUntilDataUnlocked(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -904,27 +426,6 @@ function DubitStore.interface:YieldUntilDataUnlocked(
 	return status
 end
 
---[=[
-	This function will set the 'locked' state of the datastoreKey to a given value, if the data is locked then no other server can write to this key, however when the data is unlocked - servers are able to write to this key.
-
-	```lua
-	DubitStore:SetDataSessionLocked("datastoreIdentifier", "datastoreKey", true)
-	```
-
-	:::caution
-		These changes will not take effect until you call :PushAsync to push data, including metadata to the server.
-	:::
-
-	@method SetDataSessionLocked
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param locked? boolean?
-
-	@return ()
-]=]
---
 function DubitStore.interface:SetDataSessionLocked(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -966,27 +467,6 @@ function DubitStore.interface:SetDataSessionLocked(
 	end
 end
 
---[=[
-	This function will overwrite the 'locked' state for a given datastoreKey, by overwriting a data session we're risking an older record of that players data never being saved.
-
-	```lua
-	DubitStore:OverwriteDataSessionLocked("datastoreIdentifier", "datastoreKey", true)
-	```
-
-	:::caution
-		Once you've overwritten a data session, if the session state is set to true - the previous server will be unable to write to the datastore.
-	:::
-
-	@method OverwriteDataSessionLocked
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param locked? boolean?
-
-	@return ()
-]=]
---
 function DubitStore.interface:OverwriteDataSessionLocked(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1024,33 +504,6 @@ function DubitStore.interface:OverwriteDataSessionLocked(
 	end
 end
 
---[=[
-	This function will merge the cached data with what the server already has, typically useful in cases where we're not locking player data.
-
-	In the case we pass no reconciler function, the library will use Sift to merge keys, the cached data taking priority.
-
-	```lua
-	DubitStore:SyncDataAsync("datastoreIdentifier", "datastoreKey")
-
-	-- OR
-
-	DubitStore:SyncDataAsync("datastoreIdentifier", "datastoreKey", function(serverData)
-		...
-
-		return serverData
-	end)
-	```
-
-	@method SyncDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param reconciler? (data: any, response: any) -> any?
-
-	@return Promise<()>
-]=]
---
 function DubitStore.interface:SyncDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1099,24 +552,6 @@ function DubitStore.interface:SyncDataAsync(
 	end)
 end
 
---[=[
-	This function retrieves the MetaData of a key.
-
-	```lua
-	DubitStore:GetMetaDataAsync("datastoreIdentifier", "datastoreKey"):andThen(function(metaData)
-		...
-	end)
-	```
-
-	@method GetMetaDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-
-	@return Promise<{[string]: any}>
-]=]
---
 function DubitStore.interface:GetMetaDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player
@@ -1150,25 +585,6 @@ function DubitStore.interface:GetMetaDataAsync(
 	end)
 end
 
---[=[
-	This function sets the MetaData of a key
-
-	```lua
-	DubitStore:SetMetaDataAsync("datastoreIdentifier", "datastoreKey", { value = 5 }):andThen(function(metaData)
-		...
-	end)
-	```
-
-	@method SetMetaDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param value { [string]: any }
-
-	@return Promise<()>
-]=]
---
 function DubitStore.interface:SetMetaDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1203,32 +619,6 @@ function DubitStore.interface:SetMetaDataAsync(
 	end)
 end
 
---[=[
-	This function retrieves the Data of a key. You can use the third parameter to fetch an older version of said key.
-
-	```lua
-	DubitStore:CreateDataSchema("schema", {
-		Exp = DubitStore.Container.new(42),
-		Level = DubitStore.Container.new(2)
-	})
-
-	DubitStore:GetDataAsync("datastoreIdentifier", "datastoreKey"):andThen(function(data)
-		data = DubitStore:ReconcileData({ Level = 1 }, "schema")
-
-		print(data)
-	end)
-	```
-
-	@method GetDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param version? string?
-
-	@return Promise<{[string]: any}>
-]=]
---
 function DubitStore.interface:GetDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1323,28 +713,6 @@ function DubitStore.interface:GetDataAsync(
 	end)
 end
 
---[=[
-	This function retrieves a list of versions this key currently has.
-
-	```lua
-	DubitStore:GetDataVersionsAsync("datastoreIdentifier", "datastoreKey"):andThen(function(versionList)
-		
-	end)
-	```
-
-	@method GetDataVersionsAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param sortDirection? Enum.SortOrder?
-	@param minDate? number?
-	@param maxDate? number?
-	@param pageSize? number?
-
-	@return Promise<DataStoreVersionPages>
-]=]
---
 function DubitStore.interface:GetDataVersionsAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1377,35 +745,6 @@ function DubitStore.interface:GetDataVersionsAsync(
 	end)
 end
 
---[=[
-	This function sets the Data of a key. This method returns a promise in order to do the following;
-
-	- Remain consistant with it's counterpart, GetAsync..
-	- Provide a friendly approach to how a developer can handle syntax..
-	- Scaleable error handling..
-
-	```lua
-	DubitStore:SetDataAsync("datastoreIdentifier", "datastoreKey", {
-		abc = 123
-	})
-
-	DubitStore:PushAsync()
-	```
-
-	:::caution
-		These changes will not take effect until you call :PushAsync to push data, including metadata to the server.
-	:::
-
-	@method SetDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param value any
-
-	@return Promise<()>
-]=]
---
 function DubitStore.interface:SetDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1441,31 +780,6 @@ function DubitStore.interface:SetDataAsync(
 	end)
 end
 
---[=[
-	This function will enable developers to both GET and SET data within the same function, avoiding server-server sync issues.
-
-	:::caution
-		This function will NOT write to cache, you do NOT need to call :PushAsync after making this call.
-	:::
-
-	```lua
-	DubitStore:UpdateDataAsync("datastoreIdentifier", "datastoreKey", function(data)
-		return {
-			Coins = data.Coins + 1
-		}
-	end)
-	```
-
-	@method UpdateDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param callback function
-
-	@return Promise<string, DataStoreKeyInfo>
-]=]
---
 function DubitStore.interface:UpdateDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1543,28 +857,6 @@ function DubitStore.interface:UpdateDataAsync(
 	end)
 end
 
---[=[
-	This function retrieves the value for an ordered data store key, this function is useful in the case you want to get a specific players value in an ordered datastore
-
-	:::caution
-		This function will NOT read cache, it will instead make a query to the datastore backend on each call.
-	:::
-
-	```lua
-	DubitStore:GetOrderedKeyAsync("datastoreIdentifier", "datastoreKey"):andThen(function(data)
-		...
-	end)
-	```
-
-	@method GetOrderedKeyAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-
-	@return Promise<number>
-]=]
---
 function DubitStore.interface:GetOrderedKeyAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player
@@ -1587,31 +879,6 @@ function DubitStore.interface:GetOrderedKeyAsync(
 		end)
 end
 
---[=[
-	This function retrieves ordered datastore pages, enabling the developers to create functionality such as leaderboards.
-
-	:::caution
-		This function will NOT read cache, it will instead make a query to the datastore backend on each call.
-	:::
-
-	```lua
-	DubitStore:GetOrderedDataAsync("datastoreIdentifier"):andThen(function(datastorePages)
-		...
-	end)
-	```
-
-	@method GetOrderedDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param ascending boolean
-	@param pageSize number
-	@param minValue? number?
-	@param maxValue? number?
-
-	@return Promise<DataStorePages>
-]=]
---
 function DubitStore.interface:GetOrderedDataAsync(
 	datastoreIdentifier: string,
 	ascending: boolean,
@@ -1637,27 +904,6 @@ function DubitStore.interface:GetOrderedDataAsync(
 		end)
 end
 
---[=[
-	This function sets the value of 'datastoreKey' to a given input inside of the ordered data store.
-
-	:::caution
-		This function will NOT write to cache, you do NOT need to call :PushAsync after making this call.
-	:::
-
-	```lua
-	DubitStore:SetOrderedDataAsync("datastoreIdentifier", "datastoreKey", 5)
-	```
-
-	@method SetOrderedDataAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param value number
-
-	@return Promise<string, DataStoreKeyInfo>
-]=]
---
 function DubitStore.interface:SetOrderedDataAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
@@ -1684,22 +930,6 @@ function DubitStore.interface:SetOrderedDataAsync(
 		end)
 end
 
---[=[
-	This function will remove ordered data that is tied to the 'datastoreKey' under the given 'datastoreIdentifier'
-
-	```lua
-	DubitStore:RemoveOrderedAsync("datastoreIdentifier", "datastoreKey")
-	```
-
-	@method RemoveOrderedAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-
-	@return Promise
-]=]
---
 function DubitStore.interface:RemoveOrderedAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player
@@ -1716,22 +946,6 @@ function DubitStore.interface:RemoveOrderedAsync(
 	return self.Provider:RemoveAsync(datastoreIdentifier, datastoreKey, self.Provider.datastoreTypes.Ordered)
 end
 
---[=[
-	This function will remove data that is tied to the 'datastoreKey' under the given 'datastoreIdentifier'
-
-	```lua
-	DubitStore:RemoveAsync("datastoreIdentifier", "datastoreKey")
-	```
-
-	@method RemoveAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-
-	@return Promise
-]=]
---
 function DubitStore.interface:RemoveAsync(datastoreIdentifier: string, datastoreKey: string | Player): Types.Promise
 	assert(
 		typeof(datastoreIdentifier) == "string",
@@ -1745,23 +959,6 @@ function DubitStore.interface:RemoveAsync(datastoreIdentifier: string, datastore
 	return self.Provider:RemoveAsync(datastoreIdentifier, datastoreKey, self.Provider.datastoreTypes.Normal)
 end
 
---[=[
-	This function will push any changes made in the cache to the server, if for some reason the push fails, the promise will reject.
-
-	```lua
-	DubitStore:PushAsync("datastoreIdentifier", "datastoreKey", { player.userId })
-	```
-
-	@method PushAsync
-	@within DubitStore
-
-	@param datastoreIdentifier string
-	@param datastoreKey string | Player
-	@param userIds? { number | Player }?
-
-	@return Promise<string, DataStoreKeyInfo>
-]=]
---
 function DubitStore.interface:PushAsync(
 	datastoreIdentifier: string,
 	datastoreKey: string | Player,
