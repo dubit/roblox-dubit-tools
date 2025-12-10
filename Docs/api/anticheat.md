@@ -36,6 +36,27 @@ AntiCheat.ViolationTriggered:Connect(function(player, node, message)
 end)
 ```
 
+---
+
+### Nodes
+```luau { .fn_type }
+AntiCheat.Nodes: { [string]: { any } }
+```
+
+Table denotating the different nodes that this version of the AntiCheat supports, you can pass these nodes directly into the APIs that require NodeTable.
+
+Nodes represent the fundamental building blocks of the Anticheat system. Each node defines a specific feature or functionality.
+
+Currently available keys:
+
+- ProximityPrompt
+- Honeypot
+- AntiClimb
+- AntiSwim
+- AntiFly
+- AntiNoclip
+- AntiSpeed
+
 ## Methods
 
 ### :AddToWhitelist
@@ -133,7 +154,7 @@ Flags a player as a cheater. This information is stored in a datastore, managed 
 
 ### :IsFlaggedAsCheater
 ```luau { .fn_type }
-AntiCheat:IsFlaggedAsCheater(player: Player): ()
+AntiCheat:IsFlaggedAsCheater(player: Player): boolean
 ```
 
 Allows developers on both the client, and the server - to query if the current player is a cheater or not.
@@ -142,7 +163,7 @@ Allows developers on both the client, and the server - to query if the current p
 
 ### :QueryScores
 ```luau { .fn_type }
-AntiCheat:QueryScores(player: Player): {[string]: number}
+AntiCheat:QueryScores(player: Player): { [string]: number }
 ```
 
 Allows developers to query the current players score for all nodes. Score indicates how likely that player is to be a cheater, it's not a direct indication that these players are cheaters.
@@ -154,7 +175,7 @@ Allows developers to query the current players score for all nodes. Score indica
 
 ### :QueryViolations
 ```luau { .fn_type }
-AntiCheat:QueryViolations(player: Player): {[string]: {string}}
+AntiCheat:QueryViolations(player: Player): { [string]: {string} }
 ```
 
 Allows developers to query a list of violations that the current player has broken, this list includes messages explaining what has gone wrong and information about the event.
@@ -239,3 +260,24 @@ Will yield the current thread until the whitelist has marked itself as ready on 
 
 !!! success ""
 	This is a server only method.
+
+---
+
+### :InitializeDesyncLuau
+```luau { .fn_type }
+AntiCheat:InitializeDesyncLuau(): ()
+```
+
+Responsible for initialising the library in parallel luau.
+
+---
+
+### :InitializeSyncLuau
+```luau { .fn_type }
+AntiCheat:InitializeSyncLuau(): ()
+```
+
+Responsible for initialising the library.
+
+!!! warning
+	This function is called automatically when experience starts.
