@@ -21,21 +21,6 @@ local IAB_DELAY_BEFORE_REGISTRATION = 1
 
 local isInitialised = false
 
---[=[
-	@class Engagements
-	@__index = internal
-
-	The Roblox Engagement tool is a package that enables developers to easily query and handle events, objects,
-	interfaces engagements from within a Roblox experience.
-
-	---
-
-	IAB (Interactive Advertising Bureau) provides a generalized set of rules/guidelines that we can follow in order to
-	better evaluate if a player has engaged with an event or not.
-
-	Sources in order for us to be IAB (Interactive Advertising Bureau) compliance are as follows:
-		https://www.iab.com/wp-content/uploads/2015/06/dig_vid_imp_meas_guidelines_finalv2.pdf
-]=]
 local Engagements = {}
 
 Engagements.internal = {}
@@ -349,20 +334,7 @@ function Engagements.internal.OnGuiInput(inputObject: InputObject, inputProcesse
 		remoteEvent:FireServer("GuiInteracted", identifier)
 	end
 end
---[=[
-	@within Engagements
-	@client
 
-	Tracks when a GUI is viewed or interacted with by:
-	- Setting a unique identifier as an attribute on the GUI.
-	- Tagging the GUI so it can be recognized later.
-	
-	This allows the client side system to detect and respond to GUI visibility and interactions.
-
-	:::info
-	This function must be called on the client.
-	:::
-]=]
 function Engagements.interface.TrackGui(gui: ScreenGui, identifier: string)
 	assert(RunService:IsClient(), `'TrackGui' can only be called by the client!`)
 	assert(gui:IsA("ScreenGui"), `Expected zone to be a ScreenGui, got '{gui.ClassName}'`)
@@ -371,19 +343,7 @@ function Engagements.interface.TrackGui(gui: ScreenGui, identifier: string)
 	gui:SetAttribute(`DubitEngagement_Identifier`, identifier)
 	gui:AddTag(`DubitEngagement_Gui`)
 end
---[=[
-	@within Engagements
-	@server
 
-	Tracks when a video is watched by:
-	- Setting a unique identifier as an attribute on the video.
-	- Tagging the video so it can be recognized later.
-	
-	This allows the client side system to detect and respond to video playback. The `WatchedVideo` signal will be 
-	triggered when the video ends or loops.
-
-	Note: This function must be called on the server.
-]=]
 function Engagements.interface.TrackVideo(video: VideoFrame, identifier: string?)
 	assert(RunService:IsServer(), `'TrackVideo' can only be called by the server!`)
 	assert(video:IsA("VideoFrame"), `Expected zone to be a VideoFrame, got '{video.ClassName}'`)
@@ -405,19 +365,6 @@ function Engagements.interface.TrackVideo(video: VideoFrame, identifier: string?
 	video.Ended:Connect(onVideoEnded)
 end
 
---[=[
-	@within Engagements
-	@server
-
-	Tracks when a player enters or leaves a zone by:
-	- Setting a unique identifier as an attribute on the zone.
-	- Tagging the zone so it can be recognized later.
-	
-	This allows the client side system to detect and respond to player movement in and out of designated zones. The
-	`ZoneEntered` and `ZoneLeft` signals will be triggered when relevant.
-
-	Note: This function must be called on the server.
-]=]
 function Engagements.interface.TrackZone(zone: Model, identifier: string?)
 	assert(RunService:IsServer(), `'TrackZone' can only be called by the server!`)
 	assert(zone:IsA("Model"), `Expected zone to be a Model, got '{zone.ClassName}'`)
@@ -426,21 +373,6 @@ function Engagements.interface.TrackZone(zone: Model, identifier: string?)
 	zone:AddTag(`DubitEngagement_Zone`)
 end
 
---[=[
-	@within Engagements
-	@server
-
-	Tracks when an object enters the players viewport:
-	- Setting a unique identifier as an attribute on the zone.
-	- Tagging the zone so it can be recognized later.
-	
-	This allows the client side system to detect and respond to objects appearing in the players viewport. This
-	function will invoke the following signals:
-
-	- InScreenshot
-
-	Note: This function must be called on the server.
-]=]
 function Engagements.interface.TrackObject(object: Model, identifier: string?)
 	assert(RunService:IsServer(), `'TrackObject' can only be called by the server!`)
 	assert(object:IsA("Model"), `Expected object to be a Model, got '{object.ClassName}'`)
