@@ -8,9 +8,9 @@ This DataStore library internally relies on the latest version of DubitStore, so
 
 ### Functions
 
-#### Get
+#### GetPlayerStore
 ```luau { .fn_type }
-SimpleStore:Get(key: Player, datastoreName: string?): PlayerDataStore
+SimpleStore:GetPlayerStore(key: Player, datastoreName: string?): PlayerDataStore
 ```
 
 Will get a PlaterDataStore instance based off of the parameter 'key' (key represents the Player!), optionally, if you would like to seperate player data from being in the same datastore, a second parameter is provided so you can define your own datastore.
@@ -48,6 +48,27 @@ PlayerDataStore.Changed: Signal
 #### IsNewPlayer
 ```luau { .fn_type }
 PlayerDataStore.IsNewPlayer: boolean
+```
+
+---
+
+#### Id
+```luau { .fn_type }
+PlayerDataStore.Id: number
+```
+
+---
+
+#### Key
+```luau { .fn_type }
+PlayerDataStore.Key: string
+```
+
+---
+
+#### AutosaveId
+```luau { .fn_type }
+PlayerDataStore.AutosaveId: string
 ```
 
 ### Functions
@@ -168,7 +189,7 @@ If the players data represents a table, you can use this function to overwrite s
 
 #### :Merge
 ```luau { .fn_type }
-PlayerDataStore:Merge(tableToBeMerged: {[any]: any}): ()
+PlayerDataStore:Merge(tableToBeMerged: { [any]: any }): ()
 ```
 
 !!! danger
@@ -237,7 +258,7 @@ If the players data represents a table, you can use this function to merge table
 
 #### :Update
 ```luau { .fn_type }
-PlayerDataStore:Update(transformFunction: ((serverData: any) -> any)) → ()
+PlayerDataStore:Update(transformFunction: ((serverData: any) -> any)): ()
 ```
 
 !!! danger
@@ -260,7 +281,7 @@ Given a transform function, this function will call the transform function with 
 
 #### :UpdateKey
 ```luau { .fn_type }
-PlayerDataStore:UpdateKey(path: string, transformFunction: ((serverData: any) -> any)) → ()
+PlayerDataStore:UpdateKey(path: string, transformFunction: ((serverData: any) -> any)): ()
 ```
 
 !!! danger
@@ -289,3 +310,27 @@ Given a transform function, this function will call the transform function with 
 		return currentAnimalData
 	end)
 	```
+
+---
+
+#### :Save
+```luau { .fn_type }
+PlayerDataStore:Save(): ()
+```
+
+!!! danger
+	This function yields.
+
+Save the player data to datastore.
+
+---
+
+#### :Destroy
+```luau { .fn_type }
+PlayerDataStore:Destroy(): ()
+```
+
+!!! danger
+	This function yields.
+
+Destroys this player data's instance on this server. Should be called when the player leaves the game.
