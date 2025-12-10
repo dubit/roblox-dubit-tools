@@ -381,26 +381,6 @@ function Engagements.interface.TrackObject(object: Model, identifier: string?)
 	object:AddTag(`DubitEngagement_Object`)
 end
 
---[=[
-	@within Engagements
-
-	Initializes the Engagements package by setting up necessary event listeners and tracking systems.
-
-	### How It Works:
-	- Ensures initialization only happens once.
-	- Retrieves the package's remote event for communication.
-	- If running on the **server**, it listens for `ZoneEntered` and `ZoneLeft` events
-	  from clients and fires corresponding signals.
-	- If running on the **client**, it:
-		- Tracks engagement zones by binding to tagged objects.
-		- Runs validation checks each frame (`Heartbeat`).
-		- Updates character overlap parameters when the player’s character is added or removed.
-
-	:::caution
-	The Engagements package initializes itself automatically. Developers requiring this module do not need to call this
-	function.
-	:::
-]=]
 function Engagements.interface.Initialize()
 	if isInitialised then
 		assert(isInitialised == false, `Engagements package is already initialised!`)
