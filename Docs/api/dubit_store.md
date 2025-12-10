@@ -106,7 +106,7 @@ DubitStore.PushCompleted: Signal
 
 #### :SetVerbosity
 ```luau { .fn_type }
-DubitStore:SetVerbosity(isVerboise: boolean): ()
+DubitStore:SetVerbosity(isVerbose: boolean): ()
 ```
 
 When set to true, all of the debugging logs DubitStore creates will appear, by default this is set to false so only warning+ will appear.
@@ -347,7 +347,7 @@ This function will spawn a new background worker that'll invoke an autosave sign
 
 #### :ClearCache
 ```luau { .fn_type }
-DubitStore:ClearCache(datastoreIdentifier: string, datastoreKey: string?): ()
+DubitStore:ClearCache(datastoreIdentifier: string, datastoreKey: string | Player): ()
 ```
 
 This function will remove cached data for a data store key, however if a key is not defined, the datastore cache will be removed instead.
@@ -431,7 +431,7 @@ This function sets the MetaData of a key.
 
 #### :GetDataAsync
 ```luau { .fn_type }
-DubitStore:GetDataAsync(datastoreIdentifier: string, datastoreKey: string | Player, version?: string?): Promise<{[string]: any}>
+DubitStore:GetDataAsync(datastoreIdentifier: string, datastoreKey: string | Player, version?: string?): Promise< { [string]: any } >
 ```
 
 This function retrieves the Data of a key. You can use the third parameter to fetch an older version of said key.
@@ -454,7 +454,7 @@ This function retrieves the Data of a key. You can use the third parameter to fe
 
 #### :GetDataVersionsAsync
 ```luau { .fn_type }
-DubitStore:GetDataVersionsAsync(datastoreIdentifier: string, datastoreKey: string | Player, sortDirection?: Enum.SortOrder?, minDate?: number?, maxDate?: number?, pageSize?: number?) → : Promise<DataStoreVersionPages>
+DubitStore:GetDataVersionsAsync(datastoreIdentifier: string, datastoreKey: string | Player, sortDirection?: Enum.SortOrder?, minDate?: number?, maxDate?: number?, pageSize?: number?): Promise<DataStoreVersionPages>
 ```
 
 This function retrieves a list of versions this key currently has.
@@ -466,10 +466,11 @@ This function retrieves a list of versions this key currently has.
 DubitStore:SetDataAsync(datastoreIdentifier: string, datastoreKey: string | Player, value: any): Promise
 ```
 
-This function sets the Data of a key. This method returns a promise in order to do the following;
-- Remain consistant with it's counterpart, GetAsync..
-- Provide a friendly approach to how a developer can handle syntax..
-- Scaleable error handling..
+This function sets the Data of a key. This method returns a promise in order to do the following:
+
+- Remain consistant with it's counterpart, GetAsync
+- Provide a friendly approach to how a developer can handle syntax
+- Scaleable error handling
 
 ??? example "Example Usage"
 	```lua
@@ -616,18 +617,11 @@ This function returns the type of the allocated Data Value
 
 Middleware represents an object that we can create to help transform an input into something else we can use.
 
-### Types
-
-#### MiddlewareActionType
-```luau { .fn_type }
-type MiddlewareActionType = "Get" | "Set"
-```
-
 ### Properties
 
 #### action
 ```luau { .fn_type }
-Middleware.action: MiddlewareActionType
+Middleware.action: { ["Get"] = "Get", ["Set" = "Set"] }
 ```
 
 ### Functions
