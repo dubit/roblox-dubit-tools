@@ -1,7 +1,0 @@
-{
-	"name": "ugc-toolkit",
-	"emitLegacyScripts": false,
-	"tree": {
-		"$path": "Source"
-	}
-}
