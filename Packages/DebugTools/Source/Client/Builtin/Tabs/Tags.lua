@@ -10,6 +10,8 @@ local IMGui = require(DebugToolRootPath.IMGui)
 
 local Explorer = require(script.Parent.Explorer)
 
+local expandedInstances = {}
+
 local function processTags(tag: string)
 	local taggedInstances = CollectionService:GetTagged(tag)
 
@@ -38,17 +40,17 @@ local function processTags(tag: string)
 
 			table.remove(flippedAncestors, 1)
 
-			if Components.internal.ExpandedInstances[instance] == nil then
-				Components.internal.ExpandedInstances[instance] = false
+			if expandedInstances[instance] == nil then
+				expandedInstances[instance] = false
 			end
 
 			for index = 1, #ancestors do
-				local ancestor = Components.internal.ExpandedInstances[instance] and flippedAncestors[index] or instance
+				local ancestor = expandedInstances[instance] and flippedAncestors[index] or instance
 
 				local arrowIcon = ancestor ~= instance and ""
-					or Components.internal.ExpandedInstances[instance] and "http://www.roblox.com/asset/?id=111171269745562"
+					or expandedInstances[instance] and "http://www.roblox.com/asset/?id=111171269745562"
 					or "http://www.roblox.com/asset/?id=110693549312858"
-				local newDepth = Components.internal.ExpandedInstances[instance] and (index - 1) or 0
+				local newDepth = expandedInstances[instance] and (index - 1) or 0
 
 				if IMGui:TreeNode(Explorer.getSelectedObject() == ancestor).activated() then
 					Explorer.setSelectedObject(ancestor)
@@ -62,15 +64,14 @@ local function processTags(tag: string)
 						return
 					end
 
-					Components.internal.ExpandedInstances[instance] =
-						not Components.internal.ExpandedInstances[instance]
+					expandedInstances[instance] = not expandedInstances[instance]
 				end
 
 				IMGui:Label(ancestor.Name)
 
 				IMGui:End()
 
-				if not Components.internal.ExpandedInstances[instance] then
+				if not expandedInstances[instance] then
 					break
 				end
 			end
