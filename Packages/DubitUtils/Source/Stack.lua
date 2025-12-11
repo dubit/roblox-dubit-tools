@@ -7,9 +7,9 @@ export type Stack<T> = {
 	pushFirst: (stack: Stack<T>, value: T) -> (),
 	pushLast: (stack: Stack<T>, value: T) -> (),
 
-	pop: (stack: Stack<T>) -> T,
-	popFirst: (stack: Stack<T>) -> T,
-	popLast: (stack: Stack<T>) -> T,
+	pop: (stack: Stack<T>) -> T?,
+	popFirst: (stack: Stack<T>) -> T?,
+	popLast: (stack: Stack<T>) -> T?,
 
 	peek: (stack: Stack<T>) -> T,
 	peekFirst: (stack: Stack<T>) -> T,

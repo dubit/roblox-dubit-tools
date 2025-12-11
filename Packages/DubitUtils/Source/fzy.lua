@@ -20,19 +20,6 @@ local MATCH_MAX_LENGTH = 1024
 
 local fzy = {}
 
---[=[
-	Check if `needle` is a subsequence of the `haystack`.
-
-	Usually called before `score` or `positions`.
-	
-	@within DubitUtils.fzy
-
-	@param needle string
-	@param haystack string
-	@param caseSensitive boolean? -- defaults to false
-
-	@return boolean
-]=]
 function fzy.hasMatch(needle, haystack, caseSensitive)
 	if not caseSensitive then
 		needle = string.lower(needle)
@@ -133,18 +120,6 @@ local function compute(needle, haystack, D, M, caseSensitive)
 	end
 end
 
---[=[
-	Compute a matching score.
-	
-	@within DubitUtils.fzy
-
-	@param needle string -- must be a subequence of `haystack`, or the result is undefined.
-	@param haystack string
-	@param caseSensitive boolean? -- defaults to false
-
-	@return number -- higher scores indicate better matches. See also `get_score_min` and `get_score_max`.
-]=]
-
 function fzy.score(needle, haystack, caseSensitive)
 	local n = string.len(needle)
 	local m = string.len(haystack)
@@ -160,21 +135,6 @@ function fzy.score(needle, haystack, caseSensitive)
 		return M[n][m]
 	end
 end
-
---[=[
-	Compute the locations where fzy matches a string.
-
-	Determine where each character of the `needle` is matched to the `haystack` in the optimal match.
-	
-	@within DubitUtils.fzy
-
-	@param needle string -- must be a subequence of `haystack`, or the result is undefined.
-	@param haystack string
-	@param caseSensitive boolean? -- defaults to false
-
-	@return {number} -- indices, where `indices[n]` is the location of the `n`th character of `needle` in `haystack`.
-	@return number -- the same matching score returned by `score`
-]=]
 
 function fzy.positions(needle, haystack, caseSensitive)
 	local n = string.len(needle)
@@ -213,17 +173,6 @@ function fzy.positions(needle, haystack, caseSensitive)
 	return positions, M[n][m]
 end
 
---[=[
-	Apply `has_match` and `positions` to an array of haystacks.    
-
-	@within DubitUtils.fzy
-
-	@param needle string
-	@param haystacks {string}
-	@param caseSensitive boolean? -- defaults to false
-
-	@return {{number, {number}, number}} -- {{idx, positions, score}, ...}: an array with one entry per matching line in `haystacks`, each entry giving the index of the line in `haystacks` as well as the equivalent to the return value of `positions` for that line.
-]=]
 function fzy.filter(needle, haystacks, caseSensitive)
 	local result = {}
 
