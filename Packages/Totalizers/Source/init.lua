@@ -1,177 +1,234 @@
 local RunService = game:GetService("RunService")
-local Package = script
+local DataStoreService = game:GetService("DataStoreService")
+local MessagingService = game:GetService("MessagingService")
 
-local Signal = require(script.Parent.Signal)
+local Signal = require(script.Parent:WaitForChild("Signal"))
+local DubitUtils = require(script.Parent:WaitForChild("DubitUtils"))
 
-local getDataStoreForServer = require(Package.Functions.getDataStoreFor)
-local getKeysFor = require(Package.Functions.getKeysFor)
-local retryIfFailed = require(Package.Functions.retryIfFailed)
+local TOTALIZER_UPDATE_TOPIC = "__TOTALIZERS_UPDATE"
 
-local TOTALIZER_UPDATE_LOOP_TIME = 60
-local TIME_BEFORE_UPDATING = TOTALIZER_UPDATE_LOOP_TIME / 2
+local TOTALIZERS_DATASTORE = DataStoreService:GetDataStore("Dubit_Totalizers")
+local isTotalizerAccessible = pcall(TOTALIZERS_DATASTORE.ListKeysAsync, TOTALIZERS_DATASTORE)
 
-local isInitialised = false
-local lastSyncedTimestamps = {}
+local currentUpdateRate = 60 -- seconds
+local broadcastNewTotalizerValues = true
 
---[=[
-	@class Totalizers
-	@__index = internal
+local lastTotalizerUpdate = {}
+local totalizerValueCache = {}
 
-	The community goals/totaliser tool is a tool that allows us to create some sort of value that can be written to,
-	and read from - from all Servers within a Roblox experience.
+local Totalizers = {
+	TotalizerUpdated = Signal.new(),
+}
 
-	This is useful in cases where you want to track something, for example - if you’re in an shooter game and want
-	to track how many kills all players have made throughout the lifetime of the experience, you’re able to do that.
-	Alongside this, we could use this value to award community members with free in-game items.
+local function retryIfFailed(callback, attempts)
+	local success, result = pcall(callback)
+	local attemptsDone = 0
 
-	For example, tracking how many players have liked and joined the group, and once 1000~ players have, award
-	players 1000 in game cash!
-]=]
-local Totalizers = {}
+	while not success do
+		task.wait(1)
 
-Totalizers.internal = {}
-Totalizers.interface = {}
+		if attemptsDone >= attempts then
+			break
+		else
+			attemptsDone += 1
+		end
 
-Totalizers.interface.TotalizerSynced = Signal.new()
-
---[=[
-	@within Totalizers
-
-	Will return whether the totalizer has at least the specified amount.
-]=]
-function Totalizers.interface.HasAtLeast(totalizer: string, target: number): boolean
-	local value = Totalizers.interface.Get(totalizer)
-
-	return value >= target
-end
-
---[=[
-	@within Totalizers
-
-	Will return the current value of the totalizer.
-]=]
-function Totalizers.interface.Get(totalizer: string): number
-	local dataStore: DataStore? = getDataStoreForServer()
-
-	if not dataStore then
-		return 0
+		success, result = pcall(callback)
 	end
 
-	local success, value: any? = retryIfFailed(function()
-		dataStore:GetAsync(`{totalizer}`)
-	end)
-
-	if not success or not value then
-		return 0
-	end
-
-	return value
+	return success, result
 end
 
---[=[
-	@within Totalizers
+local function updateTotalizer(name: string)
+	local previousValue = totalizerValueCache[name]
 
-	Will increment the totalizer by the specified amount. If no increment amount is specified, will increment by 1.
-]=]
-function Totalizers.interface.Increment(totalizer: string, incrementBy: number?): boolean
-	local valueToIncrementBy = incrementBy or 1
+	local newValue = Totalizers:GetAsync(name)
+
+	lastTotalizerUpdate[name] = DateTime.now().UnixTimestamp
+	totalizerValueCache[name] = newValue
+
+	if newValue ~= previousValue then
+		Totalizers.TotalizerUpdated:Fire(name, newValue)
+	end
+end
+
+local function updateTotalizers()
+	for totalizer, lastUpdate in lastTotalizerUpdate do
+		if DateTime.now().UnixTimestamp - lastUpdate < currentUpdateRate then
+			continue
+		end
+
+		task.spawn(updateTotalizer, totalizer)
+	end
+end
+
+local function fetchAvailableTotalizers()
+	local availableTotalizers = {}
+	local keysList = TOTALIZERS_DATASTORE:ListKeysAsync()
+
+	while true do
+		local totalizers = keysList:GetCurrentPage()
+
+		for _, key: DataStoreKey in totalizers do
+			table.insert(availableTotalizers, key.KeyName)
+		end
+
+		if keysList.IsFinished then
+			break
+		else
+			local success = retryIfFailed(function()
+				keysList:AdvanceToNextPageAsync()
+			end, 5)
+
+			if not success then
+				break
+			end
+		end
+	end
+
+	for _, totalizer in availableTotalizers do
+		updateTotalizer(totalizer)
+	end
+end
+
+function Totalizers.GetAsync(self, totalizer: string)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function Get")
+
+	if RunService:IsStudio() then
+		assert(isTotalizerAccessible, "Cannot access Totalizer with 'Enable Studio Access to API Services' disabled.")
+	end
+
+	local cachedValue = totalizerValueCache[totalizer]
+	local lastUpdate = lastTotalizerUpdate[totalizer]
+	if cachedValue and lastUpdate then
+		if DateTime.now().UnixTimestamp - lastUpdate < currentUpdateRate then
+			return cachedValue
+		end
+	end
+
+	local success, value = retryIfFailed(function()
+		return TOTALIZERS_DATASTORE:GetAsync(totalizer)
+	end, 5)
+
+	assert(success, "Failed to get current value of the totalizer.")
+
+	local newValue = value or 0
+	if cachedValue ~= newValue then
+		task.defer(Totalizers.TotalizerUpdated.Fire, Totalizers.TotalizerUpdated, totalizer, newValue)
+	end
+
+	totalizerValueCache[totalizer] = newValue
+
+	return newValue
+end
+
+function Totalizers.IncrementAsync(self, totalizer: string, incrementBy: number?)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function Increment")
+
+	if RunService:IsStudio() then
+		assert(isTotalizerAccessible, "Cannot access Totalizer with 'Enable Studio Access to API Services' disabled.")
+	end
+
 	local currentValue
 
-	local dataStore: DataStore? = getDataStoreForServer()
+	local success = retryIfFailed(function()
+		TOTALIZERS_DATASTORE:UpdateAsync(`{totalizer}`, function(value)
+			currentValue = (value or 0) + (incrementBy or 1)
 
-	if not dataStore then
-		return false
-	end
-
-	return retryIfFailed(function()
-		dataStore:UpdateAsync(`{totalizer}`, function(value)
-			local newValue
-
-			if value then
-				newValue = value + valueToIncrementBy
-			else
-				newValue = valueToIncrementBy
-			end
-
-			currentValue = newValue
-			lastSyncedTimestamps[totalizer] = os.time()
-
-			return newValue
+			return currentValue
 		end)
 
-		lastSyncedTimestamps[totalizer] = os.time()
+		lastTotalizerUpdate[totalizer] = DateTime.now().UnixTimestamp
+		totalizerValueCache[totalizer] = currentValue
 
-		Totalizers.interface.TotalizerSynced:Fire(totalizer, currentValue)
+		task.defer(Totalizers.TotalizerUpdated.Fire, Totalizers.TotalizerUpdated, totalizer, currentValue)
+
+		if broadcastNewTotalizerValues then
+			local writer = DubitUtils.BufferWriter.new(1000)
+			writer:WriteVarLenString(totalizer)
+			writer:Writeu40(currentValue)
+			writer:Fit()
+
+			MessagingService:PublishAsync(TOTALIZER_UPDATE_TOPIC, writer.Buffer)
+		end
+	end, 5)
+
+	return success, currentValue
+end
+
+function Totalizers.ResetAsync(self, totalizer: string)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function Reset")
+
+	if RunService:IsStudio() then
+		assert(isTotalizerAccessible, "Cannot access Totalizer with 'Enable Studio Access to API Services' disabled.")
+	end
+
+	local success = retryIfFailed(function()
+		TOTALIZERS_DATASTORE:SetAsync(`{totalizer}`, 0)
+	end, 5)
+
+	if success then
+		lastTotalizerUpdate[totalizer] = DateTime.now().UnixTimestamp
+		totalizerValueCache[totalizer] = 0
+		task.defer(Totalizers.TotalizerUpdated.Fire, Totalizers.TotalizerUpdated, totalizer, 0)
+	end
+
+	return success
+end
+
+function Totalizers.SetUpdateRate(self, updateRate: number)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function SetUpdateRate")
+	assert(typeof(updateRate) == "number", "missing argument #2 to 'SetUpdateRate' (number expected)")
+
+	currentUpdateRate = math.max(30, updateRate)
+end
+
+function Totalizers.GetUpdateRate(self)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function GetUpdateRate")
+
+	return currentUpdateRate
+end
+
+function Totalizers.SetBroadcastingEnabled(self, enabled: boolean)
+	assert(self == Totalizers, "Expected ':' not '.' calling member function SetUpdateRate")
+	assert(typeof(enabled) == "boolean", "missing argument #2 to 'SetUpdateRate' (boolean expected)")
+
+	broadcastNewTotalizerValues = enabled
+end
+
+MessagingService:SubscribeAsync(TOTALIZER_UPDATE_TOPIC, function(message)
+	local reader = DubitUtils.BufferReader.new(message.Data)
+	local totalizerName = reader:ReadVarLenString()
+	local totalizerCount = reader:Readu40()
+
+	if not lastTotalizerUpdate[totalizerName] then
+		return
+	end
+
+	if message.Sent < lastTotalizerUpdate[totalizerName] then
+		return
+	end
+
+	if totalizerValueCache[totalizerName] == totalizerCount then
+		return
+	end
+
+	lastTotalizerUpdate[totalizerName] = message.Sent
+	totalizerValueCache[totalizerName] = totalizerCount
+
+	task.defer(Totalizers.TotalizerUpdated.Fire, Totalizers.TotalizerUpdated, totalizerName, totalizerCount)
+end)
+
+if RunService:IsStudio() and not isTotalizerAccessible then
+	warn("'Enable Studio Access to API Services' is disabled, Totalizers won't function during this session.")
+else
+	fetchAvailableTotalizers()
+
+	task.spawn(function()
+		while task.wait(currentUpdateRate) do
+			updateTotalizers()
+		end
 	end)
 end
 
---[=[
-	@within Totalizers
-
-	Will reset the totalizer to 0.
-]=]
-function Totalizers.interface.Reset(totalizer: string): boolean
-	local dataStore: DataStore? = getDataStoreForServer()
-
-	if not dataStore then
-		return false
-	end
-
-	return retryIfFailed(function()
-		dataStore:SetAsync(`{totalizer}`, 0)
-	end)
-end
-
---[=[
-	@within Totalizers
-
-	Initializes the Totalizers package by setting up necessary event listeners and tracking systems.
-
-	:::caution
-	The Totalizers package initializes itself automatically. Developers requiring this module do not need to call this
-	function.
-	:::
-]=]
-function Totalizers.interface.Initialize()
-	if isInitialised then
-		assert(isInitialised == false, `Totalizers package is already initialised!`)
-	else
-		isInitialised = true
-	end
-
-	local datastore
-
-	local function updateKeys()
-		local keys = getKeysFor(datastore, 5)
-
-		for _, totalizer in keys do
-			if not lastSyncedTimestamps[totalizer] then
-				if os.time() - lastSyncedTimestamps[totalizer] < TIME_BEFORE_UPDATING then
-					continue
-				end
-			end
-
-			lastSyncedTimestamps[totalizer] = os.time()
-
-			local value = Totalizers.interface.Get(totalizer)
-
-			Totalizers.interface.TotalizerSynced:Fire(totalizer, value)
-		end
-	end
-
-	if RunService:IsServer() then
-		datastore = getDataStoreForServer()
-
-		if not datastore then
-			return
-		end
-
-		while true do
-			updateKeys()
-
-			task.wait(TOTALIZER_UPDATE_LOOP_TIME)
-		end
-	end
-end
-
-return Totalizers.interface
+return Totalizers
