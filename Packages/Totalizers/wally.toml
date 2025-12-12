@@ -5,7 +5,7 @@ realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"
 
-description = "The community goals/totaliser tool is a tool that allows us to create some sort of value that can be written to, and read from - from all Servers within a Roblox experience."
+description = "The community goals/totaliser tool is a tool that allows us to create a shared number value that can be written to, and read from - from all Servers within a Roblox experience."
 
 exclude = ["**"]
 include = [

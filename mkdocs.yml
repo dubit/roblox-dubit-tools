@@ -74,3 +74,6 @@ nav:
   - Simple Store:
     - 'packages/simple_store.md'
     - 'api/simple_store.md'
+  - Totalizers:
+    - 'packages/totalizers.md'
+    - 'api/totalizers.md'
