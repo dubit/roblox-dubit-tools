@@ -12,16 +12,15 @@
 				"Totalizers": {
 					"$path": "Source"
 				}
-			},
-			"DevPackages": {
-				"$className": "Folder",
-				"$path": "DevPackages"
 			}
 		},
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"$ignoreUnknownInstances": true,
-			"$path": "Tests/Source"
+			"$path": "Development/Server"
+		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$path": "Development/Client"
 		}
 	}
 }
