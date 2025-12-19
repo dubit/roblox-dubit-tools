@@ -1,6 +1,6 @@
 [package]
 name = "dubit/debug-tools"
-version = "1.0.1"                                                          # remember to update version in Constants.lua
+version = "1.1.0"                                                          # remember to update version in Constants.lua
 realm = "shared"
 registry = "https://github.com/upliftgames/wally-index"
 license = "MIT"

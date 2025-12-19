@@ -104,7 +104,7 @@ function Action.interface:Execute(actionName: string, arguments: { any }?): unkn
 	assert(actionDefinition, `Action definition doesn't exist for action '{actionName}'`)
 
 	if actionDefinition.Arguments then
-		for argumentIndex: number, argumentDefinition: ActionArgument in actionDefinition.Arguments do
+		for argumentIndex, argumentDefinition: ActionArgument in actionDefinition.Arguments do
 			local argumentValue: any = arguments[argumentIndex]
 
 			local argumentType: string = typeof(argumentValue)

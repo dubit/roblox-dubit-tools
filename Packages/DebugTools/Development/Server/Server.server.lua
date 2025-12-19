@@ -2,9 +2,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local DebugTools = require(ReplicatedStorage.Packages.DebugTools)
 
-DebugTools.Server.Action.new("Destroy Universe", nil, function() end)
+DebugTools.Action.new("Destroy Universe", nil, function() end)
 
-DebugTools.Server.Action.new("Test Action", nil, function(player: Player)
+DebugTools.Action.new("Test Action", nil, function(player: Player)
 	print(`Player '{player.DisplayName}' executed an action!`)
 end, {
 	{
@@ -25,7 +25,7 @@ local alternativeFruitList = {
 	"orange",
 }
 
-DebugTools.Server.Action.new("Fruits/Pick an option", "Pick a fruit please.", function() end, {
+DebugTools.Action.new("Fruits/Pick an option", "Pick a fruit please.", function() end, {
 	{
 		Type = "string",
 		Name = "Fruit",
@@ -34,9 +34,9 @@ DebugTools.Server.Action.new("Fruits/Pick an option", "Pick a fruit please.", fu
 	},
 })
 
-DebugTools.Server.Action.new("Fruits/Update 'Pick an option'", "Update the options for 'Pick an option'", function()
+DebugTools.Action.new("Fruits/Update 'Pick an option'", "Update the options for 'Pick an option'", function()
 	updated = not updated
-	DebugTools.Server.Action.new("Fruits/Pick an option", "Pick a fruit please.", function() end, {
+	DebugTools.Action.new("Fruits/Pick an option", "Pick a fruit please.", function() end, {
 		{
 			Type = "string",
 			Name = "Fruit",

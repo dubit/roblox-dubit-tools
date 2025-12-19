@@ -36,4 +36,6 @@ DebugTools.interface = {
 	Action = require(script.Parent.Shared.Action),
 }
 
+DebugTools.interface.Client = DebugTools.interface
+
 return DebugTools.interface
