@@ -1,0 +1,3577 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="dubit">
+      
+      
+        <link rel="canonical" href="https://dubit.github.io/roblox-dubit-tools/api/dubit_store/">
+      
+      
+        <link rel="prev" href="../../packages/dubit_store/">
+      
+      
+        <link rel="next" href="../../packages/dubit_utils/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>API - Roblox Dubit Tools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/api.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Roblox Dubit Tools" class="md-header__button md-logo" aria-label="Roblox Dubit Tools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Roblox Dubit Tools
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dubit/roblox-dubit-tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dubit/roblox-dubit-tools
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Roblox Dubit Tools" class="md-nav__button md-logo" aria-label="Roblox Dubit Tools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Roblox Dubit Tools
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dubit/roblox-dubit-tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dubit/roblox-dubit-tools
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Allocation Pool
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Allocation Pool
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/allocation_pool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../allocation_pool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anticheat
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anticheat
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/anticheat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anticheat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bolt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bolt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/bolt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bolt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debug Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Debug Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/debug_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dubit Store
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dubit Store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/dubit_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dubitstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DubitStore
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DubitStore">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .Middleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .GetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .SetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orderedgetrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .OrderedGetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orderedsetrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .OrderedSetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datacorrupted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .DataCorrupted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushcompleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .PushCompleted
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setverbosity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetVerbosity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getsizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetSizeInBytes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isoffline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :IsOffline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setonlinestate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetOnlineState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdevelopmentchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDevelopmentChannel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdevelopmentchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDevelopmentChannel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementmiddleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ImplementMiddleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removemiddleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveMiddleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generaterawtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GenerateRawTable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validatedataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ValidateDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createdataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :CreateDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemaexists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SchemaExists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reconciledata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReconcileData
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :OnAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :InvokeAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancelautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :CancelAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setautosaveinterval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetAutosaveInterval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ClearCache
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yielduntildataunlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :YieldUntilDataUnlocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdatasessionlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDataSessionLocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overwritedatasessionlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :OverwriteDataSessionLocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syncdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SyncDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getmetadataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetMetaDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setmetadataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetMetaDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataversionsasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataVersionsAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatedataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :UpdateDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getorderedkeyasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetOrderedKeyAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getordereddataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetOrderedDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setordereddataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetOrderedDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeorderedasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveOrderedAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :PushAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToString()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tovalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToValue()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#todatatype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToDataType()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#middleware_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Middleware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Middleware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Call
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dubit Utils
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dubit Utils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/dubit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dubit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engagements
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engagements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/engagements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engagements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Tracker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Event Tracker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/event_tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event_tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sequence Animator
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sequence Animator
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/sequence_animator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sequence_animator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simple Store
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simple Store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/simple_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simple_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Totalizers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Totalizers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/totalizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../totalizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dubitstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DubitStore
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DubitStore">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .Middleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .GetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .SetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orderedgetrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .OrderedGetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orderedsetrequestfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .OrderedSetRequestFailed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datacorrupted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .DataCorrupted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushcompleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .PushCompleted
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setverbosity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetVerbosity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getsizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetSizeInBytes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isoffline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :IsOffline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setonlinestate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetOnlineState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdevelopmentchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDevelopmentChannel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdevelopmentchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDevelopmentChannel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementmiddleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ImplementMiddleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removemiddleware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveMiddleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generaterawtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GenerateRawTable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validatedataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ValidateDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createdataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :CreateDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataschema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataSchema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemaexists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SchemaExists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reconciledata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReconcileData
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :OnAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :InvokeAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancelautosave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :CancelAutosave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setautosaveinterval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetAutosaveInterval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ClearCache
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yielduntildataunlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :YieldUntilDataUnlocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdatasessionlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDataSessionLocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overwritedatasessionlocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :OverwriteDataSessionLocked
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syncdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SyncDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getmetadataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetMetaDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setmetadataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetMetaDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdataversionsasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetDataVersionsAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatedataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :UpdateDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getorderedkeyasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetOrderedKeyAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getordereddataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetOrderedDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setordereddataasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetOrderedDataAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeorderedasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveOrderedAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :RemoveAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :PushAsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToString()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tovalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToValue()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#todatatype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToDataType()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#middleware_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Middleware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Middleware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ToString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Call
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api">API</h1>
+<h2 id="dubitstore">DubitStore</h2>
+<p>DubitStore is a feature-rich Roblox DataStore wrapper, enabling developers to take advantage over a multitude of advanced features.</p>
+<hr />
+<p>DubitStore offers quite a lot of features, however, it does not force developers to use these features.. it is up to the developer to choose what features are necessary vs what features to avoid.</p>
+<p>An brief overview on what DubitStore offers;</p>
+<ul>
+<li><strong>Middleware implementation</strong><ul>
+<li>Middleware enable both developers &amp; DubitStore to write code that mutates the data before or after the data is downloaded or uplodaded.</li>
+<li><em>⚠️ Use middleware with caution as it can introduce the ability to corrupt data if miss-used.</em></li>
+</ul>
+</li>
+<li><strong>Reconciling data</strong><ul>
+<li>To reconcile data is to help flatten two data's into a single entity, in DubitStore's case it'll be merging remote data with our schema format.</li>
+<li>To be able to reconcile data, developers must create a "Schema", this schema represents what the latets version of that data will look like.<ul>
+<li><em>ℹ️ Schemas will only fill in data which does not exist with an existing data object.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Session Locking</strong><ul>
+<li>Session locking isn't enforced in DubitStore, this is because we don't know the application, maybe we do want servers to read &amp; write to data when other servers can.. for instance, a totalizer.</li>
+</ul>
+</li>
+<li><strong>Data Corruption</strong><ul>
+<li>In the case middleware fail to mutate the state of data, the Data Corrupted signal will be invoked to indicate that data was unable to be processed.</li>
+</ul>
+</li>
+<li><strong>Autosaving data</strong><ul>
+<li>As DubitStore still doesn't know the use case, we've implemented an abstract way to save player data.. allowing you to bind a function to an autosave key, when this key is fired, your function will be called. It's up to the developer to then save that data.</li>
+<li>Autosaving intervals can be set, as well as manually called. We do not advise you call an autosave function once that data is dropped.<ul>
+<li>For instance, an example of this could be invoking the autosave function to save data when the player leaves.. this is because AutoSaving may serve a different purpose to saving data at the end of a session.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Removing existing data</strong><ul>
+<li>Since DubitStore isn't player orientated, it does not have the ability to remove player cached data when that player leaves.. this will need to be done through a developer to ensure that when that player joins back, they will not recieve an older version of said data.</li>
+<li>This is one of the cons for DubitStore, however enables us to use this module in things like Leaderboards and so on.</li>
+</ul>
+</li>
+</ul>
+<p>Some of the dubit store background handywork;</p>
+<ul>
+<li><strong>Type Support</strong><ul>
+<li>DubitStore has the ability to save objects such as Vector3's, CFrame's and so on.</li>
+<li>DubitStore achieves this by breaking each object down into a table, implementing components and things of that sort.</li>
+</ul>
+</li>
+<li><strong>BindToClose</strong><ul>
+<li>DubitStore has full support for when a studio/server is shutting down, it's goal being to save all player data before shutdown.</li>
+</ul>
+</li>
+<li><strong>Cache</strong><ul>
+<li>DubitStore will only build a cache once a get request is made and there is already no existing cache. The principle behind this is to enable developers to quickly SET &amp; GET data without making multiple datastore requests..</li>
+<li>This however means, in order to send that data over to the server, you need to "Push" that data, Pushing data is the act where we move what we currently have in cache over to the server.<ul>
+<li><em>⚠️ If a developer doesn't push any data, no data will be saved as it'll only exist under that specific servers cache.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Internal Queue &amp; Budgeting</strong><ul>
+<li>DubitStore relies on both a Queue system and DataStore budgets to regulate how fast requests are made to each endpoint.. this also includes awareness for "key cooldown" mentioned in the below document<ul>
+<li><a href="https://devforum.roblox.com/t/details-on-datastoreservice-for-advanced-developers/175804">Devforum Post</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Multi-Threading</strong><ul>
+<li>DubitStore takes advantage of roblox's parallel thread implementation, allowing DubitStore to work alongside the Roblox VM.</li>
+</ul>
+</li>
+</ul>
+<h3 id="properties">Properties</h3>
+<h4 id="container">.Container</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">Container</span><span class="p">:</span><span class="w"> </span><span class="nc">Container</span>
+</code></pre></div>
+<hr />
+<h4 id="middleware">.Middleware</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">Middleware</span><span class="p">:</span><span class="w"> </span><span class="nc">Middleware</span>
+</code></pre></div>
+<hr />
+<h4 id="getrequestfailed">.GetRequestFailed</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">GetRequestFailed</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<hr />
+<h4 id="setrequestfailed">.SetRequestFailed</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">SetRequestFailed</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<hr />
+<h4 id="orderedgetrequestfailed">.OrderedGetRequestFailed</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">OrderedGetRequestFailed</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<hr />
+<h4 id="orderedsetrequestfailed">.OrderedSetRequestFailed</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">OrderedSetRequestFailed</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<hr />
+<h4 id="datacorrupted">.DataCorrupted</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">DataCorrupted</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<hr />
+<h4 id="pushcompleted">.PushCompleted</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">.</span><span class="nv">PushCompleted</span><span class="p">:</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<h3 id="functions">Functions</h3>
+<h4 id="setverbosity">:SetVerbosity</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetVerbosity</span><span class="p">(</span><span class="nv">isVerbose</span><span class="p">:</span><span class="w"> </span><span class="nc">boolean</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>When set to true, all of the debugging logs DubitStore creates will appear, by default this is set to false so only warning+ will appear.</p>
+<hr />
+<h4 id="getsizeinbytes">:GetSizeInBytes</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetSizeInBytes</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<p>This function will return the size of a key in Bytes, this can be used to find how large you can scale your systems.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">GetDataAsync</span><span class="p">(</span><span class="s2">&quot;Inventory&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;player1&quot;</span><span class="p">):</span><span class="nf">await</span><span class="p">()</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">dataSizeInBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">GetSizeInBytes</span><span class="p">(</span><span class="s2">&quot;Inventory&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;player1&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="isoffline">:IsOffline</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">IsOffline</span><span class="p">():</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function will return a boolean depening on if the library is "online", online meaning able to push to a live roblox datastore.</p>
+<p>Ideally this is useful in scenarios where developers are inside of studio or want to run tests.</p>
+<hr />
+<h4 id="setonlinestate">:SetOnlineState</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetOnlineState</span><span class="p">(</span><span class="nv">state</span><span class="p">:</span><span class="w"> </span><span class="nc">boolean</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will override and set the "online" state of the library, online meaning able to push to a live roblox datastore.</p>
+<hr />
+<h4 id="setdevelopmentchannel">:SetDevelopmentChannel</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetDevelopmentChannel</span><span class="p">(</span><span class="nv">channel</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will set the development channel for DubitStore, if the development channel is anything other than "PRODUCTION" then specific cooldowns won't apply.
+    - We suggest leaving this unchecked unless you're either developing or debugging an issue.</p>
+<hr />
+<h4 id="getdevelopmentchannel">:GetDevelopmentChannel</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetDevelopmentChannel</span><span class="p">():</span><span class="w"> </span><span class="nc">string</span>
+</code></pre></div>
+<p>This function will retrieve the current channel of the library, in the majority of cases, this channel will be "Production</p>
+<hr />
+<h4 id="implementmiddleware">:ImplementMiddleware</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">ImplementMiddleware</span><span class="p">(</span><span class="nv">middleware</span><span class="p">:</span><span class="w"> </span><span class="nc">Middleware</span><span class="p">):</span><span class="w"> </span><span class="nc">Middleware</span>
+</code></pre></div>
+<p>This method will help developers implement middleware to recieve &amp; modify data before we set and get that data.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">middleware</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Middleware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">data</span><span class="p">,</span><span class="w"> </span><span class="nv">middlewareActionType</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">middlewareActionType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Middleware</span><span class="p">.</span><span class="py">action</span><span class="p">.</span><span class="py">Get</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="c1">-- we can do stuff with &#39;data&#39; before our library &quot;gets&quot; that data.</span>
+
+<span class="w">        </span><span class="p">...</span>
+<span class="w">    </span><span class="kr">end</span>
+
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">data</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nv">DubitStore</span><span class="p">:</span><span class="nf">ImplementMiddleware</span><span class="p">(</span><span class="nv">middleware</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="removemiddleware">:RemoveMiddleware</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">RemoveMiddleware</span><span class="p">(</span><span class="nv">middleware</span><span class="p">:</span><span class="w"> </span><span class="nc">Middleware</span><span class="p">):</span><span class="w"> </span><span class="nc">Middleware</span>
+</code></pre></div>
+<p>This method will remove any existing Middleware from DubitStoren</p>
+<hr />
+<h4 id="generaterawtable">:GenerateRawTable</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GenerateRawTable</span><span class="p">(</span><span class="nv">schemaTable</span><span class="p">:</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">Container</span><span class="p">}):</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">any</span><span class="p">}</span>
+</code></pre></div>
+<p>This function will serialise a schema into a standard Lua table</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">GenerateRawTable</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">ExampleSchemaString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">ExampleSchemaEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Cotainer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+<span class="w">        </span><span class="nv">ExampleSchemaSubEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String 2!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nv">data</span><span class="p">.</span><span class="py">ExampleSchemaString</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Super Awesome String!</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="validatedataschema">:ValidateDataSchema</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">ValidateDataSchema</span><span class="p">(</span><span class="nv">schemaTable</span><span class="p">:</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">Container</span><span class="p">}):</span><span class="w"> </span><span class="p">(</span><span class="nc">boolean</span><span class="p">,</span><span class="w"> </span><span class="nc">string</span><span class="p">)</span>
+</code></pre></div>
+<p>This function will validate schemas generated by developers.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">success</span><span class="p">,</span><span class="w"> </span><span class="nv">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">ValidateDataSchema</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">ExampleSchemaString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">ExampleSchemaEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Cotainer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+<span class="w">        </span><span class="nv">ExampleSchemaSubEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String 2!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">})</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="createdataschema">:CreateDataSchema</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">CreateDataSchema</span><span class="p">(</span><span class="nv">schemaIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">schemaTable</span><span class="p">:</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">Container</span><span class="p">}):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will create a data schema, data schemas should be used to validate data as well as update outdated data.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">CreateDataSchema</span><span class="p">(</span><span class="s2">&quot;schemaIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">ExampleSchemaString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">ExampleSchemaEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Cotainer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+<span class="w">        </span><span class="nv">ExampleSchemaSubEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Super Awesome String 2!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">})</span>
+
+<span class="c1">-- &quot;schemaIdentifier&quot; is now a direct link to the above schema, we can now use this schema to update/maintain our data!</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="getdataschema">:GetDataSchema</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetDataSchema</span><span class="p">(</span><span class="nv">schemaIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">Container</span><span class="p">}</span>
+</code></pre></div>
+<p>This function will return the initial schema implemented through <strong><a href="#createdataschema">CreateDataSchema</a></strong></p>
+<hr />
+<h4 id="schemaexists">:SchemaExists</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SchemaExists</span><span class="p">(</span><span class="nv">schemaIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function will return a boolean depending on if the schema identifier is linked to a schema object</p>
+<hr />
+<h4 id="reconciledata">:ReconcileData</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">ReconcileData</span><span class="p">(</span><span class="nv">schemaIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function will fill in the data with the contents of a schema if the data doesn't exist.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">CreateDataSchema</span><span class="p">(</span><span class="s2">&quot;schemaIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">ReconcileData</span><span class="p">({</span><span class="w"> </span><span class="nv">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s2">&quot;schemaIdentifier&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nv">schema</span><span class="p">.</span><span class="py">Level</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">schema</span><span class="p">.</span><span class="py">Exp</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; 42</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="onautosave">:OnAutosave</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">OnAutosave</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="nc">Signal</span>
+</code></pre></div>
+<p>This function returns a signal which'll be invoked each autosave occurance.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DataStoreModule</span><span class="p">:</span><span class="nf">OnAutosave</span><span class="p">(</span><span class="s2">&quot;Inventory&quot;</span><span class="p">):</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="invokeautosave">:InvokeAutosave</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">InvokeAutosave</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will invoke the autosave signal</p>
+<hr />
+<h4 id="cancelautosave">:CancelAutosave</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">CancelAutosave</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will cancel any background workers spawned through <strong><a href="#setautosaveinterval">SetAutosaveInterval</a></strong></p>
+<hr />
+<h4 id="setautosaveinterval">:SetAutosaveInterval</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetAutosaveInterval</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">interval</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will spawn a new background worker that'll invoke an autosave signal each interval</p>
+<hr />
+<h4 id="clearcache">:ClearCache</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">ClearCache</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will remove cached data for a data store key, however if a key is not defined, the datastore cache will be removed instead.</p>
+<hr />
+<h4 id="yielduntildataunlocked">:YieldUntilDataUnlocked</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">YieldUntilDataUnlocked</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">maximumYieldTime</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function will halt the execution of the current thread until either the datastore key can be written to, or the maximum yield time is surpassed</p>
+<p>If no yield time is passed, then the function will indefinitely wait.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">unlocked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">YieldUntilDataUnlocked</span><span class="p">(</span><span class="s2">&quot;datastoreIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;datastoreKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+
+<span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">unlocked</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="kr">return</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">ReconcileData</span><span class="p">({</span><span class="w"> </span><span class="nv">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s2">&quot;schemaIdentifier&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="setdatasessionlocked">:SetDataSessionLocked</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetDataSessionLocked</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">locked</span><span class="p">:</span><span class="w"> </span><span class="nc">boolean</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will set the 'locked' state of the datastoreKey to a given value, if the data is locked then no other server can write to this key, however when the data is unlocked - servers are able to write to this key.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These changes will not take effect until you call :PushAsync to push data, including metadata to the server.</p>
+</div>
+<hr />
+<h4 id="overwritedatasessionlocked">:OverwriteDataSessionLocked</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">OverwriteDataSessionLocked</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">locked</span><span class="p">:</span><span class="w"> </span><span class="nc">boolean</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>This function will overwrite the 'locked' state for a given datastoreKey, by overwriting a data session we're risking an older record of that players data never being saved.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Once you've overwritten a data session, if the session state is set to true - the previous server will be unable to write to the datastore.</p>
+</div>
+<hr />
+<h4 id="syncdataasync">:SyncDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SyncDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">reconciler</span><span class="p">:</span><span class="w"> </span><span class="p">((</span><span class="nc">data</span><span class="p">:</span><span class="w"> </span><span class="nc">any</span><span class="p">,</span><span class="w"> </span><span class="nc">response</span><span class="p">:</span><span class="w"> </span><span class="nc">any</span><span class="p">):</span><span class="w"> </span><span class="p">(...</span><span class="nc">any</span><span class="p">))</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span>
+</code></pre></div>
+<p>This function will merge the cached data with what the server already has, typically useful in cases where we're not locking player data.</p>
+<p>In the case we pass no reconciler function, the library will use Sift to merge keys, the cached data taking priority.</p>
+<hr />
+<h4 id="getmetadataasync">:GetMetaDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetMetaDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">any</span><span class="p">}&gt;</span>
+</code></pre></div>
+<p>This function retrieves the MetaData of a key.</p>
+<hr />
+<h4 id="setmetadataasync">:SetMetaDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetMetaDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="p">{[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">any</span><span class="p">}):</span><span class="w"> </span><span class="nc">Promise</span>
+</code></pre></div>
+<p>This function sets the MetaData of a key.</p>
+<hr />
+<h4 id="getdataasync">:GetDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">version</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">[</span><span class="nc">string</span><span class="p">]:</span><span class="w"> </span><span class="nc">any</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function retrieves the Data of a key. You can use the third parameter to fetch an older version of said key.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">CreateDataSchema</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">.</span><span class="py">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nv">DubitStore</span><span class="p">:</span><span class="nf">GetDataAsync</span><span class="p">(</span><span class="s2">&quot;datastoreIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;datastoreKey&quot;</span><span class="p">):</span><span class="nf">andThen</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">data</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">ReconcileData</span><span class="p">({</span><span class="w"> </span><span class="nv">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s2">&quot;schema&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">data</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h4 id="getdataversionsasync">:GetDataVersionsAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetDataVersionsAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">sortDirection</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">Enum</span><span class="p">.</span><span class="nc">SortOrder</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">minDate</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">maxDate</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">pageSize</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">DataStoreVersionPages</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function retrieves a list of versions this key currently has.</p>
+<hr />
+<h4 id="setdataasync">:SetDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">any</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span>
+</code></pre></div>
+<p>This function sets the Data of a key. This method returns a promise in order to do the following:</p>
+<ul>
+<li>Remain consistant with it's counterpart, GetAsync</li>
+<li>Provide a friendly approach to how a developer can handle syntax</li>
+<li>Scaleable error handling</li>
+</ul>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">SetDataAsync</span><span class="p">(</span><span class="s2">&quot;datastoreIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;datastoreKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">abc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="w"> </span><span class="p">})</span>
+<span class="nv">DubitStore</span><span class="p">:</span><span class="nf">PushAsync</span><span class="p">(</span><span class="s2">&quot;datastoreIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;datastoreKey&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These changes will not take effect until you call <strong><a href="#pushasync">PushAsync</a></strong> to push data, including metadata to the server.</p>
+</div>
+<hr />
+<h4 id="updatedataasync">:UpdateDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">UpdateDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">callback</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nc">data</span><span class="p">:</span><span class="w"> </span><span class="nc">any</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">any</span><span class="p">)):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nc">DataStoreKeyInfo</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function will enable developers to both GET and SET data within the same function, avoiding server-server sync issues.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nf">UpdateDataAsync</span><span class="p">(</span><span class="s2">&quot;datastoreIdentifier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;datastoreKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">data</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">Coins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data</span><span class="p">.</span><span class="py">Coins</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function will NOT write to cache, you do NOT need to call :PushAsync after making this call.</p>
+</div>
+<hr />
+<h4 id="getorderedkeyasync">:GetOrderedKeyAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetOrderedKeyAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">number</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function retrieves the value for an ordered data store key, this function is useful in the case you want to get a specific players value in an ordered datastore.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function will NOT read cache, it will instead make a query to the datastore backend on each call.</p>
+</div>
+<hr />
+<h4 id="getordereddataasync">:GetOrderedDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">GetOrderedDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">ascending</span><span class="p">:</span><span class="w"> </span><span class="nc">boolean</span><span class="p">,</span><span class="w"> </span><span class="nv">pageSize</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">,</span><span class="w"> </span><span class="nv">minValue</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">maxValue</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">DataStorePages</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function retrieves ordered datastore pages, enabling the developers to create functionality such as leaderboards.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function will NOT read cache, it will instead make a query to the datastore backend on each call.</p>
+</div>
+<hr />
+<h4 id="setordereddataasync">:SetOrderedDataAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">SetOrderedDataAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nc">DataStoreKeyInfo</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function sets the value of 'datastoreKey' to a given input inside of the ordered data store.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function will NOT write to cache, you do NOT need to call <strong><a href="#pushasync">PushAsync</a></strong> after making this call.</p>
+</div>
+<hr />
+<h4 id="removeorderedasync">:RemoveOrderedAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">RemoveOrderedAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span>
+</code></pre></div>
+<p>This function will remove ordered data that is tied to the 'datastoreKey' under the given 'datastoreIdentifier'</p>
+<hr />
+<h4 id="removeasync">:RemoveAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">RemoveAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span>
+</code></pre></div>
+<p>This function will remove data that is tied to the 'datastoreKey' under the given 'datastoreIdentifier'</p>
+<hr />
+<h4 id="pushasync">:PushAsync</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">DubitStore</span><span class="p">:</span><span class="nc">PushAsync</span><span class="p">(</span><span class="nv">datastoreIdentifier</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">datastoreKey</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">userIds</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nc">number</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nc">Player</span><span class="p">}</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">Promise</span><span class="p">&lt;</span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nc">DataStoreKeyInfo</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>This function will push any changes made in the cache to the server, if for some reason the push fails, the promise will reject.</p>
+<h2 id="container_1">Container</h2>
+<p>Containers are objects that contain a value, the object will then provide quality of life functions for manipulating this value.</p>
+<h3 id="functions_1">Functions</h3>
+<h4 id="is">.is</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Container</span><span class="p">.</span><span class="nf">is</span><span class="p">(</span><span class="nv">object</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">Container</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function compares the first parameter to the class 'Container'</p>
+<hr />
+<h4 id="new">.new</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Container</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span><span class="w"> </span><span class="nc">any</span><span class="p">):</span><span class="w"> </span><span class="nc">Container</span>
+</code></pre></div>
+<p>This function constructs a new 'Container' class</p>
+<hr />
+<h4 id="tostring">:ToString()</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Container</span><span class="p">:</span><span class="nc">ToString</span><span class="p">():</span><span class="w"> </span><span class="nc">string</span>
+</code></pre></div>
+<p>This function generates a string that shows the following; Container Type, Allocated Data Type, Allocated Data Value.</p>
+<hr />
+<h4 id="tovalue">:ToValue()</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Container</span><span class="p">:</span><span class="nc">ToValue</span><span class="p">():</span><span class="w"> </span><span class="nc">any</span>
+</code></pre></div>
+<p>This function returns the allocated Data Value.</p>
+<hr />
+<h4 id="todatatype">:ToDataType()</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Container</span><span class="p">:</span><span class="nc">ToDataType</span><span class="p">():</span><span class="w"> </span><span class="nc">string</span>
+</code></pre></div>
+<p>This function returns the type of the allocated Data Value</p>
+<h2 id="middleware_1">Middleware</h2>
+<p>Middleware represents an object that we can create to help transform an input into something else we can use.</p>
+<h3 id="properties_1">Properties</h3>
+<h4 id="action">action</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Middleware</span><span class="p">.</span><span class="nv">action</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Get&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;Get&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="functions_2">Functions</h3>
+<h4 id="is_1">.is</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Middleware</span><span class="p">.</span><span class="nf">is</span><span class="p">(</span><span class="nv">object</span><span class="err">?</span><span class="p">:</span><span class="w"> </span><span class="nc">Middleware</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">boolean</span>
+</code></pre></div>
+<p>This function compares the first parameter to the 'Middleware' class</p>
+<hr />
+<h4 id="new_1">.new</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Middleware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nv">callback</span><span class="p">:</span><span class="w"> </span><span class="p">(...</span><span class="nc">any</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">(...</span><span class="nc">any</span><span class="p">)):</span><span class="w"> </span><span class="nc">Middleware</span>
+</code></pre></div>
+<p>This function constructs a new 'Middleware' class</p>
+<hr />
+<h4 id="tostring_1">:ToString</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Middleware</span><span class="p">:</span><span class="nc">ToString</span><span class="p">():</span><span class="w"> </span><span class="nc">string</span>
+</code></pre></div>
+<p>This function generates a string that shows the following; Middleware Type, Allocated Data Type, Allocated Data Value.</p>
+<hr />
+<h4 id="call">:Call</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Middleware</span><span class="p">:</span><span class="nc">Call</span><span class="p">(...):</span><span class="w"> </span><span class="err">...</span><span class="nc">any</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.code.select"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
