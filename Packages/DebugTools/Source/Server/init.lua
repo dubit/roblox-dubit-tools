@@ -84,7 +84,7 @@ local function validatePlayers()
 
 	for _, player in Players:GetPlayers() do
 		task.spawn(function()
-			if not Authorization:IsPlayerAuthorized(player) then
+			if not Authorization:IsPlayerAuthorizedAsync(player) then
 				player:Kick(`This server is currently locked; only users who have access to debug tools can access!`)
 			end
 		end)
@@ -103,8 +103,12 @@ Networking:SubscribeToTopic("server_lock", function(_, enabled)
 	end
 end)
 
-return {
+local Server = {
 	Networking = Networking,
 	Authorization = Authorization,
 	Action = require(script.Parent.Shared.Action),
 }
+
+Server.Server = Server
+
+return Server

@@ -115,7 +115,7 @@ function Widget.internal.getWidgetData(widgetName: string): WidgetData?
 	return Widget.internal.WidgetData[widgetName]
 end
 
-function Widget.interface.new(widgetName: string, widgetCreateFunction: (parent: ScreenGui) -> () -> nil)
+function Widget.interface.new(widgetName: string, widgetCreateFunction: (parent: ScreenGui) -> () -> ())
 	assert(type(widgetName) == "string", `Expected parameter #1 'widgetName' to be a string, got {type(widgetName)}`)
 	assert(
 		type(widgetCreateFunction) == "function",

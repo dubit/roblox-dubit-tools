@@ -9,7 +9,7 @@ To add `Debug Tools` package to your project add the following into your `wally.
 
 ```toml
 [dependencies]
-DebugTools = "dubit/debug-tools@~0.2"
+DebugTools = "dubit/debug-tools@~1.1.0"
 ```
 
 !!! warning
@@ -25,40 +25,20 @@ The concept of "Actions" aims to replace traditional chat commands with a more u
 
 ### Defining an Action
 
-There are two ways of defining an action, one to define the logic on the server side and inject it to the client and the second one is to figure out of the DebugTools module is present and try to register the action refering to that module.
+Actions can be defined on both the client and the server, but they may only be executed by authorized users. Because malicious actors can modify their clients to trigger client-side actions, authorization is always enforced. If an unauthorized user attempts to perform an action, they are immediately kicked from the server.
 
-#### Defining logic on the serverside
-For each injected script, it's important to wrap it within a function. This function should take DebugTools as its first parameter. This way, you won't have to go hunting for a reference on your own when the script is injected into the client.
-
-Example:
-```lua
-return function(DebugTools)
-	DebugTools.Action.new("Show Popup", "Show some popup", function()
-		-- ... logic for triggering the popup
-	end)
-end
-```
-
-#### Defining logic on the client side
-It's not guaranteed that DebugTools ModuleScript will be available when player joins the game, so a check needs to be written for it. The only players that have access to DebugTools and get the DebugTools injected into their `PlayerGui` are people that have rank higher or equal the set authorised rank under the set Roblox group (both defined in `Constants.lua`).
+The execution environment depends on where the action is defined, an action defined from a server script runs on the server and an action defined from a client script runs on the client.
 
 Example:
 ```lua
-local Players = game:GetService("Players")
-
-local DebugTools = Players.LocalPlayer.PlayerGui:WaitForChild("DebugTools", 5)
-if DebugTools then
-	DebugTools = require(DebugTools)
-
-	DebugTools.Action.new("Show Popup", "Show some popup", function()
-		-- ... logic for triggering the popup
-	end)
-end
+DebugTools.Action.new("Print message", nil, function()
+	print("Hello world!")
+end)
 ```
 
 #### Gotchas
 
-An action can also have arguments, all of the arguments **need to** have a type specified, while the rest `Name`, `Default` are optional.
+An action can also have arguments, all of the arguments **need to** have a type specified, while the rest; `Name`, `Description` and `Default` are optional.
 
 Example:
 
@@ -110,14 +90,14 @@ Tabs are sections within the interface of Debug Tools, while Widgets primarily s
 ### Defining a Tab
 
 ```lua
-DebugTools.Tab.new("My Tab", function(parent: Frame) -- this is a constructor function
-	local widgetFrame: Frame = Instance.new("Frame")
-	widgetFrame.Parent = widgetFrame
+DebugTools.Tab.new("My Tab", function(parent) -- this is a constructor function
+	local tabContent = Instance.new("Frame")
+	tabContent.Parent = parent
 
-	-- ... some widget logic
+	-- ... some tab logic
 
 	return function() -- this is a destructor function
-		widgetFrame:Destroy()
+		tabContent:Destroy()
 	end
 end)
 ```
@@ -153,14 +133,14 @@ Widgets are on screen elements that can be any size and anywhere on the screen a
 Every widget has a constructor function that needs to return a destructor function, the constructor function gets executed whenever the widget gets shown whereas the destructor is executed whenever the widget gets hidden. Here is an example implementation of a Widget:
 
 ```lua
-DebugTools.Widget.new("Cool Widget", function(parent: ScreenGui) -- this is a constructor function
-	local widgetFrame: Frame = Instance.new("Frame")
-	widgetFrame.Parent = widgetFrame
+DebugTools.Widget.new("Cool Widget", function(parent) -- this is a constructor function
+	local widgetContent = Instance.new("Frame")
+	widgetContent.Parent = parent
 
 	-- ... some widget logic
 
 	return function() -- this is a destructor function
-		widgetFrame:Destroy()
+		widgetContent:Destroy()
 	end
 end)
 ```

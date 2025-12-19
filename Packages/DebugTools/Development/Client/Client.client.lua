@@ -6,9 +6,9 @@ end
 
 local DebugTools = require(ReplicatedStorage.Packages.DebugTools)
 
-DebugTools.Client.Action.new("Destroy Universe", nil, function() end)
+DebugTools.Action.new("Destroy Universe", nil, function() end)
 
-DebugTools.Client.Action.new("Test Action", nil, function(player: Player)
+DebugTools.Action.new("Test Action", nil, function(player: Player)
 	print(`Player '{player.DisplayName}' executed an action!`)
 end, {
 	{

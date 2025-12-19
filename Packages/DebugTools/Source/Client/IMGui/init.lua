@@ -315,7 +315,7 @@ function IMGui.public.End(_)
 	table.remove(activeInstance.FrameData.Stack, stackSize)
 end
 
-function IMGui.public.Connect(_, parent: GuiBase, tickLoop: () -> nil)
+function IMGui.public.Connect(_, parent: GuiBase, tickLoop: () -> ())
 	local newIMGuiInstance: IMGuiInstance = {
 		Parent = parent,
 

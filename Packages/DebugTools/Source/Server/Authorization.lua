@@ -24,6 +24,7 @@ type PlayerData = {
 
 local Authorization = {
 	PlayerAuthorized = Signal.new(),
+	PlayerAuthorizationLost = Signal.new(), -- TODO: Implement
 }
 
 local playersData: { [Player]: PlayerData } = {}
@@ -95,8 +96,8 @@ local function playerRemoved(player: Player)
 	playersData[player] = nil
 end
 
-function Authorization.IsPlayerAuthorized(self, player: Player)
-	assert(self == Authorization, "Expected ':' not '.' calling member function IsPlayerAuthorized")
+function Authorization.IsPlayerAuthorizedAsync(self, player: Player)
+	assert(self == Authorization, "Expected ':' not '.' calling member function IsPlayerAuthorizedAsync")
 
 	local playerData = playersData[player]
 	if not playerData then

@@ -70,6 +70,10 @@ function CodeWarnings.internal.getLatestMessageData(): MessageData?
 end
 
 function CodeWarnings.internal.addMessage(message: string, messageType: Enum.MessageType)
+	if messageType == Enum.MessageType.MessageOutput then
+		return
+	end
+
 	local latestMessageData = CodeWarnings.internal.getLatestMessageData()
 	if latestMessageData and (latestMessageData.Message == message and latestMessageData.Type == messageType) then
 		latestMessageData.Amount += 1

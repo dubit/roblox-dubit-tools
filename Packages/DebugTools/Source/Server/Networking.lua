@@ -1,4 +1,3 @@
---!strict
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -18,8 +17,8 @@ Networking.internal = {
 	NetworkTargets = {},
 }
 Networking.interface = {
-	NetworkTargetAdded = Signal.new(),
-	NetworkTargetRemoved = Signal.new(),
+	NetworkTargetAdded = Signal.new(), -- TODO: Remove, there is Authorization.PlayerAuthorized
+	NetworkTargetRemoved = Signal.new(), -- TODO: Remove, there is Authorization.PlayerAuthorizationLost
 }
 
 function Networking.internal.playerRemoving(player: Player)
@@ -37,7 +36,7 @@ function Networking.internal.registerNetworkTarget(player: Player)
 		return
 	end
 
-	if not Authorization:IsPlayerAuthorized(player) then
+	if not Authorization:IsPlayerAuthorizedAsync(player) then
 		return
 	end
 
@@ -59,7 +58,7 @@ end
 function Networking.internal.listenToNetworkTraffic()
 	Networking.internal.NetworkTrafficRemote.OnServerEvent:Connect(
 		function(player: Player, messageContent: { any } | string)
-			if not Authorization:IsPlayerAuthorized(player) then
+			if not Authorization:IsPlayerAuthorizedAsync(player) then
 				player:Kick("Attempted to perform unauthorized action.")
 				return
 			end
@@ -148,6 +147,7 @@ function Networking.interface:SubscribeToTopic(topic: string, callback: (...any)
 	end
 end
 
+-- TODO: Add :GetAuthorizedPlayers to Authorization, remove this one
 function Networking.interface:GetNetworkTargets(): { Player }
 	local networkTargets: { Player } = {}
 	for player: Player in Networking.internal.NetworkTargets do
