@@ -11,6 +11,18 @@ DebugTools.Action.new(name: string, description: string?, action: (any...) -> ()
 
 Defines a new action, for more information check out **[Overview](../packages/debug_tools.md#actions)**.
 
+??? example "Example Usage"
+	```lua
+	DebugTools.Action.new("Test Action", nil, function(player: Player)
+		print(`Player '{player.DisplayName}' executed an action!`)
+	end, {
+		{
+			Type = "Player",
+			Name = "Player",
+		},
+	})
+	```
+
 ## Authorization
 
 ### Properties
