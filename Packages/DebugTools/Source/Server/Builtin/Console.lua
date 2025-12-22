@@ -2,6 +2,7 @@ local RunService = game:GetService("RunService")
 local LogService = game:GetService("LogService")
 
 local Networking = require(script.Parent.Parent.Networking)
+local Authorization = require(script.Parent.Parent.Authorization)
 
 local MESSAGE_HISTORY_LENGTH = 100
 
@@ -43,8 +44,8 @@ if not RunService:IsStudio() then
 		end
 	end)
 
-	Networking.NetworkTargetAdded:Connect(sendMessagesHistory)
-	for _, player in Networking:GetNetworkTargets() do
+	Authorization.PlayerAuthorized:Connect(sendMessagesHistory)
+	for _, player in Authorization:GetAuthorizedPlayers() do
 		task.spawn(sendMessagesHistory, player)
 	end
 end

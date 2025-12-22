@@ -8,52 +8,24 @@ local Constants = require(SharedPath.Constants)
 
 local Authorization = require(script.Parent.Authorization)
 
-local Networking = {}
-Networking.internal = {
-	TopicCallbacks = {},
-	NetworkTrafficRemote = nil :: RemoteEvent?,
-	MessageQueue = {} :: {
-		[number]: { unknown },
-	},
-}
-Networking.interface = {}
+local outgoingMessageQueue = {}
+local topicCallbacks = {}
 
-function Networking.internal.invokeTopic(topic: string, ...)
-	local topicCallbacks = Networking.internal.TopicCallbacks[topic]
+local networkTrafficRemote = ReplicatedStorage:WaitForChild(Constants.NETWORK_TRAFFIC_REMOTE_NAME) :: RemoteEvent
 
-	if not topicCallbacks then
+local function invokeTopic(topic: string, ...)
+	local callbacks = topicCallbacks[topic]
+
+	if not callbacks then
 		return
 	end
 
-	for _, callback in topicCallbacks do
+	for _, callback in callbacks do
 		callback(...)
 	end
 end
 
-function Networking.interface:SendMessage(topic: string, ...)
-	table.insert(Networking.internal.MessageQueue, {
-		topic,
-		{ ... },
-	})
-end
-
-function Networking.interface:SubscribeToTopic(topic: string, callback: (...any) -> ...any): ()
-	if not Networking.internal.TopicCallbacks[topic] then
-		Networking.internal.TopicCallbacks[topic] = {}
-	end
-
-	local topicCallbacks = Networking.internal.TopicCallbacks[topic]
-
-	table.insert(topicCallbacks, callback)
-	return function()
-		local callbackIndex: number? = table.find(topicCallbacks, callback)
-		table.remove(topicCallbacks, callbackIndex)
-	end
-end
-
-local networkTrafficRemote = ReplicatedStorage:WaitForChild(Constants.NETWORK_TRAFFIC_REMOTE_NAME) :: RemoteEvent
-
-networkTrafficRemote.OnClientEvent:Connect(function(messageContent: { any })
+networkTrafficRemote.OnClientEvent:Connect(function(messageContent)
 	for _, message in messageContent do
 		local topic: string = message[1]
 		local params: { any } = message[2]
@@ -62,21 +34,19 @@ networkTrafficRemote.OnClientEvent:Connect(function(messageContent: { any })
 			continue
 		end
 
-		Networking.internal.invokeTopic(topic, table.unpack(params))
+		invokeTopic(topic, table.unpack(params))
 	end
 end)
 
-Networking.internal.NetworkTrafficRemote = networkTrafficRemote
-
 RunService.Heartbeat:Connect(function()
-	if #Networking.internal.MessageQueue <= 0 then
+	if #outgoingMessageQueue <= 0 then
 		return
 	end
 
-	local messagesToSend = Networking.internal.MessageQueue
-	Networking.internal.MessageQueue = {}
+	local messagesToSend = outgoingMessageQueue
+	outgoingMessageQueue = {}
 
-	Networking.internal.NetworkTrafficRemote:FireServer(messagesToSend)
+	networkTrafficRemote:FireServer(messagesToSend)
 end)
 
 Authorization.StatusChanged:Connect(function(authorized)
@@ -89,4 +59,34 @@ if Authorization:IsLocalPlayerAuthorized() then
 	networkTrafficRemote:FireServer("_ready_")
 end
 
-return Networking.interface
+local Networking = {}
+
+function Networking.SendMessage(self, topic: string, ...)
+	assert(self == Networking, "Expected ':' not '.' calling member function SendMessage")
+
+	table.insert(outgoingMessageQueue, {
+		topic,
+		{ ... },
+	})
+end
+
+function Networking.SubscribeToTopic(self, topic: string, callback: (...any) -> ()): ()
+	assert(self == Networking, "Expected ':' not '.' calling member function SubscribeToTopic")
+
+	if not topicCallbacks[topic] then
+		topicCallbacks[topic] = {}
+	end
+
+	local callbacks = topicCallbacks[topic]
+
+	table.insert(callbacks, callback)
+	return function()
+		local callbackIndex = table.find(callbacks, callback)
+
+		if callbackIndex then
+			table.remove(callbacks, callbackIndex)
+		end
+	end
+end
+
+return Networking
