@@ -1,0 +1,3758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="dubit">
+      
+      
+        <link rel="canonical" href="https://dubit.github.io/roblox-dubit-tools/api/bolt/">
+      
+      
+        <link rel="prev" href="../../packages/bolt/">
+      
+      
+        <link rel="next" href="../../packages/debug_tools/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>API - Roblox Dubit Tools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/api.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Roblox Dubit Tools" class="md-header__button md-logo" aria-label="Roblox Dubit Tools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Roblox Dubit Tools
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dubit/roblox-dubit-tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dubit/roblox-dubit-tools
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Roblox Dubit Tools" class="md-nav__button md-logo" aria-label="Roblox Dubit Tools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Roblox Dubit Tools
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dubit/roblox-dubit-tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dubit/roblox-dubit-tools
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Allocation Pool
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Allocation Pool
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/allocation_pool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../allocation_pool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anticheat
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anticheat
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/anticheat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anticheat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bolt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bolt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/bolt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bolt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bolt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bolt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reliableevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .ReliableEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remoteproperty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .RemoteProperty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remotefunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .RemoteFunction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reliableevent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReliableEvent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReliableEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onclientevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnClientEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onserverevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnServerEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fireserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireServer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fireclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireClient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fireallclients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireAllClients
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remoteproperty_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoteProperty
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RemoteProperty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Observe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ClearFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remotefunction_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoteFunction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RemoteFunction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onserverinvoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnServerInvoke
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invokeserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :InvokeServer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bufferreader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BufferReader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BufferReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readb8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadB8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU40
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU56
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readf32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadF32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readf64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadF64
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readvector2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadVector2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readvector3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadVector3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readcframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadCFrame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readcolor3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadColor3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bufferwriter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BufferWriter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BufferWriter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeb8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteB8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU40
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU56
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writef32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteF32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writef64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteF64
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writestring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writevector2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteVector2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writevector3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteVector3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writecframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteCFrame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writecolor3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteColor3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debug Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Debug Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/debug_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dubit Store
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dubit Store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/dubit_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dubit_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dubit Utils
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dubit Utils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/dubit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dubit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engagements
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engagements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/engagements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engagements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Tracker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Event Tracker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/event_tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event_tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sequence Animator
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sequence Animator
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/sequence_animator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sequence_animator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simple Store
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simple Store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/simple_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simple_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Totalizers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Totalizers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/totalizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../totalizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bolt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bolt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bolt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reliableevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .ReliableEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remoteproperty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .RemoteProperty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remotefunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .RemoteFunction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reliableevent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReliableEvent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReliableEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onclientevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnClientEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onserverevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnServerEvent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fireserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireServer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fireclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireClient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fireallclients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :FireAllClients
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remoteproperty_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoteProperty
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RemoteProperty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Observe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :GetFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :SetFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearfor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ClearFor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remotefunction_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoteFunction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RemoteFunction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onserverinvoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnServerInvoke
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invokeserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :InvokeServer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bufferreader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BufferReader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BufferReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readb8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadB8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readi32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadI32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU40
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readu56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadU56
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readf32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadF32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readf64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadF64
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readvector2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadVector2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readvector3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadVector3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readcframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadCFrame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readcolor3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :ReadColor3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bufferwriter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BufferWriter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BufferWriter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .new
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frombuffer_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .fromBuffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeb8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteB8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writei32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteI32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU40
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeu56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteU56
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writef32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteF32
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writef64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteF64
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writeinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writestring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writevector2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteVector2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writevector3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteVector3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writecframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteCFrame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writecolor3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :WriteColor3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :Fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api">API</h1>
+<h2 id="bolt">Bolt</h2>
+<h3 id="functions">Functions</h3>
+<h4 id="reliableevent">.ReliableEvent</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Bolt</span><span class="p">.</span><span class="nv">ReliableEvent</span><span class="o">&lt;</span><span class="nv">T</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">serializer</span><span class="p">:</span><span class="w"> </span><span class="p">((</span><span class="nc">writer</span><span class="p">:</span><span class="w"> </span><span class="nc">BufferWriter</span><span class="p">,</span><span class="w"> </span><span class="nc">T</span><span class="p">...)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">())</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">deserializer</span><span class="p">:</span><span class="w"> </span><span class="p">((</span><span class="nc">reader</span><span class="p">:</span><span class="w"> </span><span class="nc">BufferReader</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">T</span><span class="p">...)</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">ReliableEvent</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">...&gt;</span>
+</code></pre></div>
+<p>Creates a <strong><a href="#reliableevent_1">ReliableEvent</a></strong> that is used for communication between client &lt;-&gt; server with a guaranteed delivery on both sides.</p>
+<h4 id="remoteproperty">.RemoteProperty</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Bolt</span><span class="p">.</span><span class="nv">RemoteProperty</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">propertyName</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="nv">serializer</span><span class="p">:</span><span class="w"> </span><span class="p">((</span><span class="nc">writer</span><span class="p">:</span><span class="w"> </span><span class="nc">BufferWriter</span><span class="p">,</span><span class="w"> </span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">())</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">deserializer</span><span class="p">:</span><span class="w"> </span><span class="p">((</span><span class="nc">reader</span><span class="p">:</span><span class="w"> </span><span class="nc">BufferReader</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">T</span><span class="p">)</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">RemoteProperty</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Creates a <strong><a href="#remoteproperty_1">RemoteProperty</a></strong> that automatically synchronizes its value to Players.</p>
+<h4 id="remotefunction">.RemoteFunction</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">Bolt</span><span class="p">.</span><span class="nv">RemoteFunction</span><span class="o">&lt;</span><span class="nv">T</span><span class="p">...,</span><span class="w"> </span><span class="nv">R</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">functionName</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="nc">RemoteFunction</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">...,</span><span class="w"> </span><span class="nc">R</span><span class="p">...&gt;</span>
+</code></pre></div>
+<p>Creates a <strong><a href="#remotefunction_1">RemoteFunction</a></strong> that allows for clients to execute server functions just like they would do on the client side. The code invoking the function yields until it receives a response from the server.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Bolt doesn't allow for server to client remote function calls as it's a security risk that's not worth the convinience.</p>
+</div>
+<h2 id="reliableevent_1">ReliableEvent</h2>
+<h3 id="properties">Properties</h3>
+<h4 id="onclientevent">OnClientEvent</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">ReliableEvent</span><span class="p">.</span><span class="nv">OnClientEvent</span><span class="p">:</span><span class="w"> </span><span class="nc">RestrictedConnector</span><span class="p">&lt;</span><span class="nc">T</span><span class="p">...&gt;</span>
+</code></pre></div>
+<p>Fires on client side when the server sends an event.</p>
+<hr />
+<h4 id="onserverevent">OnServerEvent</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">ReliableEvent</span><span class="p">.</span><span class="nv">OnServerEvent</span><span class="p">:</span><span class="w"> </span><span class="nc">RestrictedConnector</span><span class="p">&lt;</span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nc">T</span><span class="p">...&gt;</span>
+</code></pre></div>
+<p>Fires on server side when the client sends an event.</p>
+<h3 id="functions_1">Functions</h3>
+<h4 id="fireserver">:FireServer</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">ReliableEvent</span><span class="p">:</span><span class="nc">FireServer</span><span class="p">(...:</span><span class="w"> </span><span class="nc">T</span><span class="p">.</span><span class="err">..):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Fires the <strong><a href="#onserverevent">OnServerEvent</a></strong> event on the server from one client. Connected events receive the <strong>Player</strong> argument of the firing client. Since this method is used to communicate from a client to the server, it only works when used in a client script.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can be only called from client scripts.</p>
+</div>
+<hr />
+<h4 id="fireclient">:FireClient</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">ReliableEvent</span><span class="p">:</span><span class="nc">FireClient</span><span class="p">(</span><span class="nv">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="p">...:</span><span class="w"> </span><span class="nc">T</span><span class="p">.</span><span class="err">..):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Fires the <strong><a href="#onclientevent">OnClientEvent</a></strong> event for the specific client in the required <strong>Player</strong> argument. Since this method is used to communicate from the server to a client, it only works when used in a server script.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can be only called from server scripts.</p>
+</div>
+<hr />
+<h4 id="fireallclients">:FireAllClients</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">ReliableEvent</span><span class="p">:</span><span class="nc">FireAllClients</span><span class="p">(...:</span><span class="w"> </span><span class="nc">T</span><span class="p">.</span><span class="err">..):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Fires the <strong><a href="#onclientevent">OnClientEvent</a></strong> event for each connected client. Unlike <strong><a href="#fireclient">FireClient</a></strong>, this event does not take a target <strong>Player</strong> as the first argument, since it fires to all connected players. Since this method is used to communicate from the server to clients, it only works when used in a server script.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can be only called from server scripts.</p>
+</div>
+<h2 id="remoteproperty_1">RemoteProperty</h2>
+<h3 id="functions_2">Functions</h3>
+<h4 id="observe">:Observe</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">Observe</span><span class="p">(</span><span class="nv">callback</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nc">value</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">()):</span><span class="w"> </span><span class="p">(()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">())</span>
+</code></pre></div>
+<p>Registers a callback function that gets called whenever the property value changes.</p>
+<p>Registering a callback also means that the first callback it will receive will be the current value of that <strong><a href="#remoteproperty_1">RemoteProperty</a></strong>.</p>
+<p>Returns a function that when called disconnects the callback from the <strong><a href="#remoteproperty_1">RemoteProperty</a></strong> and any further value updates won't be received by this callback function.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can be only called from client scripts.</p>
+</div>
+<hr />
+<h4 id="get">:Get</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">Get</span><span class="p">():</span><span class="w"> </span><span class="nc">T</span>
+</code></pre></div>
+<p>Returns the current value of the property.</p>
+<hr />
+<h4 id="getfor">:GetFor</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">GetFor</span><span class="p">(</span><span class="nv">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="nc">T</span>
+</code></pre></div>
+<p>Returns the current value of the property for a given player.</p>
+<hr />
+<h4 id="set">:Set</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">Set</span><span class="p">(</span><span class="nv">newValue</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Sets the value of the remote property to the newly passed one, if the new value is the same as the old value, the value update will be skipped.</p>
+<p>When <strong><a href="#set">Set</a></strong> is called all of the values set for players using <strong><a href="#setfor">SetFor</a></strong> get cleared and are set to the newly passed value.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function can be only called from server scripts.</p>
+</div>
+<hr />
+<h4 id="setfor">:SetFor</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">SetFor</span><span class="p">(</span><span class="nv">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="nv">newValue</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Sets the value of the remote property for that given player, if the new value is the same as the old value, the value update will be skipped.</p>
+<p>Only this specific player will receive the value update, an "overwrite" gets created for this specific player and any further <strong><a href="#setfor">SetFor</a></strong> calls will compare the new value with this one.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function can be only called from server scripts.</p>
+</div>
+<hr />
+<h4 id="clearfor">:ClearFor</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteProperty</span><span class="p">:</span><span class="nc">ClearFor</span><span class="p">(</span><span class="nv">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Clears the overwriten value that was set by <strong><a href="#setfor">SetFor</a></strong>, if the master value that was set for this remote property is different from the value that was overwritten for the specific player passed in the parameter, they will get a value update.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function can be only called from server scripts.</p>
+</div>
+<h2 id="remotefunction_1">RemoteFunction</h2>
+<h3 id="properties_1">Properties</h3>
+<h4 id="onserverinvoke">OnServerInvoke</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteFunction</span><span class="p">.</span><span class="nv">OnServerInvoke</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nc">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">,</span><span class="w"> </span><span class="p">...:</span><span class="w"> </span><span class="nc">T</span><span class="p">...):</span><span class="w"> </span><span class="nc">R</span><span class="p">.</span><span class="err">..</span>
+</code></pre></div>
+<p>This callback is called when the RemoteFunction is invoked with <strong><a href="#invokeserver">InvokeServer</a></strong>. When the bound function returns, the returned values are sent back to the calling client.</p>
+<details class="example">
+<summary>Example Usage</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Server.luau</label><label for="__tabbed_1_2">Client.luau</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">remoteFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bolt</span><span class="p">.</span><span class="nf">RemoteFunction</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">Bolt</span><span class="p">.</span><span class="nc">RemoteFunction</span><span class="p">&lt;(),</span><span class="w"> </span><span class="p">(</span><span class="nc">string</span><span class="p">)&gt;</span>
+
+<span class="nv">remoteFunction</span><span class="p">.</span><span class="nv">OnServerInvoke</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">player</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">player</span><span class="p">.</span><span class="nv">DisplayName</span>
+<span class="kr">end</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">remoteFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bolt</span><span class="p">.</span><span class="nf">RemoteFunction</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">Bolt</span><span class="p">.</span><span class="nc">RemoteFunction</span><span class="p">&lt;(),</span><span class="w"> </span><span class="p">(</span><span class="nc">string</span><span class="p">)&gt;</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nv">remoteFunction</span><span class="p">:</span><span class="nc">InvokeServer</span><span class="p">())</span><span class="w"> </span><span class="c1">--&gt; username</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</details>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can only be set from server scripts.</p>
+</div>
+<h3 id="functions_3">Functions</h3>
+<h4 id="invokeserver">:InvokeServer</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">RemoteFunction</span><span class="p">:</span><span class="nc">InvokeServer</span><span class="p">(...:</span><span class="w"> </span><span class="nc">T</span><span class="p">.</span><span class="err">..):</span><span class="w"> </span><span class="nc">R</span><span class="p">.</span><span class="err">..</span>
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>This function yields.</p>
+</div>
+<p>Invokes the RemoteFunction which in turn calls the <strong><a href="#onserverinvoke">OnServerInvoke</a></strong> callback. Since this method is used to communicate from a client to the server, it will only work when used in a client script.</p>
+<p>Any type of Roblox object such as an Enum, Instance, or others can be passed as a parameter to InvokeServer(), as well as Luau types such as numbers, strings, and booleans.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This property can be only called from client scripts.</p>
+</div>
+<h2 id="bufferreader">BufferReader</h2>
+<h3 id="functions_4">Functions</h3>
+<h4 id="frombuffer">.fromBuffer</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">.</span><span class="nf">fromBuffer</span><span class="p">(</span><span class="nb">buffer</span><span class="p">:</span><span class="w"> </span><span class="nc">buffer</span><span class="p">):</span><span class="w"> </span><span class="nc">BufferReader</span>
+</code></pre></div>
+<hr />
+<h4 id="frombuffer_1">.fromBuffer</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nb">string</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">):</span><span class="w"> </span><span class="nc">BufferReader</span>
+</code></pre></div>
+<hr />
+<h4 id="readb8">:ReadB8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadB8</span><span class="p">():</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nc">boolean</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h4 id="readi8">:ReadI8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadI8</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readi16">:ReadI16</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadI16</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readi24">:ReadI24</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadI24</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readi32">:ReadI32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadI32</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu8">:ReadU8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU8</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu16">:ReadU16</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU16</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu24">:ReadU24</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU24</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu32">:ReadU32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU32</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu40">:ReadU40</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU40</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readu56">:ReadU56</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadU56</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readf32">:ReadF32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadF32</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readf64">:ReadF64</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadF64</span><span class="p">():</span><span class="w"> </span><span class="nc">number</span>
+</code></pre></div>
+<hr />
+<h4 id="readinstance">:ReadInstance</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadInstance</span><span class="p">():</span><span class="w"> </span><span class="nc">Instance</span>
+</code></pre></div>
+<hr />
+<h4 id="readstring">:ReadString</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadString</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="nc">string</span>
+</code></pre></div>
+<hr />
+<h4 id="readvector2">:ReadVector2</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadVector2</span><span class="p">():</span><span class="w"> </span><span class="nc">Vector2</span>
+</code></pre></div>
+<hr />
+<h4 id="readvector3">:ReadVector3</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadVector3</span><span class="p">():</span><span class="w"> </span><span class="nc">Vector3</span>
+</code></pre></div>
+<hr />
+<h4 id="readcframe">:ReadCFrame</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadCFrame</span><span class="p">():</span><span class="w"> </span><span class="nc">CFrame</span>
+</code></pre></div>
+<hr />
+<h4 id="readcolor3">:ReadColor3</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferReader</span><span class="p">:</span><span class="nc">ReadColor3</span><span class="p">():</span><span class="w"> </span><span class="nc">Color3</span>
+</code></pre></div>
+<h2 id="bufferwriter">BufferWriter</h2>
+<h3 id="functions_5">Functions</h3>
+<h4 id="new">.new</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="nc">BufferWriter</span>
+</code></pre></div>
+<hr />
+<h4 id="frombuffer_2">.fromBuffer</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">.</span><span class="nf">fromBuffer</span><span class="p">(</span><span class="nv">source</span><span class="p">:</span><span class="w"> </span><span class="nc">buffer</span><span class="p">):</span><span class="w"> </span><span class="nc">BufferWriter</span>
+</code></pre></div>
+<hr />
+<h4 id="writeb8">:WriteB8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteB8</span><span class="p">(...</span><span class="nv">boolean</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writei8">:WriteI8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteI8</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writei16">:WriteI16</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteI16</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writei24">:WriteI24</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteI24</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writei32">:WriteI32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteI32</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu8">:WriteU8</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU8</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu16">:WriteU16</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU16</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu24">:WriteU24</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU24</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu32">:WriteU32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU32</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu40">:WriteU40</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU40</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeu56">:WriteU56</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteU56</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writef32">:WriteF32</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteF32</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writef64">:WriteF64</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteF64</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writeinstance">:WriteInstance</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteInstance</span><span class="p">(</span><span class="nv">instance</span><span class="p">:</span><span class="w"> </span><span class="nc">Instance</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writestring">:WriteString</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteString</span><span class="p">(</span><span class="nb">string</span><span class="p">:</span><span class="w"> </span><span class="nc">string</span><span class="p">,</span><span class="w"> </span><span class="nv">count</span><span class="p">:</span><span class="w"> </span><span class="nc">number</span><span class="err">?</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writevector2">:WriteVector2</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteVector2</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">Vector2</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writevector3">:WriteVector3</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteVector3</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">Vector3</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writecframe">:WriteCFrame</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteCFrame</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">CFrame</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="writecolor3">:WriteColor3</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">WriteColor3</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="nc">Color3</span><span class="p">):</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h4 id="fit">:Fit</h4>
+<div class="fn_type highlight"><pre><span></span><code><span class="nv">BufferWriter</span><span class="p">:</span><span class="nc">Fit</span><span class="p">():</span><span class="w"> </span><span class="p">()</span>
+</code></pre></div>
+<p>Shrinks the internal buffer size to the current internal cursor offset.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.code.select"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
