@@ -17,17 +17,10 @@ local SharedPath = DebugToolRootPath.Shared
 local Signal = require(SharedPath.Signal)
 local Constants = require(SharedPath.Constants)
 
-type PlayerData = {
-	Authorized: boolean,
-	Authorizing: boolean,
-}
+local playerAuthorizedSignal = Signal.new()
+local playerAuthorizationLostSignal = Signal.new()
 
-local Authorization = {
-	PlayerAuthorized = Signal.new(),
-	PlayerAuthorizationLost = Signal.new(), -- TODO: Implement
-}
-
-local playersData: { [Player]: PlayerData } = {}
+local playersData = {}
 local currentAuthorizationMethod: (Player) -> boolean
 
 local function defaultAuthorizationMethod(player: Player)
@@ -49,6 +42,11 @@ end
 currentAuthorizationMethod = defaultAuthorizationMethod
 
 local function playerAdded(player: Player)
+	local wasPlayerAuthorized = false
+	if playersData[player] and playersData[player].Authorized then
+		wasPlayerAuthorized = true
+	end
+
 	local authState = {
 		Authorized = false,
 		Authorizing = true,
@@ -82,10 +80,13 @@ local function playerAdded(player: Player)
 	player:SetAttribute(Constants.IS_AUTHORIZED_ATTRIBUTE, authState.Authorized)
 
 	if not authState.Authorized then
+		if wasPlayerAuthorized then
+			playerAuthorizationLostSignal:Fire(player)
+		end
 		return
 	end
 
-	Authorization.PlayerAuthorized:Fire(player)
+	playerAuthorizedSignal:Fire(player)
 end
 
 local function playerRemoved(player: Player)
@@ -95,6 +96,17 @@ local function playerRemoved(player: Player)
 
 	playersData[player] = nil
 end
+
+Players.PlayerRemoving:Connect(playerRemoved)
+Players.PlayerAdded:Connect(playerAdded)
+for _, player in Players:GetPlayers() do
+	task.spawn(playerAdded, player)
+end
+
+local Authorization = {
+	PlayerAuthorized = playerAuthorizedSignal,
+	PlayerAuthorizationLost = playerAuthorizationLostSignal,
+}
 
 function Authorization.IsPlayerAuthorizedAsync(self, player: Player)
 	assert(self == Authorization, "Expected ':' not '.' calling member function IsPlayerAuthorizedAsync")
@@ -125,10 +137,18 @@ function Authorization.SetAuthorizationCallback(self, callback: ((player: Player
 	end
 end
 
-Players.PlayerRemoving:Connect(playerRemoved)
-Players.PlayerAdded:Connect(playerAdded)
-for _, player in Players:GetPlayers() do
-	task.spawn(playerAdded, player)
+function Authorization.GetAuthorizedPlayers(self)
+	assert(self == Authorization, "Expected ':' not '.' calling member function GetAuthorizedPlayers")
+
+	local authorizedPlayers = {}
+
+	for player, data in playersData do
+		if data.Authorized == true then
+			table.insert(authorizedPlayers, player)
+		end
+	end
+
+	return authorizedPlayers
 end
 
 return Authorization

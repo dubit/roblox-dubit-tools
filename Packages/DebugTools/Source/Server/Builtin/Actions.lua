@@ -1,20 +1,20 @@
 --!strict
+local Players = game:GetService("Players")
 local Networking = require(script.Parent.Parent.Networking)
+local Authorization = require(script.Parent.Parent.Authorization)
 
 local Action = require(script.Parent.Parent.Parent.Shared.Action)
 
-local Internal = {
-	ActionListeners = {},
-}
+local actionListeners = {}
 
-function Internal:SendActionsList(player: Player)
-	local playerData = Internal.ActionListeners[player]
+local function sendActionsList(player: Player)
+	local playerData = actionListeners[player]
 	if not playerData then
 		playerData = {
 			Listening = true,
 			SentActions = {},
 		}
-		Internal.ActionListeners[player] = playerData
+		actionListeners[player] = playerData
 	end
 
 	local actionsToSend = {}
@@ -39,7 +39,7 @@ end
 Action.ActionAdded:Connect(function(actionName: string)
 	local actionDefinition = Action:GetDefinition(actionName)
 
-	for player, playerData in Internal.ActionListeners do
+	for player, playerData in actionListeners do
 		if not playerData.Listening then
 			continue
 		end
@@ -51,7 +51,7 @@ Action.ActionAdded:Connect(function(actionName: string)
 end)
 
 Action.ActionRemoved:Connect(function(actionName: string)
-	for player, playerData in Internal.ActionListeners do
+	for player, playerData in actionListeners do
 		if not playerData.Listening then
 			continue
 		end
@@ -64,14 +64,22 @@ end)
 
 Networking:SubscribeToTopic("actions_listening", function(player: Player, isListening: boolean)
 	if isListening then
-		Internal:SendActionsList(player)
+		sendActionsList(player)
 	else
-		Internal.ActionListeners[player].Listening = false
+		actionListeners[player].Listening = false
 	end
 end)
 
 Networking:SubscribeToTopic("actions_execute", function(_, actionName: string, arguments: { any }?)
 	Action:Execute(actionName, arguments)
+end)
+
+Authorization.PlayerAuthorizationLost:Connect(function(player)
+	actionListeners[player].Listening = false
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	actionListeners[player] = nil
 end)
 
 return nil
