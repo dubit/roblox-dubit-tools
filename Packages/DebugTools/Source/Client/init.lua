@@ -33,6 +33,7 @@ DebugTools.interface = {
 
 	-- Shared API with server
 	Networking = require(script.Networking),
+	Authorization = require(script.Authorization),
 	Action = require(script.Parent.Shared.Action),
 }
 
