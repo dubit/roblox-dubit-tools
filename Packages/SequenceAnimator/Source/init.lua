@@ -54,18 +54,16 @@ local animatorFromTrackLookup: { [SequenceTrack]: SequenceAnimator } = {}
 local animatorData: { [SequenceAnimator]: SequenceAnimatorData } = {}
 
 local function checkAndRegisterMover(sequenceAnimator: SequenceAnimator, instance: Instance)
+	local data = animatorData[sequenceAnimator]
+	if not data then
+		return
+	end
+
 	if instance:IsA("Motor6D") or instance:IsA("Bone") then
-		local data = animatorData[sequenceAnimator]
-		if not data then
-			return
-		end
-
-		local filteredMotor6D = string.gsub(instance.Name, "Motor6D", "")
-
-		data.Movers[instance.Name] = instance
-
-		if filteredMotor6D ~= instance.Name then
-			data.Movers[filteredMotor6D] = instance
+		if instance:IsA("Motor6D") and instance.Part1 ~= nil then
+			data.Movers[instance.Part1.Name] = instance
+		else
+			data.Movers[instance.Name] = instance
 		end
 	end
 end
