@@ -378,7 +378,7 @@ function IMGui.public.applyFrameStyle(instance: Frame | TextButton)
 	end
 end
 
-function IMGui.public.applyTextStyle(instance: TextLabel | TextButton)
+function IMGui.public.applyTextStyle(instance: TextLabel | TextButton | TextBox)
 	instance.FontFace = IMGui.private.CurrentConfig.Font
 
 	instance.TextSize = IMGui.private.CurrentConfig.Sizes.TextSize
