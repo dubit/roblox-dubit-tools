@@ -8,5 +8,5 @@ return table.freeze({
 
 	IS_AUTHORIZED_ATTRIBUTE = "DEBUGTOOLS_ISAUTHORIZED",
 
-	VERSION = "1.1.1",
+	VERSION = "1.1.2",
 })
