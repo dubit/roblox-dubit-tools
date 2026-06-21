@@ -5,107 +5,37 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DebugToolRootPath = script.Parent.Parent
 local SharedPath = DebugToolRootPath.Shared
 
-local Signal = require(SharedPath.Signal)
 local Constants = require(SharedPath.Constants)
 
 local Authorization = require(DebugToolRootPath.Server.Authorization)
 
-local Networking = {}
-Networking.internal = {
-	TopicCallbacks = {},
-	NetworkTrafficRemote = nil :: RemoteEvent?,
-	NetworkTargets = {},
-}
-Networking.interface = {
-	NetworkTargetAdded = Signal.new(), -- TODO: Remove, there is Authorization.PlayerAuthorized
-	NetworkTargetRemoved = Signal.new(), -- TODO: Remove, there is Authorization.PlayerAuthorizationLost
-}
+local networkTrafficRemote = Instance.new("RemoteEvent")
+networkTrafficRemote.Name = Constants.NETWORK_TRAFFIC_REMOTE_NAME
+networkTrafficRemote.Parent = ReplicatedStorage
 
-function Networking.internal.playerRemoving(player: Player)
-	if not Networking.internal.NetworkTargets[player] then
+local outgoingMessageQueue = {}
+local readyTargets = {}
+local topicCallbacks = {}
+
+local function playerLostAuthorization(player: Player)
+	if not outgoingMessageQueue[player] then
 		return
 	end
 
-	Networking.internal.NetworkTargets[player] = nil
-
-	Networking.interface.NetworkTargetRemoved:Fire(player)
+	readyTargets[player] = nil
+	outgoingMessageQueue[player] = nil
 end
 
-function Networking.internal.registerNetworkTarget(player: Player)
-	if Networking.internal.NetworkTargets[player] then
+local function playerAuthorized(player: Player)
+	if outgoingMessageQueue[player] then
 		return
 	end
 
-	if not Authorization:IsPlayerAuthorizedAsync(player) then
-		return
-	end
-
-	Networking.internal.NetworkTargets[player] = {
-		MessageQueue = {},
-	}
-
-	Networking.interface.NetworkTargetAdded:Fire(player)
+	outgoingMessageQueue[player] = {}
 end
 
-function Networking.internal.createTrafficRemote()
-	local networkTrafficRemote: RemoteEvent = Instance.new("RemoteEvent")
-	networkTrafficRemote.Name = Constants.NETWORK_TRAFFIC_REMOTE_NAME
-	networkTrafficRemote.Parent = ReplicatedStorage
-
-	Networking.internal.NetworkTrafficRemote = networkTrafficRemote
-end
-
-function Networking.internal.listenToNetworkTraffic()
-	Networking.internal.NetworkTrafficRemote.OnServerEvent:Connect(
-		function(player: Player, messageContent: { any } | string)
-			if not Authorization:IsPlayerAuthorizedAsync(player) then
-				player:Kick("Attempted to perform unauthorized action.")
-				return
-			end
-
-			if messageContent == "_ready_" then
-				Networking.internal.registerNetworkTarget(player)
-				return
-			end
-
-			if typeof(messageContent) ~= "table" then
-				return
-			end
-
-			for _, message in messageContent do
-				local topic: string = message[1]
-				local params: { any } = message[2]
-
-				if not topic or not params then
-					continue
-				end
-
-				Networking.internal.invokeTopic(topic, player, table.unpack(params))
-			end
-		end
-	)
-end
-
-function Networking.internal.initiateTrafficHeartbeat()
-	RunService.Heartbeat:Connect(function()
-		for player: Player, playerData in Networking.internal.NetworkTargets do
-			if #playerData.MessageQueue <= 0 then
-				continue
-			end
-
-			Networking.internal.NetworkTrafficRemote:FireClient(player, playerData.MessageQueue)
-
-			playerData.MessageQueue = {}
-		end
-	end)
-
-	Players.PlayerRemoving:Connect(function(player: Player)
-		Networking.internal.playerRemoving(player)
-	end)
-end
-
-function Networking.internal.invokeTopic(topic: string, player: Player, ...)
-	local topicCallbacks = Networking.internal.TopicCallbacks[topic]
+local function invokeTopic(topic: string, player: Player, ...)
+	local topicCallbacks = topicCallbacks[topic]
 
 	if not topicCallbacks then
 		return
@@ -116,49 +46,93 @@ function Networking.internal.invokeTopic(topic: string, player: Player, ...)
 	end
 end
 
-function Networking.interface:SendMessageToPlayer(player: Player, topic: string, ...)
-	if not Networking.internal.NetworkTargets[player] then
+Players.PlayerRemoving:Connect(playerLostAuthorization)
+Authorization.PlayerAuthorized:Connect(playerAuthorized)
+Authorization.PlayerAuthorizationLost:Connect(playerLostAuthorization)
+for _, player in Authorization:GetAuthorizedPlayers() do
+	task.spawn(playerAuthorized, player)
+end
+
+networkTrafficRemote.OnServerEvent:Connect(function(player, messageContent: { any } | string)
+	if not Authorization:IsPlayerAuthorizedAsync(player) then
+		player:Kick("Attempted to perform unauthorized action.")
 		return
 	end
 
-	table.insert(Networking.internal.NetworkTargets[player].MessageQueue, {
+	if messageContent == "_ready_" then
+		readyTargets[player] = true
+		return
+	end
+
+	if typeof(messageContent) ~= "table" then
+		return
+	end
+
+	for _, message in messageContent do
+		local topic: string = message[1]
+		local params: { any } = message[2]
+
+		if not topic or not params then
+			continue
+		end
+
+		invokeTopic(topic, player, table.unpack(params))
+	end
+end)
+
+RunService.Heartbeat:Connect(function()
+	for player, playerData in outgoingMessageQueue do
+		if not readyTargets[player] or #playerData <= 0 then
+			continue
+		end
+
+		local messageQueue = playerData
+		outgoingMessageQueue[player] = {}
+
+		networkTrafficRemote:FireClient(player, messageQueue)
+	end
+end)
+
+local Networking = {}
+
+function Networking.SendMessageToPlayer(self, player: Player, topic: string, ...)
+	assert(self == Networking, "Expected ':' not '.' calling member function SendMessageToPlayer")
+
+	if not outgoingMessageQueue[player] then
+		return
+	end
+
+	table.insert(outgoingMessageQueue[player], {
 		topic,
 		{ ... },
 	})
 end
 
-function Networking.interface:SendMessage(topic: string, ...)
-	for player: Player in Networking.internal.NetworkTargets do
-		Networking.interface:SendMessageToPlayer(player, topic, ...)
+function Networking.SendMessage(self, topic: string, ...)
+	assert(self == Networking, "Expected ':' not '.' calling member function SendMessage")
+
+	for player in outgoingMessageQueue do
+		Networking:SendMessageToPlayer(player, topic, ...)
 	end
 end
 
-function Networking.interface:SubscribeToTopic(topic: string, callback: (...any) -> ...any): ()
-	if not Networking.internal.TopicCallbacks[topic] then
-		Networking.internal.TopicCallbacks[topic] = {}
+function Networking.SubscribeToTopic(self, topic: string, callback: (...any) -> ()): ()
+	assert(self == Networking, "Expected ':' not '.' calling member function SubscribeToTopic")
+
+	if not topicCallbacks[topic] then
+		topicCallbacks[topic] = {}
 	end
 
-	local topicCallbacks = Networking.internal.TopicCallbacks[topic]
+	local topicCallbacks = topicCallbacks[topic]
 
 	table.insert(topicCallbacks, callback)
 	return function()
-		local callbackIndex: number? = table.find(topicCallbacks, callback)
-		table.remove(topicCallbacks, callbackIndex)
+		local callbackIndex = table.find(topicCallbacks, callback)
+
+		if callbackIndex then
+			table.remove(topicCallbacks, callbackIndex)
+		end
 	end
 end
 
--- TODO: Add :GetAuthorizedPlayers to Authorization, remove this one
-function Networking.interface:GetNetworkTargets(): { Player }
-	local networkTargets: { Player } = {}
-	for player: Player in Networking.internal.NetworkTargets do
-		table.insert(networkTargets, player)
-	end
-
-	return networkTargets
-end
-
-Networking.internal.createTrafficRemote()
-Networking.internal.listenToNetworkTraffic()
-Networking.internal.initiateTrafficHeartbeat()
-
-return Networking.interface
+return Networking

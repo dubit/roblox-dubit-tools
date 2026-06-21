@@ -78,6 +78,18 @@ When changing the authorization callback all of the players in the server will b
 !!! success ""
 	This is a server only method.
 
+---
+
+#### :IsLocalPlayerAuthorized
+```luau { .fn_type }
+DebugTools.Authorization:IsLocalPlayerAuthorized(): boolean
+```
+
+Returns true if local player is authorized to use DebugTools.
+
+!!! info ""
+	This is a client only method.
+
 ## Console
 
 ### Methods

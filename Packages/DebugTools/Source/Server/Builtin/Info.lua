@@ -2,6 +2,7 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
 local Networking = require(script.Parent.Parent.Networking)
+local Authorization = require(script.Parent.Parent.Authorization)
 
 local isQueryingServerInfo = false
 local serverInfo
@@ -56,8 +57,8 @@ local function sendServerInfo(player: Player)
 	Networking:SendMessageToPlayer(player, "server_info", info.Ip, info.Location)
 end
 
-Networking.NetworkTargetAdded:Connect(sendServerInfo)
-for _, player in Networking:GetNetworkTargets() do
+Authorization.PlayerAuthorized:Connect(sendServerInfo)
+for _, player in Authorization:GetAuthorizedPlayers() do
 	task.spawn(sendServerInfo, player)
 end
 
